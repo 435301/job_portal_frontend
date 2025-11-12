@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Sidebar from "../componets/Sidebar";
 import Header from "../componets/Header";
 import {
@@ -11,37 +11,56 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { createEducation } from "../../redux/slices/educationSlice.tsx";
+import { useAppDispatch } from "../../redux/hooks.tsx";
+import { validateEducationForm, FormErrors } from "../../common/validation.tsx";
+
+interface EducationForm {
+    educationName: string;
+    status: number | any;
+}
 
 function CreateEducation() {
+    const dispatch = useAppDispatch();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-    const [openMenus, setOpenMenus] = useState({});
+    const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [errors, setErrors] = useState<FormErrors>({});
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        type: "",
-        course: "",
-        description: "",
-        status: "Active",
+    const [formData, setFormData] = useState<EducationForm>({
+        educationName: "",
+        status: "",
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log("Education Created:", formData);
-        navigate("/admin/education-manage"); // Redirect back after save
+        const validationErrors = validateEducationForm(formData);
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) {
+            return;
+        }
+        try {
+            const resultAction = await dispatch(createEducation(formData));
+            if (createEducation.fulfilled.match(resultAction)) {
+                navigate("/admin/manage-education");
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const toggleMobileSidebar = () => setIsMobileSidebarOpen(!isMobileSidebarOpen);
     const closeMobileSidebar = () => setIsMobileSidebarOpen(false);
-    const toggleSubMenu = (id) =>
+    const toggleSubMenu = (id: string) =>
         setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
 
     return (
@@ -77,7 +96,7 @@ function CreateEducation() {
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/education")}
+                                        onClick={() => navigate("/admin/manage-education")}
                                     >
                                         <i className="bi bi-arrow-left me-2"></i>Manage Education
                                     </Button>
@@ -98,72 +117,35 @@ function CreateEducation() {
                                             <Form.Label>Education Name</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="name"
+                                                name="educationName"
+                                                className={`form-control ${errors.educationName ? "is-invalid" : ""}`}
                                                 placeholder="Enter education name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </Form.Group>
-                                    </Col>
-
-                                    <Col md={4}>
-                                        <Form.Group>
-                                            <Form.Label>Type</Form.Label>
-                                            <Form.Select
-                                                name="type"
-                                                value={formData.type}
-                                                onChange={handleChange}
-                                                className="form-control"
-                                                required
-                                            >
-                                                <option value="">Select type</option>
-                                                <option value="Degree">Degree</option>
-                                                <option value="Diploma">Diploma</option>
-                                                <option value="Certificate">Certificate</option>
-                                            </Form.Select>
-                                        </Form.Group>
-                                    </Col>
-
-                                    <Col md={4}>
-                                        <Form.Group>
-                                            <Form.Label>Course</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                name="course"
-                                                placeholder="Enter course name"
-                                                value={formData.course}
+                                                value={formData.educationName}
                                                 onChange={handleChange}
                                             />
+                                            {errors.educationName && (
+                                                <div className="invalid-feedback">{errors.educationName}</div>
+                                            )}
                                         </Form.Group>
                                     </Col>
-
                                     <Col md={4}>
                                         <Form.Group>
                                             <Form.Label>Status</Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}
-                                                className="form-control"
+
+                                                className={`form-control ${errors.status ? "is-invalid" : ""}`}
+
                                                 onChange={handleChange}
                                             >
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
                                             </Form.Select>
-                                        </Form.Group>
-                                    </Col>
-
-                                    <Col md={12}>
-                                        <Form.Group>
-                                            <Form.Label>Description</Form.Label>
-                                            <Form.Control
-                                                as="textarea"
-                                                rows={4}
-                                                name="description"
-                                                placeholder="Enter description..."
-                                                value={formData.description}
-                                                onChange={handleChange}
-                                            />
+                                            {errors.status && (
+                                                <div className="invalid-feedback">{errors.status}</div>
+                                            )}
                                         </Form.Group>
                                     </Col>
                                 </Row>

@@ -26,8 +26,9 @@ const Sidebar = ({
       text: "Master Data",
       icon: "bi bi-collection",
       children: [
-        { id: "education", text: "Education", path: "/admin/education" },
+        { id: "education", text: "Education", path: "/admin/manage-education" },
         { id: "institutions", text: "Institutions", path: "/admin/institutions" },
+        { id: "skill", text: "Skill", path: "/admin/manage-skill" },
       ],
     },
     {

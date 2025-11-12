@@ -2,7 +2,19 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const EducationViewModal = ({ show, onHide, item }) => {
+interface Education {
+  id: number;
+  educationName: string;
+  status: number | any;
+}
+
+interface EducationEditModalProps {
+  show: boolean;
+  onHide: () => void;
+  item: Education | null;
+}
+
+const EducationViewModal: React.FC<EducationEditModalProps> = ({ show, onHide, item }) => {
   if (!item) return null;
 
   return (
@@ -10,7 +22,7 @@ const EducationViewModal = ({ show, onHide, item }) => {
       show={show}
       onHide={onHide}
       centered
-      size="md"
+      size={"md" as any}
       backdrop="static"
       className="rounded-4"
     >
@@ -21,18 +33,15 @@ const EducationViewModal = ({ show, onHide, item }) => {
       </Modal.Header>
       <Modal.Body className="px-4 py-3">
         <div className="fs-6">
-          <p><strong>Education Name:</strong> {item.name}</p>
-          <p><strong>Type:</strong> {item.type}</p>
-          <p><strong>Course:</strong> {item.course}</p>
-          <p><strong>Created On:</strong> {item.date}</p>
+          <p><strong>Education Name:</strong> {item.educationName}</p>
           <p>
             <strong>Status:</strong>{" "}
             <span
               className={`badge rounded-pill ${
-                item.status === "Active" ? "bg-success" : "bg-danger"
+                item.status === 1 ? "bg-success" : "bg-danger"
               }`}
             >
-              {item.status}
+              {item.status === 1? "Active" : "Inactive"}
             </span>
           </p>
         </div>

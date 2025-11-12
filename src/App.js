@@ -1,9 +1,10 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Router } from 'react-router-dom';
 import Home from './users/Home';
 import './App.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { ToastContainer } from "react-toastify";
 
 // User Pages
 import Login from './users/Login';
@@ -16,14 +17,14 @@ import EmployerAccount from './users/EmployerAccount';
 import VerifyEmail from './users/VerifyEmail';
 import EmailVerifiedSuccess from './users/EmailVerifiedSuccess';
 import ProfilePage from './users/ProfilePage';
-
-
-
 // Admin Pages
 import AdminDashboard from './admin/pages/Dashboard'; // example file path
-import EducationManage from './admin/pages/EducationManage'; // example file path
-import CreateEducation from "./admin/pages/CreateEducation";
+import CreateEducation from "./admin/pages/CreateEducation.tsx";
 import AdminLogin from "./admin/pages/AdminLogin";
+import ProtectedRoute from './admin/componets/ProtectedRoute';
+import CreateSkill from './admin/pages/CreateSkills';
+import EducationManage from './admin/pages/EducationManage.tsx';
+
 
 
 const App = () => {
@@ -44,13 +45,36 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />} />
 
         {/* ===== Admin Routes ===== */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/education" element={<EducationManage />} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /> </ProtectedRoute>
+        } />
+        <Route path="/admin/manage-education" element={<EducationManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
+        <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
+      <ToastContainer position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" 
+        toastStyle={{
+          color: "#fff",
+          borderRadius: "12px",
+          fontWeight: "500",
+        }}
+        progressStyle={{
+          background: "#2CB0DD",
+        }}
+      />
     </>
+
+
   );
 };
 

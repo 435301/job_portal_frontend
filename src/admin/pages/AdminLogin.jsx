@@ -1,19 +1,46 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Button, Card, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { adminLogin } from "../../redux/slices/adminSlice";
+import { validateLoginForm } from "../../common/validation.tsx";
 
 const AdminLogin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const { loading, token, error } = useSelector((state) => state.admin);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/admin/dashboard");
+    }
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
-    // Add your login API call or logic here
+    const validationErrors = validateLoginForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+    try {
+      const response = await dispatch(adminLogin(formData));;
+      if (adminLogin.fulfilled.match(response)) {
+        navigate("/admin/dashboard");
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -41,11 +68,15 @@ const AdminLogin = () => {
                     <Form.Control
                       type="email"
                       name="email"
+                      className={`form-control ${errors.email ? "is-invalid" : ""}`}
                       placeholder="Enter email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
+
                     />
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="password">
@@ -53,11 +84,15 @@ const AdminLogin = () => {
                     <Form.Control
                       type="password"
                       name="password"
+                      className={`form-control ${errors.password ? "is-invalid" : ""}`}
                       placeholder="Enter password"
                       value={formData.password}
                       onChange={handleChange}
-                      required
+
                     />
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
                   </Form.Group>
 
                   <div className="d-flex justify-content-between align-items-center mb-3">
@@ -68,8 +103,16 @@ const AdminLogin = () => {
                   </div>
 
                   <div className="d-grid">
-                    <Button variant="primary" type="submit" className="rounded-3">
-                      <i className="bi bi-box-arrow-in-right me-2"></i> Login
+                    <Button variant="primary" type="submit" className="rounded-3" disabled={loading}>
+                      {loading ? (
+                        <>
+                          <Spinner animation="border" size="sm" className="me-2" /> Logging in...
+                        </>
+                      ) : (
+                        <>
+                          <i className="bi bi-box-arrow-in-right me-2"></i> Login
+                        </>
+                      )}
                     </Button>
                   </div>
                 </Form>
