@@ -1,0 +1,495 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+body {
+  font-family: "DM Sans", sans-serif;
+
+}
+
+/* ===== Base Layout ===== */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #20487d;
+  color: white;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  z-index: 1000;
+  position: relative;
+}
+
+.sidebar.expanded {
+  width: 240px;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar.mobile-open {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 240px;
+}
+
+.content .btn.btn-primary {
+  background: #2CB0DD;
+  color: var(--bs-white) !important;
+  font-weight: 400;
+  transition: 0.5s;
+  border-color: #2CB0DD;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 7px 16px;
+}
+
+.modal p {
+  color: #05264E;
+  font-size: 15px;
+}
+
+.content .form-control {
+  border-radius: 3px;
+  height: 43px;
+  font-size: 14px;
+}
+
+.content .table td {
+  vertical-align: middle;
+  padding: 9px;
+  color: #05264E;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.table .badge {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 5px;
+}
+
+.bg-success-light {
+  background-color: #d4edda !important;
+  color: #155724;
+}
+
+.bg-danger-light {
+  background-color: #f8d7da !important;
+  color: #721c24;
+}
+
+.btn-icon {
+  /* border: none; */
+  padding: 4px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.btn-view {
+  background-color: transparent;
+  color: #198754;
+  border: 1px solid #198754;
+}
+
+.btn-edit {
+  background-color: transparent;
+  color: #2cb0dd;
+  border-color: #2cb0dd;
+}
+
+.btn-delete {
+  background-color: transparent;
+  color: #e60000;
+  border-color: #e60000;
+}
+
+.content .btn.btn-primary:hover {
+  background: #20487d !important;
+  color: #fff !important;
+}
+
+.content .table th {
+  background-color: #f9fafb;
+  color: #0d1b2a;
+  font-weight: 500;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.content .btn-outline-secondary {
+  color: #05264E;
+  border-color: #05264e29;
+  font-weight: 500 !important;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 7px 16px;
+  background: #F4F6FA;
+}
+
+.card-header {
+  padding: 13px 17px 15px;
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.menu-link.active-link {
+  /* background: #007bff; */
+  color: #fff;
+  font-weight: 600;
+  border-left: 2px solid #0dcaf0;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.pagination .page-link {
+  border-radius: 0.35rem;
+  color: #20487d;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.pagination {
+  gap: 0.25rem;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #20487d;
+  border-color: #20487d;
+  color: #fff;
+}
+
+/* Sidebar header */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Menu */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.submenu {
+  list-style: none;
+  padding-left: 10px;
+  margin: 0;
+}
+
+/* ===== Main Area ===== */
+.main-area {
+  flex-grow: 1;
+  background-color: #f4f6f9;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Topbar */
+.topbar {
+  background-color: #20487d;
+  color: white;
+  padding: 7px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---------- Avatar Circle ---------- */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: #ffffff22;
+  border: 2px solid #ffffff55;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+  background: #ffffff33;
+  border-color: #fff;
+  transform: scale(1.05);
+}
+
+.user-avatar i {
+  font-size: 1.3rem;
+}
+
+/* ---------- Profile Menu ---------- */
+.profile-menu {
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.profile-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.profile-menu a:hover {
+  background: #f5f5f5;
+}
+
+.text-success {
+  --bs-text-opacity: 1;
+  color: rgb(0 169 18) !important;
+}
+
+.verify-header-success {
+  background-color: #BCE6BE7A;
+}
+
+.profile-menu .logout {
+  color: #d9534f;
+  font-weight: 500;
+}
+
+.sidebar ul li {
+  color: #fff;
+  opacity: 100%;
+}
+
+/* subtle appear animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-toggle {
+  background: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: #20487d;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 5px 10px;
+
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+.search-box i {
+  color: white;
+}
+
+/* Right section */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Profile dropdown */
+.profile-menu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  width: 160px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-menu a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 15px;
+  transition: background 0.3s;
+}
+
+.profile-menu a:hover {
+  background-color: #f2f2f2;
+}
+
+.profile-menu .logout {
+  color: red;
+  font-weight: 500;
+}
+
+.profile-menu hr {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/* Overlay (mobile only) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 500;
+}
+
+/* Content */
+.content {
+  flex-grow: 1;
+  padding: 25px;
+}
+
+.content h3 {
+  color: #20487d;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    height: 100%;
+  }
+
+  .sidebar.mobile-open {
+    left: 0;
+  }
+
+  .search-box {
+    display: none !important;
+  }
+}
+
+.dashboard-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.icon-boxs {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+}
+
+.bg-primary-subtle {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.bg-success-subtle {
+  background-color: rgba(25, 135, 84, 0.1);
+}
+
+.bg-warning-subtle {
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.bg-danger-subtle {
+  background-color: rgba(220, 53, 69, 0.1);
+}

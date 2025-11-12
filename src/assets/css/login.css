@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+body {
+    font-family: "DM Sans", sans-serif !important;
+
+}
+
+
+.cont {
+    position: relative;
+    width: 25%;
+    height: 400px;
+    padding: 10px 25px;
+    margin: 10vh auto;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.bg-primary-1 .form-label {
+    margin-bottom: .5rem;
+    font-size: 14px;
+    color: #252638;
+    font-weight: 450;
+}
+
+.bg-primary-1 .input-group>.form-control,
+.input-group>.form-select {
+    position: relative;
+    flex: 1 1 auto;
+    /* width: 9%; */
+    min-width: 0;
+    height: 49px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.hero-header-2 {
+    padding-top: 107px !important;
+    position: relative;
+    background: transparent radial-gradient(closest-side at 82% 54%, #2CB0DD 0%, #20477C 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding-bottom: 33px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+
+}
+
+.hero-header-1 {
+    padding-top: 147px !important;
+    position: relative;
+    background: url(../img/login.png) !important;
+    opacity: 1;
+    padding-bottom: 33px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+
+}
+
+.form-label {
+    margin-bottom: .5rem;
+    font-size: 14px;
+    color: #252638;
+}
+
+.header-1 .form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.btn-dark {
+    border-radius: 24px;
+    padding: 9px 23px;
+    font-size: 14px;
+    font-weight: 500 !important;
+}
+
+.header-1 .form-select {
+    background-image: none;
+    -webkit-appearance: auto;
+    height: 43px;
+    font-size: 14px;
+    color: #000000ad;
+}
+
+.header-1 {
+    background: url(../img/bg-slider2.svg) !important;
+    opacity: 1;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.bg-primary-1 .btn-primary-1 {
+    background-color: #1F4277;
+    border-color: #1F4277;
+    padding: 10px 65px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 22px;
+    font-weight: 600;
+}
+
+.sub p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #252638;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+
+.bg-primary-1 h3 {
+    font-size: 26px;
+    color: #252638;
+    font-weight: 800;
+}
+
+.login-container .nav-tabs {
+    border-bottom: none;
+    background: #F3F4F6;
+    padding: 4px;
+    border: 1px solid #70707036;
+    border-radius: 25px;
+}
+
+.bg-primary-1 .nav-tabs .nav-link {
+    background-color: transparent;
+    color: #05264E;
+    border-radius: 20px;
+    padding: 8px 46px;
+    margin: 0 5px;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+}
+
+.login-container .nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.bg-primary-1 .form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #757575;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .hero-header-1 {
+        padding-top: 137px;
+        position: relative;
+        background: transparent radial-gradient(closest-side at 82% 54%, #2CB0DD 0%, #20477C 100%) 0% 0% no-repeat padding-box;
+        opacity: 1;
+        padding-bottom: 33px;
+        padding: 16px 2px !important;
+    }
+
+    .bg-primary-1 .px-5 {
+        padding-right: 0rem !important;
+        padding-left: 0rem !important;
+    }
+
+    .hero-header-2 {
+        padding-top: 107px;
+        position: relative;
+        background: transparent radial-gradient(closest-side at 82% 54%, #2CB0DD 0%, #20477C 100%) 0% 0% no-repeat padding-box;
+        opacity: 1;
+        padding-bottom: 33px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 15px 0px !important;
+    }
+}

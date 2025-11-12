@@ -1,0 +1,260 @@
+import React, { useEffect } from "react";
+import WOW from "wowjs";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "animate.css";
+import "../assets/css/style.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+// Image imports (adjust paths as needed)
+import icon1 from "../assets/img/icon-1.png";
+import icon2 from "../assets/img/icon-2.png";
+import icon3 from "../assets/img/icon-3.png";
+
+const Jobs = () => {
+  useEffect(() => {
+    new WOW.WOW({ live: false }).init();
+  }, []);
+
+  return (
+    <>
+      {/* Header Section */}
+      <div className="container-fluid header position-relative overflow-hidden p-0">
+        <Navbar />
+
+        {/* Breadcrumb / Search Section */}
+        <div className="container-fluid bg-breadcrumb">
+          <div className="container text-center py-5" style={{ maxWidth: "900px" }}>
+            <h3 className="text-white mb-4 wow fadeInDown" data-wow-delay="0.1s">
+              Find Your Dream Jobs
+            </h3>
+
+            <div
+              className="search-bar ms-5 ps-4 bg-white shadow-sm d-flex align-items-center justify-content-between px-3 py-2 flex-wrap"
+              style={{ maxWidth: "708px", gap: "4px" }}
+            >
+              {/* Job Title Input */}
+              <div className="d-flex align-items-center flex-grow-1 border-end flex-nowrap">
+                <i className="bi bi-briefcase-fill text-muted"></i>
+                <input
+                  type="text"
+                  className="form-control border-0 shadow-none"
+                  placeholder="Search by Job title, skill"
+                />
+              </div>
+
+              {/* Location Input */}
+              <div className="d-flex align-items-center pe-3 flex-shrink-1" style={{ minWidth: "150px" }}>
+                <i className="bi bi-geo-alt me-2 text-muted"></i>
+                <select
+                  className="form-select border-0 shadow-none p-0"
+                  style={{ minWidth: "100px", fontSize: "15px" }}
+                >
+                  <option>Location</option>
+                  <option>New York</option>
+                  <option>San Francisco</option>
+                  <option>Chicago</option>
+                  <option>London</option>
+                  <option>Remote</option>
+                </select>
+              </div>
+
+              {/* Remote Switch */}
+              <div className="d-flex align-items-center pe-3 flex-shrink-0">
+                <div className="form-check form-switch mb-0 me-2">
+                  <input className="form-check-input" type="checkbox" id="remoteSwitch" />
+                </div>
+                <label className="form-check-label ms-1 text-muted small" htmlFor="remoteSwitch">
+                  Remote
+                </label>
+              </div>
+
+              {/* Search Button */}
+              <button className="btn btn-primary rounded-pill px-4 flex-shrink-0">Search jobs</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Jobs Section */}
+      <section className="my-5 jobs-list">
+        <div className="container">
+          <div className="row">
+            {/* Filter Sidebar */}
+            <div className="col-lg-3">
+              <div className="filter-panel">
+                <h5>Filter</h5>
+                <div className="applied-count">Applied (3)</div>
+
+                {/* Location */}
+                <div className="mt-3 mb-3">
+                  <label htmlFor="location" className="form-label">
+                    Location
+                  </label>
+                  <select className="form-select" id="location">
+                    <option>Location</option>
+                    <option>New York</option>
+                    <option>Remote</option>
+                    <option>London</option>
+                  </select>
+                </div>
+
+                {/* Industry */}
+                <div className="mb-3">
+                  <label className="form-label">Industry</label>
+                  {[
+                    { id: "software", label: "Software", count: 28 },
+                    { id: "finance", label: "Finance", count: 40 },
+                    { id: "management", label: "Management", count: 2 },
+                  ].map((item) => (
+                    <div
+                      className="form-check d-flex justify-content-between align-items-center"
+                      key={item.id}
+                    >
+                      <div className="d-flex align-items-center">
+                        <input className="form-check-input me-2" type="checkbox" id={item.id} />
+                        <label className="form-check-label" htmlFor={item.id}>
+                          {item.label}
+                        </label>
+                      </div>
+                      <span className="number">{item.count}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Salary Range */}
+                <div className="mb-3 mt-4">
+                  <label className="form-label">Salary Range</label>
+                  <input type="range" className="form-range custom-range" id="salaryRange" />
+                  <div className="range-labels d-flex justify-content-between">
+                    <span>$0</span>
+                    <span>$200K+</span>
+                  </div>
+                </div>
+
+                {/* Experience Level */}
+                <div className="mb-3">
+                  <label className="form-label">Experience Level</label>
+                  {["Entry Level", "Mid Level", "Senior Level"].map((level, index) => (
+                    <div
+                      className="form-check radio-group d-flex align-items-center"
+                      key={index}
+                    >
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="experience"
+                        id={level.toLowerCase().replace(" ", "")}
+                      />
+                      <label className="form-check-label ms-1" htmlFor={level.toLowerCase().replace(" ", "")}>
+                        {level}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Job Type */}
+                <div className="mb-3">
+                  <label className="form-label">Job Type</label>
+                  {["Full Time", "Part Time"].map((type, index) => (
+                    <div className="form-check d-flex align-items-center" key={index}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={type.toLowerCase().replace(" ", "")}
+                      />
+                      <label className="form-check-label ms-1" htmlFor={type.toLowerCase().replace(" ", "")}>
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Apply Filters Button */}
+                <button className="btn btn-apply-filter">Apply Filters</button>
+              </div>
+            </div>
+
+            {/* Job Listings */}
+            <div className="col-lg-9 job-portal">
+              <div className="row ms-3 mb-3">
+                <div className="d-flex justify-content-lg-between align-items-center gap-3">
+                  <h6 className="mb-0">Showing 14-60 of 563 jobs</h6>
+                  <div className="d-flex">
+                    <select className="form-select custom-select-style-2 me-2">
+                      <option>Show 12</option>
+                      <option>Show 24</option>
+                      <option>Show 48</option>
+                    </select>
+                    <select className="form-select custom-select-style">
+                      <option>Sort by New Post</option>
+                      <option>Sort by Old Post</option>
+                      <option>Sort by Popular</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Job Cards */}
+              <div className="row g-4 ms-4">
+                {[
+                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
+                  { img: icon2, title: "Frontend Engineer", company: "Figma" },
+                  { img: icon3, title: "AI Research Scientist", company: "Stripe" },
+                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
+                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
+                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
+                ].map((job, index) => (
+                  <div
+                    className="col-md-6 wow fadeInUp"
+                    data-wow-delay={`${0.1 * (index + 1)}s`}
+                    key={index}
+                  >
+                    <div className="card job-card border-0 shadow-sm h-100">
+                      <div className="card-body">
+                        <div className="d-flex align-items-center justify-content-between mb-3">
+                          <div className="d-flex align-items-center">
+                            <img src={job.img} width="45" className="me-3" alt={job.company} />
+                            <div>
+                              <h6 className="fw-bold mb-0">{job.title}</h6>
+                              <small className="text-muted">{job.company}</small>
+                            </div>
+                          </div>
+                          <span className="badge bg-light text-success border rounded-pill px-3">
+                            New
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-wrap gap-2 mb-3">
+                          <span className="badge bg-danger text-danger px-3 py-2">
+                            <i className="bi bi-geo-alt-fill me-1"></i>San Francisco, CA
+                          </span>
+                          <span className="badge bg-info px-3 py-2">
+                            <i className="bi bi-briefcase-fill me-1"></i>Full time
+                          </span>
+                        </div>
+
+                        <p className="mb-1">Salary : $120k – $150k</p>
+                        <div className="text-end d-flex justify-content-between align-items-center mt-4">
+                          <small className="text-muted">Posted 2 days ago</small>
+                          <a href="#" className="btn btn-primary">
+                            Apply
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
+    </>
+  );
+};
+
+export default Jobs;
