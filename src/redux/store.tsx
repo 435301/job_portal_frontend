@@ -4,6 +4,7 @@ import educationReducer from "./slices/educationSlice.tsx"
 import skillReducer from "./slices/skillSlice.tsx"
 import institutionReducer from "./slices/institutionSlice.tsx"
 import jobTitleReducer from "./slices/JobTitleSlice.tsx"
+import noticePeriodReducer from "./slices/noticePeriodSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     skill: skillReducer,
     institution: institutionReducer,
     jobTitle: jobTitleReducer,
+    noticePeriod: noticePeriodReducer,
   },
 });
 

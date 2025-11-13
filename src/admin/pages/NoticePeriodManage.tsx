@@ -7,14 +7,13 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import DeleteConfirmationModal from "../componets/Modal/DeleteModal.tsx";
-import { deleteSkill, getAllSkills, updateSkill } from "../../redux/slices/skillSlice.tsx";
-import { deleteJobTitle, getAllJobTitle, updateJobTitle } from "../../redux/slices/JobTitleSlice.tsx";
-import JobTitleViewModal from "../componets/Modal/JobTitleViewModal.tsx";
-import JobTitleEditModal from "../componets/Modal/JobTitleEditModal.tsx";
+import { deleteNoticePeriod, getAllNoticePeriods, updateNoticePeriod } from "../../redux/slices/noticePeriodSlice.tsx";
+import NoticePeriodViewModal from "../componets/Modal/NoticePeriodViewModal.tsx";
+import NoticePeriodEditModal from "../componets/Modal/NoticePeriodEditModal.tsx";
 
-interface JobTitle {
+interface NoticePeriod {
     id: number;
-    jobTitleName: string;
+    noticePeriodName: string;
     status: number;
     createdBy?: number;
     updatedBy?: number;
@@ -22,18 +21,18 @@ interface JobTitle {
     updatedAt?: string;
 }
 
-function JobTitleManage() {
+function NoticePeriodManage() {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { JobTitleList, loading } = useSelector(
-        (state: RootState) => state.jobTitle
+    const { NoticePeriodList, loading } = useSelector(
+        (state: RootState) => state.noticePeriod
     );
 
-    const [selectedItem, setSelectedItem] = useState<JobTitle | null>(null);
+    const [selectedItem, setSelectedItem] = useState<NoticePeriod | null>(null);
     const [showView, setShowView] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [jobTitleDelete, setJobTitleDelete] = useState<number | null>(null);
+    const [noticePeriodDelete, setNoticePeriodDelete] = useState<number | null>(null);
 
     // Sidebar states
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -54,7 +53,7 @@ function JobTitleManage() {
         setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
 
     useEffect(() => {
-        dispatch(getAllJobTitle({ page, search: searchTerm, showStatus: statusFilter === "" ? undefined : Number(statusFilter), }));
+        dispatch(getAllNoticePeriods({ page, search: searchTerm, showStatus: statusFilter === "" ? undefined : Number(statusFilter), }));
     }, [dispatch, dispatch, page, searchTerm, statusFilter]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,34 +68,34 @@ function JobTitleManage() {
         setSearchTerm("");
         setStatusFilter("");
         setPage(1);
-        dispatch(getAllJobTitle({ page: 1 }));
+        dispatch(getAllNoticePeriods({ page: 1 }));
     };
 
-    const handleView = (item: JobTitle) => {
+    const handleView = (item: NoticePeriod) => {
         setSelectedItem(item);
         setShowView(true);
     };
 
-    const handleEdit = (item: JobTitle) => {
+    const handleEdit = (item: NoticePeriod) => {
         setSelectedItem(item);
         setShowEdit(true);
     };
 
-    const handleSaveEdit = (updatedItem: JobTitle) => {
-        dispatch(updateJobTitle({ id: updatedItem.id, updateData: updatedItem }));
+    const handleSaveEdit = (updatedItem: NoticePeriod) => {
+        dispatch(updateNoticePeriod({ id: updatedItem.id, updateData: updatedItem }));
         setShowEdit(false);
     };
 
     const handleDeleteClick = (id: any) => {
-        setJobTitleDelete(id);
+        setNoticePeriodDelete(id);
         setShowDeleteModal(true);
     };
 
     const handleDelete = async () => {
-        if (jobTitleDelete !== null) {
-            await dispatch(deleteJobTitle(jobTitleDelete));
+        if (noticePeriodDelete !== null) {
+            await dispatch(deleteNoticePeriod(noticePeriodDelete));
             setShowDeleteModal(false);
-            setJobTitleDelete(null);
+            setNoticePeriodDelete(null);
         }
     };
 
@@ -126,16 +125,16 @@ function JobTitleManage() {
                                 <Col>
                                     <h4 className="fw-bold mb-1 d-flex align-items-center text-dark">
                                         <i className="bi bi-mortarboard-fill me-2 text-primary fs-4"></i>
-                                        Job Title Management
+                                        Notice Period Management
                                     </h4>
                                 </Col>
                                 <Col xs="auto">
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/create-job-title")}
+                                        onClick={() => navigate("/admin/create-notice-period")}
                                     >
-                                        <i className="bi bi-plus-circle me-2"></i>Add Job Title
+                                        <i className="bi bi-plus-circle me-2"></i>Add Notice Period
                                     </Button>
                                 </Col>
                             </Row>
@@ -147,7 +146,7 @@ function JobTitleManage() {
                                     <InputGroup>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Search job title name..."
+                                            placeholder="Search notice period name..."
                                             value={searchTerm}
                                             onChange={handleSearchChange}
                                         />
@@ -175,10 +174,10 @@ function JobTitleManage() {
                         <Card className="shadow-sm border-0">
                             <Card.Header className="bg-white py-3 d-flex justify-content-between align-items-center">
                                 <h6 className="fw-bold mb-0 text-primary">
-                                    <i className="bi bi-list-task me-2"></i>Job Title List
+                                    <i className="bi bi-list-task me-2"></i>Notice Period List
                                 </h6>
                                 <span className="text-muted small">
-                                    Showing {JobTitleList?.length || 0} results
+                                    Showing {NoticePeriodList?.length || 0} results
                                 </span>
                             </Card.Header>
 
@@ -194,17 +193,17 @@ function JobTitleManage() {
                                         <thead className="bg-light">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Job Title Name</th>
+                                                <th>Notice Period Name</th>
                                                 <th>Status</th>
                                                 <th className="text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {JobTitleList?.length > 0 ? (
-                                                JobTitleList.map((item: JobTitle, index: number) => (
+                                            {NoticePeriodList?.length > 0 ? (
+                                                NoticePeriodList.map((item: NoticePeriod, index: number) => (
                                                     <tr key={item.id}>
                                                         <td>{index + 1}</td>
-                                                        <td>{item.jobTitleName}</td>
+                                                        <td>{item.noticePeriodName}</td>
                                                         <td>
                                                             <span
                                                                 className={`badge rounded-pill bg-light border ${item.status === 1
@@ -243,7 +242,7 @@ function JobTitleManage() {
                                             ) : (
                                                 <tr>
                                                     <td colSpan={4} className="text-center py-3">
-                                                        No job title records found.
+                                                        No notice period records found.
                                                     </td>
                                                 </tr>
                                             )}
@@ -254,12 +253,12 @@ function JobTitleManage() {
                         </Card>
 
                         {/* Modals */}
-                        <JobTitleViewModal
+                        <NoticePeriodViewModal
                             show={showView}
                             onHide={() => setShowView(false)}
                             item={selectedItem}
                         />
-                        <JobTitleEditModal
+                        <NoticePeriodEditModal
                             show={showEdit}
                             onHide={() => setShowEdit(false)}
                             item={selectedItem}
@@ -278,4 +277,4 @@ function JobTitleManage() {
         </div>
     );
 }
-export default JobTitleManage;
+export default NoticePeriodManage;

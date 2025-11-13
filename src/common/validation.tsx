@@ -13,6 +13,7 @@ export interface FormErrors {
   skillName?: string;
   institutionName?: string;
   jobTitleName?:string;
+  noticePeriodName?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -92,6 +93,23 @@ export const validateJobTitleForm = (formData: { jobTitleName?: string; status?:
 
   if (!formData.jobTitleName || !formData.jobTitleName.trim()) {
     errors.jobTitleName = "Job Title Name is required";
+  }
+
+  // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+
+//  NOTICE PERIOD FORM VALIDATION
+export const validateNoticePeriodForm = (formData: { noticePeriodName?: string; status?: string | number }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.noticePeriodName || !formData.noticePeriodName.trim()) {
+    errors.noticePeriodName = "Notice Period Name is required";
   }
 
   // If status is expected to be 0 or 1, handle both string/number cases

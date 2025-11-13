@@ -30,6 +30,7 @@ const Sidebar = ({
         { id: "institutions", text: "Institutions", path: "/admin/manage-institutions" },
         { id: "skill", text: "Skill", path: "/admin/manage-skills" },
         { id: "jobTitle", text: "Job Title", path: "/admin/manage-job-titles" },
+        { id: "noticePeriods", text: "Notice Period", path: "/admin/manage-notice-periods" },
       ],
     },
     {
