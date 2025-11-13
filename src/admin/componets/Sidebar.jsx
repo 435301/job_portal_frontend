@@ -29,6 +29,7 @@ const Sidebar = ({
         { id: "education", text: "Education", path: "/admin/manage-education" },
         { id: "institutions", text: "Institutions", path: "/admin/manage-institutions" },
         { id: "skill", text: "Skill", path: "/admin/manage-skills" },
+        { id: "jobTitle", text: "Job Title", path: "/admin/manage-job-titles" },
       ],
     },
     {

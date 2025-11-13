@@ -12,6 +12,7 @@ export interface FormErrors {
   educationName?: string;
   skillName?: string;
   institutionName?: string;
+  jobTitleName?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -84,3 +85,19 @@ export const validateInstitutionForm = (formData: { institutionName?: string; st
   return errors;
 };
 
+
+//  JobTitle FORM VALIDATION
+export const validateJobTitleForm = (formData: { jobTitleName?: string; status?: string | number }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.jobTitleName || !formData.jobTitleName.trim()) {
+    errors.jobTitleName = "Job Title Name is required";
+  }
+
+  // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};

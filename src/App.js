@@ -27,6 +27,8 @@ import EducationManage from './admin/pages/EducationManage.tsx';
 import SkillManage from './admin/pages/SkillsManage.tsx';
 import InstitutionManage from './admin/pages/InstitutionManage.tsx';
 import CreateInstitution from './admin/pages/CreateInstitution.tsx';
+import CreateJobTitle from './admin/pages/CreateJobTitle.tsx';
+import JobTitleManage from './admin/pages/JobTitlesManage.tsx';
 
 
 
@@ -53,9 +55,11 @@ const App = () => {
         <Route path="/admin/manage-education" element={<EducationManage />} />
         <Route path="/admin/manage-skills" element={<SkillManage />} />
         <Route path="/admin/manage-institutions" element={<InstitutionManage />} />
+        <Route path="/admin/manage-job-titles" element={<JobTitleManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
+        <Route path="/admin/create-job-title" element={<CreateJobTitle />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

@@ -1,8 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { logoutAdmin } from "../../redux/slices/adminSlice";
+import { useDispatch } from "react-redux";
 
 const Header = ({ toggleMobileSidebar, showProfileMenu, setShowProfileMenu }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logoutAdmin());
+    navigate("/admin/login");
+  };
+
+
   return (
     <header className="topbar">
       <div className="left-section">
@@ -32,7 +42,7 @@ const Header = ({ toggleMobileSidebar, showProfileMenu, setShowProfileMenu }) =>
             <Link to="/profile">Profile</Link>
             <Link to="/settings">Settings</Link>
             <hr />
-            <Link to="/logout" className="logout">
+            <Link to="/logout" className="logout" onClick={handleLogout}>
               Logout
             </Link>
           </div>
