@@ -6,10 +6,12 @@ const mobileRegex = /^[0-9]{10}$/;
 
 // Define a strong interface for errors
 export interface FormErrors {
-  educationName?: string;
   email?: string;
   password?: string;
   status?: string; // should be string message, not number
+  educationName?: string;
+  skillName?: string;
+  institutionName?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -48,3 +50,37 @@ export const validateEducationForm = (formData: { educationName?: string; status
 
   return errors;
 };
+
+
+//  SKILL FORM VALIDATION
+export const validateSkillForm = (formData: { skillName?: string; status?: string | number }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.skillName || !formData.skillName.trim()) {
+    errors.skillName = "Skill Name is required";
+  }
+
+  // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  INSTITUTION FORM VALIDATION
+export const validateInstitutionForm = (formData: { institutionName?: string; status?: string | number }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.institutionName || !formData.institutionName.trim()) {
+    errors.institutionName = "Institution Name is required";
+  }
+
+  // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+

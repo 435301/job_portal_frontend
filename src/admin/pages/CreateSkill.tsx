@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Sidebar from "../componets/Sidebar";
-import Header from "../componets/Header";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import Sidebar from "../componets/Sidebar.jsx";
+import Header from "../componets/Header.jsx";
 import {
     Container,
     Row,
@@ -11,33 +11,56 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useAppDispatch } from "../../redux/hooks.tsx";
+import { validateEducationForm, FormErrors, validateSkillForm } from "../../common/validation.tsx";
+import { createSkill } from "../../redux/slices/skillSlice.tsx";
+
+interface SkillForm {
+    skillName: string;
+    status: number | any;
+}
 
 function CreateSkill() {
+    const dispatch = useAppDispatch();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-    const [openMenus, setOpenMenus] = useState({});
+    const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [errors, setErrors] = useState<FormErrors>({});
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        status: "Active",
+    const [formData, setFormData] = useState<SkillForm>({
+        skillName: "",
+        status: "",
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        navigate("/admin/education-manage"); // Redirect back after save
+        const validationErrors = validateSkillForm(formData);
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) {
+            return;
+        }
+        try {
+            const resultAction = await dispatch(createSkill(formData));
+            if (createSkill.fulfilled.match(resultAction)) {
+                navigate("/admin/manage-skills");
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const toggleMobileSidebar = () => setIsMobileSidebarOpen(!isMobileSidebarOpen);
     const closeMobileSidebar = () => setIsMobileSidebarOpen(false);
-    const toggleSubMenu = (id) =>
+    const toggleSubMenu = (id: string) =>
         setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
 
     return (
@@ -73,9 +96,9 @@ function CreateSkill() {
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/education")}
+                                        onClick={() => navigate("/admin/manage-skills")}
                                     >
-                                        <i className="bi bi-arrow-left me-2"></i>Manage Skills
+                                        <i className="bi bi-arrow-left me-2"></i>Manage Skill
                                     </Button>
                                 </Col>
                             </Row>
@@ -94,34 +117,37 @@ function CreateSkill() {
                                             <Form.Label>Skill Name</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="name"
+                                                name="skillName"
+                                                className={`form-control ${errors.skillName ? "is-invalid" : ""}`}
                                                 placeholder="Enter skill name"
-                                                value={formData.name}
+                                                value={formData.skillName}
                                                 onChange={handleChange}
-                                                
                                             />
+                                            {errors.skillName && (
+                                                <div className="invalid-feedback">{errors.skillName}</div>
+                                            )}
                                         </Form.Group>
                                     </Col>
-
-                                 
-
-                                  
                                     <Col md={4}>
                                         <Form.Group>
                                             <Form.Label>Status</Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}
-                                                className="form-control"
+
+                                                className={`form-control ${errors.status ? "is-invalid" : ""}`}
+
                                                 onChange={handleChange}
                                             >
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
+                                                <option value="">Select Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
                                             </Form.Select>
+                                            {errors.status && (
+                                                <div className="invalid-feedback">{errors.status}</div>
+                                            )}
                                         </Form.Group>
                                     </Col>
-
-                                  
                                 </Row>
 
                                 <div className="text-end mt-4">

@@ -22,8 +22,11 @@ import AdminDashboard from './admin/pages/Dashboard'; // example file path
 import CreateEducation from "./admin/pages/CreateEducation.tsx";
 import AdminLogin from "./admin/pages/AdminLogin";
 import ProtectedRoute from './admin/componets/ProtectedRoute';
-import CreateSkill from './admin/pages/CreateSkills';
+import CreateSkill from './admin/pages/CreateSkill.tsx';
 import EducationManage from './admin/pages/EducationManage.tsx';
+import SkillManage from './admin/pages/SkillsManage.tsx';
+import InstitutionManage from './admin/pages/InstitutionManage.tsx';
+import CreateInstitution from './admin/pages/CreateInstitution.tsx';
 
 
 
@@ -48,8 +51,11 @@ const App = () => {
         <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /> </ProtectedRoute>
         } />
         <Route path="/admin/manage-education" element={<EducationManage />} />
+        <Route path="/admin/manage-skills" element={<SkillManage />} />
+        <Route path="/admin/manage-institutions" element={<InstitutionManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
+        <Route path="/admin/create-institution" element={<CreateInstitution />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
