@@ -50,7 +50,7 @@ function CreateInstitution() {
         }
         try {
             const resultAction = await dispatch(createInstitution(formData));
-            if (createSkill.fulfilled.match(resultAction)) {
+            if (createInstitution.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-institutions");
             }
         } catch (error) {

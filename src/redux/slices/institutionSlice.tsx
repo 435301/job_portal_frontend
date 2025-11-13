@@ -63,7 +63,6 @@ export const getAllInstitutions = createAsyncThunk<
   async (params = { page: 1, showStatus: 1, search: "" }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL_JOB}/institutions/list`, params, getAuthAdminHeaders());
-       console.log("Institution API response:", response.data);
       return response.data;
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch institutions");

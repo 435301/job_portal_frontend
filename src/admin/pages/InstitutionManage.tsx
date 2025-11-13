@@ -54,7 +54,7 @@ function InstitutionManage() {
         setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
 
     useEffect(() => {
-        dispatch(getAllInstitutions({ page, search: searchTerm, showStatus: statusFilter }));
+        dispatch(getAllInstitutions({ page, search: searchTerm, showStatus: statusFilter === "" ? undefined : Number(statusFilter), }));
     }, [dispatch, page, searchTerm, statusFilter]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
