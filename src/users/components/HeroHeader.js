@@ -36,7 +36,7 @@ const HeroHeader = () => {
               </div>
               <div className="d-flex align-items-center pe-3 flex-shrink-0">
                 <Form.Check type="switch" id="remoteSwitch" className="mb-0 me-2" />
-                <Form.Label htmlFor="remoteSwitch" className="ms-1 text-muted small">Remote</Form.Label>
+                <Form.Label htmlFor="remoteSwitch" className="ms-1 text-muted  mb-0">Remote</Form.Label>
               </div>
               <Button className="btn btn-primary rounded-pill px-4 flex-shrink-0">Search jobs</Button>
             </div>

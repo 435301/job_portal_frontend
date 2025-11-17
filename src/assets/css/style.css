@@ -94,7 +94,7 @@ p {
     transition: 0.5s;
     border-color: #2CB0DD;
     border-radius: 22px;
-    font-size: 16px;
+    font-size: 15px;
     padding: 8px 26px;
 
 }
@@ -131,7 +131,7 @@ p {
     color: #FFFFFF;
     font-weight: 400;
     transition: 0.5s;
-    font-size: 16px;
+    font-size: 15px;
     padding: 8px 26px;
     border-radius: 22px;
 }
@@ -148,7 +148,7 @@ p {
     margin-right: 45px;
     padding: 35px 0;
     color: #fff !important;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     outline: none;
     transition: .5s;
@@ -1095,7 +1095,7 @@ h2 span {
     color: #20477C !important;
     font-weight: 600;
     transition: 0.5s;
-    font-size: 16px !important;
+    font-size: 15px !important;
     padding: 11px 26px;
     border-radius: 22px;
 }
