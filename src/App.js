@@ -31,6 +31,8 @@ import CreateJobTitle from './admin/pages/CreateJobTitle.tsx';
 import JobTitleManage from './admin/pages/JobTitlesManage.tsx';
 import CreateNoticePeriod from './admin/pages/CreateNoticePeriod.tsx';
 import NoticePeriodManage from './admin/pages/NoticePeriodManage.tsx';
+import ExperienceManage from './admin/pages/ExperienceManage.tsx';
+import CreateExperience from './admin/pages/CreateExperience.tsx';
 
 
 
@@ -59,11 +61,13 @@ const App = () => {
         <Route path="/admin/manage-institutions" element={<InstitutionManage />} />
         <Route path="/admin/manage-job-titles" element={<JobTitleManage />} />
         <Route path="/admin/manage-notice-periods" element={<NoticePeriodManage />} />
+        <Route path="/admin/manage-experience" element={<ExperienceManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
         <Route path="/admin/create-job-title" element={<CreateJobTitle />} />
         <Route path="/admin/create-notice-period" element={<CreateNoticePeriod />} />
+        <Route path="/admin/create-experience" element={<CreateExperience />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
