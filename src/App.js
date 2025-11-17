@@ -7,16 +7,32 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ToastContainer } from "react-toastify";
 
 // User Pages
+
+// User Pages
 import Login from './users/Login';
 import Register from './users/Register';
 import Jobs from './users/Jobs';
 import JobDetails from './users/JobDetails';
 import Candidates from './users/Candidates';
+import CompanyDetails from './users/CompanyDetails';
 import CandidatesDetail from './users/CandidatesDetail';
 import EmployerAccount from './users/EmployerAccount';
 import VerifyEmail from './users/VerifyEmail';
 import EmailVerifiedSuccess from './users/EmailVerifiedSuccess';
 import ProfilePage from './users/ProfilePage';
+import Company from './users/Company';
+import EmployeeDashboard from './users/EmployeeDashboard';
+import ManageJobPostings from './users/ManageJobPostings';
+import BasicJobDetails from './users/BasicJobDetails';
+import CompanyDetailsReg from './users/CompanyDetailsReg';
+import CompanyDetailsHiring from './users/CompanyDetailsHiring';
+import SuccessPage from './users/SuccessPage';
+import CompanyProfileDesign from './users/CompanyProfileDesign';
+import LokkingJobs from './users/LokkingJobs';
+
+import CompanyEmailVerifiedSuccess from './users/CompanyEmailVerifiedSuccess';
+
+
 // Admin Pages
 import AdminDashboard from './admin/pages/Dashboard'; // example file path
 import CreateEducation from "./admin/pages/CreateEducation.tsx";
@@ -45,6 +61,7 @@ const App = () => {
     <>
       <Routes>
         {/* ===== User Routes ===== */}
+        {/* ===== User Routes ===== */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -55,7 +72,19 @@ const App = () => {
         <Route path="/employer-account" element={<EmployerAccount />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/verify-email-success" element={<EmailVerifiedSuccess />} />
+        <Route path="/company-verify-email-success" element={<CompanyEmailVerifiedSuccess />} />
+
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/company" element={<Company />} />
+        <Route path="/company-details" element={<CompanyDetails />} />
+        <Route path="/employer-dashboard" element={<EmployeeDashboard />} />
+        <Route path="/job-posting" element={<ManageJobPostings />} />
+        <Route path="/basic-job-details" element={<BasicJobDetails />} />
+        <Route path="/company-details-reg" element={<CompanyDetailsReg />} />
+        <Route path="/company-details-hiring" element={<CompanyDetailsHiring />} />
+        <Route path="/success-page" element={<SuccessPage />} />
+        <Route path="/company-profile" element={<CompanyProfileDesign />} />
+        <Route path="/looking-jobs" element={<LokkingJobs />} />
 
         {/* ===== Admin Routes ===== */}
         <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /> </ProtectedRoute>

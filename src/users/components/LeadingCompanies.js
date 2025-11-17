@@ -25,7 +25,7 @@ const companies = [
 
 const CompanyCard = ({ company, delay }) => (
   <Col md={6} lg={3} className={`wow fadeInUp`} data-wow-delay={delay}>
-    <div className="job-card h-100">
+    <div className="job-card  h-100">
       <div className="d-flex align-items-start justify-content-between">
         <div className="d-flex align-items-center">
           <img src={company.logo} className="company-logo" alt={company.name} />
@@ -36,7 +36,7 @@ const CompanyCard = ({ company, delay }) => (
         </div>
         <span className={`badge ${company.badge}`}>{company.jobs} jobs</span>
       </div>
-      <div className="d-flex align-items-center justify-content-between mt-4">
+      <div className="d-flex align-items-center justify-content-between card-btn mt-4">
         <p className="job-title mb-0 text-muted"><i className="bi bi-briefcase-fill"></i> {company.title}</p>
         <Button className="btn-arrow"><i className="bi bi-arrow-up-right"></i></Button>
       </div>

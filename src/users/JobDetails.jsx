@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "animate.css";
@@ -6,6 +6,7 @@ import "../assets/css/style.css";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CareerBreakPopup from "./components/CareerBreakPopup";
 
 // Example image imports (update paths accordingly)
 import shareIcon from "../assets/img/share.svg";
@@ -16,6 +17,7 @@ const JobDetails = () => {
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to top on load
     }, []);
+    const [showPopup, setShowPopup] = useState(false);
 
     return (
         <>
@@ -86,26 +88,47 @@ const JobDetails = () => {
                         <div className="job-list-card  shadow-sm rounded">
                             {/* Header Section */}
                             <div
-                                className="d-flex p-3 align-items-center border-bottom pb-4 justify-content-between flex-wrap mb-3"
+                                className="job-card p-4 mb-3 d-flex justify-content-between align-items-center flex-wrap"
                                 style={{
-                                    background: "transparent linear-gradient(180deg, #E5F5FA 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box"
+                                    background:
+                                        "transparent linear-gradient(180deg, #E5F5FA 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box",
                                 }}
                             >
+                                {/* LEFT SECTION */}
                                 <div>
-                                    <h4 className="fw-semibold mb-1">Sr. Visual Designer</h4>
-                                    <p className="mb-2 text-muted">by Grethelin in Design & Creative</p>
+                                    <h4 className="fw-semibold mb-1">Frontend Engineer</h4>
+                                    <p className="mb-2 text-muted">by Giveth in Design & Creative</p>
+
                                     <span className="badge bg-success me-2 px-3 py-2">
-                                        <i className="bi bi-house-door me-1"></i> Remote
+                                        <i className="bi bi-geo-alt me-1"></i> Boston
                                     </span>
+
                                     <span className="badge bg-primary px-3 py-2">
-                                        <i className="bi bi-briefcase-fill me-1"></i> Full-time
+                                        <i className="bi bi-briefcase-fill me-1"></i> Full time
                                     </span>
                                 </div>
-                                <div>
-                                    <img src={shareIcon} alt="Share" className="me-2 icon-small" />
-                                    <img src={favoriteIcon} alt="Favorite" className="icon-small" />
+
+                                {/* RIGHT SECTION */}
+                                <div className="d-flex flex-column align-items-end mt-3 mt-md-0">
+
+                                    {/* Save + Apply */}
+                                    <div className="d-flex mb-4">
+                                        <img src={shareIcon} alt="Share" className="me-3 icon-small rounded-0" />
+                                        <img src={favoriteIcon} alt="Wishlist" className="icon-small rounded-0" />
+                                    </div>
+                                    <div className="d-flex mb-3">
+                                        <button className="btn link me-3">
+                                            <i className="bi bi-bookmark"></i> Save
+                                        </button>
+
+                                        <button className="btn btn-dark px-4">Apply Now</button>
+                                    </div>
+
+                                    {/* Share + Wishlist */}
+
                                 </div>
                             </div>
+
 
                             {/* Job Role Insights */}
                             <div className="job-insight-card p-3">
@@ -122,8 +145,8 @@ const JobDetails = () => {
                                         { icon: "people", title: "Quantity", value: "5 person" },
                                     ].map((item, index) => (
                                         <div className="col-md-4 mb-3" key={index}>
-                                            <div className="job-insight-item d-flex align-items-start">
-                                                <div className="job-insight-icon me-3">
+                                            <div className="job-insight-item d-flex align-items-start mb-2">
+                                                <div className="job-insight-icon me-0">
                                                     <i className={`bi bi-${item.icon}`}></i>
                                                 </div>
                                                 <div className="job-insight-text">
@@ -190,13 +213,15 @@ const JobDetails = () => {
                                     title="Job Location"
                                 ></iframe>
                             </div>
+
                         </div>
                         {/* Interested Section */}
                         <div className="interest-box mt-4 ">
-                            <div className="interest-text">
+                            <div className="interest-text" >
                                 <h5 className="mb-1">Interested in this job?</h5>
                                 <p className="text-muted mb-0">67 days left to apply</p>
                             </div>
+
                             <a href="#" className="btn btn-main">
                                 Apply Now
                             </a>
@@ -244,46 +269,52 @@ const JobDetails = () => {
                     </div>
 
 
-                {/* Right Sidebar */}
-                <div className="col-lg-4 mt-4">
-                    <div className="sidebar-card-1 mb-4 text-center p-3 rounded">
-                        <h4 className="fw-semibold">Interested in this job?</h4>
-                        <p className="text-muted small mb-2">67 days left to apply</p>
-                        <button className="btn btn-primary mb-2">Apply Now</button>
-                    </div>
-
-                    <div className="sidebar-card p-3 rounded shadow-sm">
-                        <div className="d-flex align-items-center justify-content-between mb-3">
-                            <div className="me-3">
-                                <img src={companyLogo} className="rounded-circle" alt="Company" width={60} height={60} />
-                            </div>
-                            <button type="button" className="btn btn-outline-secondary btn-sm">
-                                <i className="bi bi-plus"></i> Follow
+                    {/* Right Sidebar */}
+                    <div className="col-lg-4 mt-4">
+                        <div className="sidebar-card-1 mb-4 text-center p-3 rounded">
+                            <h4 className="fw-semibold">Interested in this job?</h4>
+                            <p className="text-muted small mb-2">67 days left to apply</p>
+                            <button
+                                className="btn btn-dark mb-2"
+                                onClick={() => setShowPopup(true)} // 👈 open the same popup
+                            >
+                                Apply Now
                             </button>
                         </div>
-                        <div>
-                            <h6 className="mb-0">Product Manager</h6>
-                            <small className="text-dark">Google - San Francisco, CA</small>
-                        </div>
-                        <p className="mt-2 small text-muted">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Architecto eos repellendus pariatur.
-                        </p>
-                        <div className="mb-3">
-                            <span className="skill-badge bg-skill-green me-1">React</span>
-                            <span className="skill-badge bg-skill-pink me-1">NodeJS</span>
-                            <span className="skill-badge bg-skill-purple me-1">Python</span>
-                        </div>
-                        <div className="text-end">
-                            <a href="#" className="text-primary small text-decoration-none">
-                                11 jobs available
-                            </a>
+
+                        <div className="sidebar-card p-3 rounded">
+                            <div className="d-flex align-items-center justify-content-between mb-3">
+                                <div className="me-3">
+                                    <img src={companyLogo} className="rounded-circle" alt="Company" width={60} height={60} />
+                                </div>
+                                <button type="button" className="btn btn-outline-secondary btn-sm">
+                                    <i className="bi bi-plus"></i> Follow
+                                </button>
+                            </div>
+                            <div>
+                                <h6 className="mb-0">Product Manager</h6>
+                                <small className="text-dark">Google - San Francisco, CA</small>
+                            </div>
+                            <p className="mt-2 small text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Architecto eos repellendus pariatur.
+                            </p>
+                            <div className="mb-3">
+                                <span className="skill-badge bg-skill-green me-1">React</span>
+                                <span className="skill-badge bg-skill-pink me-1">NodeJS</span>
+                                <span className="skill-badge bg-skill-purple me-1">Python</span>
+                            </div>
+                            <div className="text-end">
+                                <a href="#" className="text-primary small text-decoration-none">
+                                    11 jobs available
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {showPopup && <CareerBreakPopup onClose={() => setShowPopup(false)} />}
+
             </div>
-      
-</div>
-            {/* ====== Footer ====== */ }
+            {/* ====== Footer ====== */}
             < Footer />
         </>
     );

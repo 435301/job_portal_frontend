@@ -32,7 +32,7 @@ const CandidatesDetails = () => {
                         </h3>
 
                         <div
-                            className="search-bar ms-5 ps-4 bg-white shadow-sm d-flex align-items-center justify-content-between px-3 py-2 flex-wrap"
+                            className="search-bar ms-5 ps-4 bg-white  d-flex align-items-center justify-content-between px-3 py-2 flex-wrap"
                             style={{ maxWidth: "708px", gap: "4px" }}
                         >
                             {/* Job Title Input */}
@@ -86,41 +86,71 @@ const CandidatesDetails = () => {
                         <img src={img2} alt="Job Banner" className="w-100 rounded" />
 
                         {/* Job Info Section */}
-                        <div className="job-list-card p-3 bg-white  ">
-                            <div className="d-flex align-items-center border-bottom pb-4 justify-content-between flex-wrap mb-3">
+                        <div className="job-list-card p-4 bg-white rounded-3">
+                            {/* TOP SECTION */}
+                            <div className="d-flex align-items-start justify-content-between flex-wrap mb-4">
+
+                                {/* LEFT SIDE: NAME + DETAILS */}
                                 <div>
-                                    <h4 className="fw-semibold mb-1">Sr. Visual Designer</h4>
-                                    <p className="mb-2 text-muted">by Grethelin in Design & Creative</p>
-                                    <span className="badge bg-success me-2 px-3 py-2">
-                                        <i className="bi bi-house-door me-1"></i> Remote
-                                    </span>
-                                    <span className="badge bg-primary px-3 py-2">
-                                        <i className="bi bi-briefcase-fill me-1"></i> Full-time
-                                    </span>
+                                    <h4 className="fw-semibold mb-1">Akeeb Shaik</h4>
+
+                                    <div className="text-muted d-flex align-items-center flex-wrap">
+                                        <span className="text-info fw-semibold me-2">UI/UX Designer</span>
+
+                                        <span className="mx-2">•</span>
+
+                                        <i className="bi bi-geo-alt me-1"></i>
+                                        <span className="me-3">Boston</span>
+
+                                        <span className="mx-2">•</span>
+
+                                        <span className="fw-semibold">$40/day</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <img src={shareIcon} alt="Share" className="me-2" width="24" />
-                                    <img src={favoriteIcon} alt="Favorite" width="24" />
+
+                                {/* RIGHT SIDE: SHARE + WISHLIST */}
+                                <div className="mt-3 mt-md-0">
+                                    <img src={shareIcon} alt="Share" className="me-3" width="22" />
+                                    <img src={favoriteIcon} alt="Favorite" width="22" />
                                 </div>
                             </div>
 
+                            {/* BUTTONS */}
+                            <div className="d-flex flex-wrap gap-3 mb-4">
+                                <button className="btn btn-outline-info fw-medium px-4 rounded-pill">
+                                    + Follow
+                                </button>
+
+                                <button className="btn btn-outline-secondary px-4 rounded-pill">
+                                    Save to PDF
+                                </button>
+
+                                <button className="btn btn-outline-secondary px-4 rounded-pill">
+                                    Message
+                                </button>
+                            </div>
+
+                            {/* ABOUT SECTION */}
                             <h5>About me</h5>
                             <p>
-                                With my experience for more than 3 years in Customer Service, I can really say that I am good in
-                                communicating with clients and understanding their needs to save time and ensure a smooth transaction.
+                                With my experience for more than 3 years in Customer Service, I can really
+                                say that I am good in communicating with clients and understanding their
+                                needs to save time and ensure a smooth transaction.
                             </p>
                             <p>
-                                I love talking to people and having casual conversations. Social media helps me stay updated on trends,
-                                social events, and news.
+                                I love talking to people and having casual conversations. Social media helps
+                                me stay updated on trends, social events, and news.
                             </p>
                             <p>
-                                I have the experience to contribute success in your business. I’m looking forward and excited to
-                                partner with you! Thank you for checking my profile. Have a great day!
+                                I have the experience to contribute success in your business. I’m looking
+                                forward and excited to partner with you! Thank you for checking my profile.
+                                Have a great day!
                             </p>
                         </div>
 
+
                         {/* Skills */}
-                        <div className="job-list-card mt-4 p-3 bg-white shadow-sm rounded">
+                        <div className="job-list-card mt-4 p-3 bg-white  rounded">
                             <div className="skills">
                                 <h5 className="fw-semibold mb-3">Skills</h5>
                                 <span className="skill-badge bg-skill-blue">Sketch</span>
@@ -195,21 +225,23 @@ const CandidatesDetails = () => {
 
                     {/* Right Sidebar */}
                     <div className="col-lg-4">
-                        <div className="info-card p-4 mb-4 bg-white shadow-sm rounded">
-                            <h6 className="fw-semibold text-dark mb-3">Information</h6>
-                            <ul className="list-unstyled mb-0 info-list">
-                                <li><strong>Offered Salary:</strong> <span>$40/day</span></li>
-                                <li><strong>Experience time:</strong> <span>1 - 2 Years</span></li>
-                                <li><strong>Languages:</strong> <span>English</span></li>
-                                <li><strong>Gender:</strong> <span>Female</span></li>
-                                <li><strong>Qualification:</strong> <span>Associate Degree</span></li>
-                                <li><strong>Age:</strong> <span>****</span></li>
-                                <li><strong>Phone:</strong> <span>****</span></li>
-                                <li><strong>Email:</strong> <span>joseph123@gmail.com</span></li>
+                        <div class="card mb-3">
+                            <div class="card__header">Information</div>
+
+                            <ul class="card__list">
+                                <li><span class="card__label">Offered Salary:</span> <span class="card__value">$40/day</span></li>
+                                <li><span class="card__label">Experience time:</span> <span class="card__value">1 - 2 Years</span></li>
+                                <li><span class="card__label">Languages:</span> <span class="card__value">English</span></li>
+                                <li><span class="card__label">Gender:</span> <span class="card__value">Female</span></li>
+                                <li><span class="card__label">Qualification:</span> <span class="card__value">Associate Degree</span></li>
+                                <li><span class="card__label">Age:</span> <span class="card__value">****</span></li>
+                                <li><span class="card__label">Phone:</span> <span class="card__value">****</span></li>
+                                <li><span class="card__label">Email:</span> <span class="card__value">joseph123@gmail.com</span></li>
                             </ul>
                         </div>
 
-                        <div className="info-card p-4 bg-white shadow-sm rounded">
+
+                        <div className="info-card p-4 bg-white  rounded">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h6 className="fw-semibold text-dark mb-0">Maps</h6>
                                 <a href="#" className="text-primary small text-decoration-none">Get Direction</a>

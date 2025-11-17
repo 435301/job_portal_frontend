@@ -12,8 +12,10 @@ import Footer from "./components/Footer";
 // 🖼️ Import both images
 import candidateImage from "../assets/img/login-1.png";
 import employerImage from "../assets/img/reg-2.png";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     new WOW.WOW({ live: false }).init();
   }, []);
@@ -132,71 +134,79 @@ const Login = () => {
                           </Nav.Item>
                         </Nav>
 
-                      <Form className="mt-4 pt-3 px-3" onSubmit={handleSubmit}>
-  {/* Email */}
-  <Form.Group className="mb-3">
-    <Form.Label>
-      Email Address <span className="text-danger">*</span>
-    </Form.Label>
-    <Form.Control
-      type="email"
-      name="email"
-      placeholder="you@example.com"
-      value={formData.email}
-      onChange={handleChange}
-      isInvalid={!!errors.email}  // ✅ Bootstrap validation
-    />
-    <Form.Control.Feedback type="invalid">
-      {errors.email}
-    </Form.Control.Feedback>
-  </Form.Group>
+                        <Form className="mt-4 pt-3 px-3" onSubmit={handleSubmit}>
+                          {/* Email */}
+                          <Form.Group className="mb-3">
+                            <Form.Label>
+                              Email Address <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="email"
+                              name="email"
+                              placeholder="you@example.com"
+                              value={formData.email}
+                              onChange={handleChange}
+                              isInvalid={!!errors.email}  // ✅ Bootstrap validation
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.email}
+                            </Form.Control.Feedback>
+                          </Form.Group>
 
-  {/* Password */}
-  <Form.Group className="mb-3 position-relative">
-    <Form.Label>
-      Password <span className="text-danger">*</span>
-    </Form.Label>
-    <Form.Control
-      type={showPassword ? "text" : "password"}
-      name="password"
-      placeholder="Enter password"
-      value={formData.password}
-      onChange={handleChange}
-      isInvalid={!!errors.password}  // ✅ Bootstrap validation
-    />
-    <Button
-      variant="link"
-      size="sm"
-      className="position-absolute end-0 me-2 text-decoration-none "
-      onClick={() => setShowPassword(!showPassword)}
-      type="button"
-    >
-      {/* {showPassword ? "Hide" : "Show"} */}
-    </Button>
-    <Form.Control.Feedback type="invalid">
-      {errors.password}
-    </Form.Control.Feedback>
-  </Form.Group>
+                          {/* Password */}
+                          <Form.Group className="mb-3 position-relative">
+                            <Form.Label>
+                              Password <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type={showPassword ? "text" : "password"}
+                              name="password"
+                              placeholder="Enter password"
+                              value={formData.password}
+                              onChange={handleChange}
+                              isInvalid={!!errors.password}  // ✅ Bootstrap validation
+                            />
+                            <Button
+                              variant="link"
+                              size="sm"
+                              className="position-absolute end-0 me-2 text-decoration-none "
+                              onClick={() => setShowPassword(!showPassword)}
+                              type="button"
+                            >
+                              {/* {showPassword ? "Hide" : "Show"} */}
+                            </Button>
+                            <Form.Control.Feedback type="invalid">
+                              {errors.password}
+                            </Form.Control.Feedback>
+                          </Form.Group>
 
-  {/* Forgot password */}
-  <div className="text-end mb-3">
-    <a href="#" className="text-decoration-none small">
-      Forgot Password?
-    </a>
-  </div>
+                          {/* Forgot password */}
+                          <div className="text-end mb-3">
+                            <a href="#" className="text-decoration-none small">
+                              Forgot Password?
+                            </a>
+                          </div>
 
-  {/* Login Button */}
-  <div className="text-center mt-3">
-    <Button variant="primary" className="w-100 py-2" type="submit">
-      Log In as {activeTab === "candidate" ? "Candidate" : "Employer"}
-    </Button>
+                          {/* Login Button */}
+                          <div className="text-center mt-3">
+                            <Button
+                              variant="dark"
+                              className="  px-4"
+                              type="button"
+                              onClick={() => navigate(
+                                activeTab === "candidate" ? "/profile" : "/employer-profile"
+                              )}
+                            >
+                              Login  {activeTab === "" ? "Candidate" : ""}
+                            </Button>
 
-    <Form.Text className="d-block mt-3 text-muted small">
-      Don’t have an account?{" "}
-      <a href="/register">Register here</a>.
-    </Form.Text>
-  </div>
-</Form>
+
+                            <Form.Text className="d-block mt-3 text-muted small">
+                              Don’t have an account?{" "}
+                              <a href="/register">Register here</a>.
+                            </Form.Text>
+                          </div>
+                        </Form>
 
                       </div>
                     </div>

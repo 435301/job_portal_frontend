@@ -10,7 +10,6 @@ import EducationSection from './components/EducationSection';
 import ITSkillsSection from './components/ITSkillsSection';
 import CertificationsSection from './components/CertificationsSection';
 import PersonalDetailsSection from './components/PersonalDetailsSection';
-import LanguagesSection from './components/LanguagesSection';
 import QuickLinks from './components/QuickLinks';
 
 function ProfilePage() {
@@ -32,7 +31,6 @@ function ProfilePage() {
             <ITSkillsSection />
             <CertificationsSection />
             <PersonalDetailsSection />
-            <LanguagesSection />
           </div>
           <div className="col-lg-3">
             <QuickLinks />
