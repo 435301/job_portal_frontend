@@ -12,8 +12,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
-import {  FormErrors, validateExperienceForm } from "../../common/validation.tsx";
+import { FormErrors, validateExperienceForm } from "../../common/validation.tsx";
 import { createExperience } from "../../redux/slices/experienceSlice.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface ExperienceForm {
     experienceName: string;
@@ -47,8 +48,10 @@ function CreateExperience() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createExperience(formData));
+            const resultAction = await dispatch(createExperience(finalData));
             if (createExperience.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-experience");
             }

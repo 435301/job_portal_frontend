@@ -14,6 +14,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { createEducation } from "../../redux/slices/educationSlice.tsx";
 import { useAppDispatch } from "../../redux/hooks.tsx";
 import { validateEducationForm, FormErrors } from "../../common/validation.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface EducationForm {
     educationName: string;
@@ -47,8 +48,10 @@ function CreateEducation() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createEducation(formData));
+            const resultAction = await dispatch(createEducation(finalData));
             if (createEducation.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-education");
             }

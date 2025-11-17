@@ -12,9 +12,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
-import {  FormErrors, validateInstitutionForm } from "../../common/validation.tsx";
+import { FormErrors, validateInstitutionForm } from "../../common/validation.tsx";
 import { createSkill } from "../../redux/slices/skillSlice.tsx";
 import { createInstitution } from "../../redux/slices/institutionSlice.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface InstitutionForm {
     institutionName: string;
@@ -48,8 +49,10 @@ function CreateInstitution() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createInstitution(formData));
+            const resultAction = await dispatch(createInstitution(finalData));
             if (createInstitution.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-institutions");
             }

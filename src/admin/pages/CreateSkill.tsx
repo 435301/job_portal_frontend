@@ -14,6 +14,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
 import { validateEducationForm, FormErrors, validateSkillForm } from "../../common/validation.tsx";
 import { createSkill } from "../../redux/slices/skillSlice.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface SkillForm {
     skillName: string;
@@ -47,8 +48,10 @@ function CreateSkill() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createSkill(formData));
+            const resultAction = await dispatch(createSkill(finalData));
             if (createSkill.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-skills");
             }

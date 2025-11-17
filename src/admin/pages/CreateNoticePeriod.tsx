@@ -12,8 +12,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
-import {  FormErrors, validateNoticePeriodForm } from "../../common/validation.tsx";
+import { FormErrors, validateNoticePeriodForm } from "../../common/validation.tsx";
 import { createNoticePeriod } from "../../redux/slices/noticePeriodSlice.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface NoticePeriodForm {
     noticePeriodName: string;
@@ -47,8 +48,10 @@ function CreateNoticePeriod() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createNoticePeriod(formData));
+            const resultAction = await dispatch(createNoticePeriod(finalData));
             if (createNoticePeriod.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-notice-periods");
             }

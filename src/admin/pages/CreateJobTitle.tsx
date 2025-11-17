@@ -12,9 +12,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
-import {  FormErrors, validateJobTitleForm, validateSkillForm } from "../../common/validation.tsx";
+import { FormErrors, validateJobTitleForm, validateSkillForm } from "../../common/validation.tsx";
 import { createSkill } from "../../redux/slices/skillSlice.tsx";
 import { createJobTitle } from "../../redux/slices/JobTitleSlice.tsx";
+import { getUserIpAddress } from "../../common/ipAddress.tsx";
 
 interface JobTitleForm {
     jobTitleName: string;
@@ -48,8 +49,10 @@ function CreateJobTitle() {
         if (Object.keys(validationErrors).length > 0) {
             return;
         }
+        const ip = await getUserIpAddress();
+        const finalData = { ...formData, ipAddress: ip, };
         try {
-            const resultAction = await dispatch(createJobTitle(formData));
+            const resultAction = await dispatch(createJobTitle(finalData));
             if (createJobTitle.fulfilled.match(resultAction)) {
                 navigate("/admin/manage-job-titles");
             }
