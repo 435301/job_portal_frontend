@@ -17,6 +17,7 @@ export interface FormErrors {
   experienceName?:string;
   courseName?:string;
   educationId?:string;
+  courseType?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -150,6 +151,23 @@ export const validateCourseForm = (formData: { educationId?: number; courseName?
    if (!formData.educationId || !formData.educationId) {
     errors.educationId = "Education Name is required";
   }
+
+  // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  COURSE TYPE FORM VALIDATION
+export const validateCourseTypeForm = (formData: {courseType?: string; status?: string | number , ipAddress?:string}): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.courseType || !formData.courseType.trim()) {
+    errors.courseType = "Course Type is required";
+  }
+
 
   // If status is expected to be 0 or 1, handle both string/number cases
   if (formData.status === undefined || formData.status === null || formData.status === "") {

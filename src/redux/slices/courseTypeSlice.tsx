@@ -5,11 +5,9 @@ import BASE_URL_JOB from "../../config/config";
 import getAuthAdminHeaders from "../../utils/auth";
 
 // MODEL
-export interface Course {
+export interface CourseType {
     id: number;
-    educationId: number;
-    educationName: string;
-    courseName: string;
+    courseType: string;
     status: number;
     ipAddress: string;
     createdBy?: number;
@@ -25,18 +23,18 @@ interface Pagination {
     page: number;
 }
 
-interface CourseState {
+interface CourseTypeState {
     loading: boolean;
-    courseList: Course[];
-    selectedCourse: Course | null;
+    courseTypeList: CourseType[];
+    selectedCourseType: CourseType | null;
     error: string | null;
     pagination: Pagination;
 }
 
-const initialState: CourseState = {
+const initialState: CourseTypeState = {
     loading: false,
-    courseList: [],
-    selectedCourse: null,
+    courseTypeList: [],
+    selectedCourseType: null,
     error: null,
     pagination: {
         total: 0,
@@ -46,11 +44,11 @@ const initialState: CourseState = {
 };
 
 // THUNKS
-export const createCourse = createAsyncThunk<Course, any>(
-    "course/create",
+export const createCourseType = createAsyncThunk<CourseType, any>(
+    "courseType/create",
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post( `${BASE_URL_JOB}/course/create`,formData, getAuthAdminHeaders(false) );
+            const response = await axios.post(`${BASE_URL_JOB}/courseType/create`, formData, getAuthAdminHeaders(false));
             toast.success(response.data.message);
             return response.data.data;
         } catch (error: any) {
@@ -60,140 +58,140 @@ export const createCourse = createAsyncThunk<Course, any>(
     }
 );
 
-export const getAllCourses = createAsyncThunk<any, { page?: number; status?: string | number; search?: string, educationId?:number; } | void>(
-    "course/getAll",
-    async (params = { page: 1, status: 1, search: "", educationId:0 }, { rejectWithValue }) => {
+export const getAllCourseTypes = createAsyncThunk<any, { page?: number; status?: string | number; search?: string, } | void>(
+    "courseType/getAll",
+    async (params = { page: 1, status: 1, search: "", }, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${BASE_URL_JOB}/course/list`,params,getAuthAdminHeaders() );
+            const response = await axios.post(`${BASE_URL_JOB}/courseType/list`, params, getAuthAdminHeaders());
             return response.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to fetch courses");
+            toast.error(error.response?.data?.message || "Failed to fetch course type");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
-export const getCourseById = createAsyncThunk<Course, number>(
-    "course/getById",
+export const getCourseTypeById = createAsyncThunk<CourseType, number>(
+    "courseType/getById",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${BASE_URL_JOB}/course/${id}`, getAuthAdminHeaders());
+            const response = await axios.get(`${BASE_URL_JOB}/courseType/${id}`, getAuthAdminHeaders());
             return response.data.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to fetch course");
+            toast.error(error.response?.data?.message || "Failed to fetch course Type");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
-export const updateCourse = createAsyncThunk<Course, { id: number; updateData: Course }>(
-    "course/update",
+export const updateCourseType = createAsyncThunk<CourseType, { id: number; updateData: CourseType }>(
+    "courseType/update",
     async ({ id, updateData }, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`${BASE_URL_JOB}/course/update/${id}`,updateData, getAuthAdminHeaders(false) );
+            const response = await axios.put(`${BASE_URL_JOB}/courseType/update/${id}`, updateData, getAuthAdminHeaders(false));
             toast.success(response.data.message);
             return response.data.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to update course");
+            toast.error(error.response?.data?.message || "Failed to update course Type");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
-export const deleteCourse = createAsyncThunk<number, number>(
-    "course/delete",
+export const deleteCourseType = createAsyncThunk<number, number>(
+    "courseType/delete",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete( `${BASE_URL_JOB}/course/delete/${id}`, getAuthAdminHeaders());
+            const response = await axios.delete(`${BASE_URL_JOB}/courseType/delete/${id}`, getAuthAdminHeaders());
             toast.success(response.data.message);
             return id;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to delete course");
+            toast.error(error.response?.data?.message || "Failed to delete course Type");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
 // SLICE
-const courseSlice = createSlice({
-    name: "course",
+const courseTypeSlice = createSlice({
+    name: "courseType",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
 
             // CREATE
-            .addCase(createCourse.pending, (state) => {
+            .addCase(createCourseType.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(createCourse.fulfilled, (state, action: PayloadAction<Course>) => {
+            .addCase(createCourseType.fulfilled, (state, action: PayloadAction<CourseType>) => {
                 state.loading = false;
-                state.courseList.unshift(action.payload);
+                state.courseTypeList.unshift(action.payload);
             })
-            .addCase(createCourse.rejected, (state, action) => {
+            .addCase(createCourseType.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // GET ALL
-            .addCase(getAllCourses.pending, (state) => {
+            .addCase(getAllCourseTypes.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getAllCourses.fulfilled, (state, action) => {
+            .addCase(getAllCourseTypes.fulfilled, (state, action) => {
                 state.loading = false;
 
                 // Correct backend mapping
-                state.courseList = action.payload.data.courses;
+                state.courseTypeList = action.payload.data.courseTypes;
                 state.pagination.total = action.payload.data.pagination.total;
                 state.pagination.pages = action.payload.data.pagination.pages;
                 state.pagination.page = action.payload.data.pagination.page;
             })
-            .addCase(getAllCourses.rejected, (state, action) => {
+            .addCase(getAllCourseTypes.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // GET BY ID
-            .addCase(getCourseById.pending, (state) => {
+            .addCase(getCourseTypeById.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getCourseById.fulfilled, (state, action: PayloadAction<Course>) => {
+            .addCase(getCourseTypeById.fulfilled, (state, action: PayloadAction<CourseType>) => {
                 state.loading = false;
-                state.selectedCourse = action.payload;
+                state.selectedCourseType = action.payload;
             })
-            .addCase(getCourseById.rejected, (state, action) => {
+            .addCase(getCourseTypeById.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // UPDATE
-            .addCase(updateCourse.pending, (state) => {
+            .addCase(updateCourseType.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(updateCourse.fulfilled, (state, action: PayloadAction<Course>) => {
+            .addCase(updateCourseType.fulfilled, (state, action: PayloadAction<CourseType>) => {
                 state.loading = false;
-                state.courseList = state.courseList.map((course) =>
+                state.courseTypeList = state.courseTypeList.map((course) =>
                     course.id === action.payload.id ? action.payload : course
                 );
             })
-            .addCase(updateCourse.rejected, (state, action) => {
+            .addCase(updateCourseType.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // DELETE
-            .addCase(deleteCourse.pending, (state) => {
+            .addCase(deleteCourseType.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(deleteCourse.fulfilled, (state, action: PayloadAction<number>) => {
+            .addCase(deleteCourseType.fulfilled, (state, action: PayloadAction<number>) => {
                 state.loading = false;
-                state.courseList = state.courseList.filter((c) => c.id !== action.payload);
+                state.courseTypeList = state.courseTypeList.filter((c) => c.id !== action.payload);
             })
-            .addCase(deleteCourse.rejected, (state, action) => {
+            .addCase(deleteCourseType.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });
     },
 });
 
-export default courseSlice.reducer;
+export default courseTypeSlice.reducer;

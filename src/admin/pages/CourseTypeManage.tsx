@@ -7,16 +7,13 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import DeleteConfirmationModal from "../componets/Modal/DeleteModal.tsx";
-import { deleteCourse, getAllCourses, updateCourse } from "../../redux/slices/courseSlice.tsx";
-import CourseViewModal from "../componets/Modal/CourseViewModal.tsx";
-import CourseEditModal from "../componets/Modal/CourseEditModal.tsx";
-import { getAllEducations } from "../../redux/slices/educationSlice.tsx";
+import { deleteCourseType, getAllCourseTypes, updateCourseType } from "../../redux/slices/courseTypeSlice.tsx";
+import CourseTypeViewModal from "../componets/Modal/CourseTypeViewModal.tsx";
+import CourseTypeEditModal from "../componets/Modal/CourseTypeEditModal.tsx";
 
-interface Course {
+interface CourseType {
     id: number;
-    educationId: number;
-    educationName: string;
-    courseName: string;
+    courseType: string;
     status: number;
     ipAddress: string;
     createdBy?: number;
@@ -25,22 +22,18 @@ interface Course {
     updatedAt?: string;
 }
 
-function CourseManage() {
+function CourseTypeManage() {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { courseList, loading } = useSelector(
-        (state: RootState) => state.course
+    const { courseTypeList, loading } = useSelector(
+        (state: RootState) => state.courseType
     );
-    const { educationList } = useSelector(
-        (state: RootState) => state.education
-    );
-    console.log('courseList', courseList)
 
-    const [selectedItem, setSelectedItem] = useState<Course | null>(null);
+    const [selectedItem, setSelectedItem] = useState<CourseType | null>(null);
     const [showView, setShowView] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [courseDelete, setCourseDelete] = useState<number | null>(null);
+    const [courseTypeDelete, setCourseTypeDelete] = useState<number | null>(null);
 
     // Sidebar states
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -51,7 +44,6 @@ function CourseManage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("");
     const [page, setPage] = useState<number>(1);
-    const [educationFilter, setEducationFilter] = useState("");
 
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -62,9 +54,8 @@ function CourseManage() {
         setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
 
     useEffect(() => {
-        dispatch(getAllCourses({ page, search: searchTerm, status: statusFilter || undefined , educationId: educationFilter ? Number(educationFilter) : undefined,}));
-        dispatch(getAllEducations());
-    }, [dispatch, dispatch, page, searchTerm, statusFilter, educationFilter]);
+        dispatch(getAllCourseTypes({ page, search: searchTerm, status: statusFilter ,}));
+    }, [dispatch, dispatch, page, searchTerm, statusFilter]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
@@ -78,35 +69,34 @@ function CourseManage() {
         setSearchTerm("");
         setStatusFilter("");
         setPage(1);
-        setEducationFilter("");
-        dispatch(getAllCourses({ page: 1, search: "", status: "", educationId: undefined ,}));
+        dispatch(getAllCourseTypes({ page: 1, search: "", status: "" ,}));
     };
 
-    const handleView = (item: Course) => {
+    const handleView = (item: CourseType) => {
         setSelectedItem(item);
         setShowView(true);
     };
 
-    const handleEdit = (item: Course) => {
+    const handleEdit = (item: CourseType) => {
         setSelectedItem(item);
         setShowEdit(true);
     };
 
-    const handleSaveEdit = (updatedItem: Course) => {
-        dispatch(updateCourse({ id: updatedItem.id, updateData: updatedItem }));
+    const handleSaveEdit = (updatedItem: CourseType) => {
+        dispatch(updateCourseType({ id: updatedItem.id, updateData: updatedItem }));
         setShowEdit(false);
     };
 
     const handleDeleteClick = (id: any) => {
-        setCourseDelete(id);
+        setCourseTypeDelete(id);
         setShowDeleteModal(true);
     };
 
     const handleDelete = async () => {
-        if (courseDelete !== null) {
-            await dispatch(deleteCourse(courseDelete));
+        if (courseTypeDelete !== null) {
+            await dispatch(deleteCourseType(courseTypeDelete));
             setShowDeleteModal(false);
-            setCourseDelete(null);
+            setCourseTypeDelete(null);
         }
     };
     
@@ -144,9 +134,9 @@ function CourseManage() {
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/create-course")}
+                                        onClick={() => navigate("/admin/create-course-type")}
                                     >
-                                        <i className="bi bi-plus-circle me-2"></i>Add Course
+                                        <i className="bi bi-plus-circle me-2"></i>Add Course Type
                                     </Button>
                                 </Col>
                             </Row>
@@ -154,27 +144,12 @@ function CourseManage() {
 
                         <Card className="p-3 card-header shadow-sm mb-2">
                             <Row className="align-items-center g-3">
-                                <Col md={3}>
-                                    <Form.Select
-                                        className="form-control"
-                                        value={educationFilter}
-                                        onChange={(e) => setEducationFilter(e.target.value)}
-                                    >
-                                        <option value="">Select Education</option>
-                                        <option value="">All</option>
-
-                                        {educationList.map((edu) => (
-                                            <option key={edu.id} value={edu.id}>
-                                                {edu.educationName}
-                                            </option>
-                                        ))}
-                                    </Form.Select>
-                                </Col>
+                              
                                 <Col md={3}>
                                     <InputGroup>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Search course name..."
+                                            placeholder="Search course type name..."
                                             value={searchTerm}
                                             onChange={handleSearchChange}
                                         />
@@ -202,10 +177,10 @@ function CourseManage() {
                         <Card className="shadow-sm border-0">
                             <Card.Header className="bg-white py-3 d-flex justify-content-between align-items-center">
                                 <h6 className="fw-bold mb-0 text-primary">
-                                    <i className="bi bi-list-task me-2"></i>Course List
+                                    <i className="bi bi-list-task me-2"></i>Course Type List
                                 </h6>
                                 <span className="text-muted small">
-                                    Showing {courseList?.length || 0} results
+                                    Showing {courseTypeList?.length || 0} results
                                 </span>
                             </Card.Header>
 
@@ -221,20 +196,17 @@ function CourseManage() {
                                         <thead className="bg-light">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Education Name</th>
-                                                <th>Course Name</th>
+                                                <th>Course Type Name</th>
                                                 <th>Status</th>
                                                 <th className="text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {courseList?.length > 0 ? (
-                                                courseList.map((item: Course, index: number) => (
-                                                    console.log('item', item),
+                                            {courseTypeList?.length > 0 ? (
+                                                courseTypeList.map((item: CourseType, index: number) => (
                                                     <tr key={item.id}>
                                                         <td>{index + 1}</td>
-                                                        <td>{item.educationName}</td>
-                                                        <td>{item.courseName}</td>
+                                                        <td>{item.courseType}</td>
                                                         <td>
                                                             <span
                                                                 className={`badge rounded-pill bg-light border ${item.status === 1
@@ -273,7 +245,7 @@ function CourseManage() {
                                             ) : (
                                                 <tr>
                                                     <td colSpan={4} className="text-center py-3">
-                                                        No course records found.
+                                                        No course type records found.
                                                     </td>
                                                 </tr>
                                             )}
@@ -284,17 +256,16 @@ function CourseManage() {
                         </Card>
 
                         {/* Modals */}
-                        <CourseViewModal
+                        <CourseTypeViewModal
                             show={showView}
                             onHide={() => setShowView(false)}
                             item={selectedItem}
                         />
-                        <CourseEditModal
+                        <CourseTypeEditModal
                             show={showEdit}
                             onHide={() => setShowEdit(false)}
                             item={selectedItem}
                             onSave={handleSaveEdit}
-                            educationList={educationList}
                         />
                         {showDeleteModal &&
                             <DeleteConfirmationModal
@@ -309,4 +280,4 @@ function CourseManage() {
         </div>
     );
 }
-export default CourseManage;
+export default CourseTypeManage;

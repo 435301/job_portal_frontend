@@ -7,6 +7,7 @@ import jobTitleReducer from "./slices/JobTitleSlice.tsx"
 import noticePeriodReducer from "./slices/noticePeriodSlice.tsx";
 import experienceReducer from "./slices/experienceSlice.tsx";
 import courseReducer from "./slices/courseSlice.tsx";
+import courseTypeReducer from "./slices/courseTypeSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     noticePeriod: noticePeriodReducer,
     experience: experienceReducer,
     course: courseReducer,
+    courseType: courseTypeReducer,
   },
 });
 
