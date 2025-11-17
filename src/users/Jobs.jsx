@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import WOW from "wowjs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
@@ -15,6 +17,7 @@ const Jobs = () => {
   useEffect(() => {
     new WOW.WOW({ live: false }).init();
   }, []);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -196,54 +199,71 @@ const Jobs = () => {
               </div>
 
               {/* Job Cards */}
-              <div className="row g-4 ms-4">
-                {[
-                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
-                  { img: icon2, title: "Frontend Engineer", company: "Figma" },
-                  { img: icon3, title: "AI Research Scientist", company: "Stripe" },
-                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
-                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
-                  { img: icon1, title: "Frontend Engineer", company: "Stripe" },
-                ].map((job, index) => (
-                  <div
-                    className="col-md-6 wow fadeInUp"
-                    data-wow-delay={`${0.1 * (index + 1)}s`}
-                    key={index}
-                  >
-                    <div className="card job-card border-0 shadow-sm h-100">
+              <div className=" row g-4 ms-4">
+                {[1, 2, 3, 4].map((job, i) => (
+                  <div key={i} className="col-md-12 wow fadeInUp" data-wow-delay="0.1s">
+                    <div className="card job-card border-0 h-100 rounded-3">
                       <div className="card-body">
+                        {/* Header Section */}
                         <div className="d-flex align-items-center justify-content-between mb-3">
+                          {/* Left: Profile Info */}
                           <div className="d-flex align-items-center">
-                            <img src={job.img} width="45" className="me-3" alt={job.company} />
+                            <img src={icon1} width="45" className="me-3" alt="Logo" />
                             <div>
-                              <h6 className="fw-bold mb-0">{job.title}</h6>
-                              <small className="text-muted">{job.company}</small>
+                              <h6
+                                className="fw-bold mb-0"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => navigate("/job-details")}
+                              >
+                                Akeeb Shaik
+                              </h6>
+                              <small className="text-muted">General Proofreader</small>
                             </div>
                           </div>
-                          <span className="badge bg-light text-success border rounded-pill px-3">
-                            New
-                          </span>
+
+                          {/* Right: Wishlist + Apply Now Button */}
+                          <div className="d-flex align-items-center gap-2">
+                            <button
+                              className="btn btn-outline-light border p-2"
+                              style={{ width: "42px", height: "42px" }}
+                            >
+                              <i className="bi bi-bookmark fs-5 text-secondary"></i>
+                            </button>
+                            <button
+                              className="btn btn-primary-2 fw-semibold rounded-pill px-4 py-2"
+                              style={{ backgroundColor: "#002b5b", border: "none" }}
+                            >
+                              Apply Now
+                            </button>
+                          </div>
                         </div>
 
-                        <div className="d-flex flex-wrap gap-2 mb-3">
-                          <span className="badge bg-danger text-danger px-3 py-2">
-                            <i className="bi bi-geo-alt-fill me-1"></i>San Francisco, CA
-                          </span>
-                          <span className="badge bg-info px-3 py-2">
-                            <i className="bi bi-briefcase-fill me-1"></i>Full time
-                          </span>
-                        </div>
+                        {/* Description */}
+                        <p className="text-muted mb-3">
+                          Highly skilled with APA format, Word/PowerPoint, InDesign. Experienced
+                          Genealogist, Musician, and Rosarian.
+                        </p>
 
-                        <p className="mb-1">Salary : $120k – $150k</p>
-                        <div className="text-end d-flex justify-content-between align-items-center mt-4">
-                          <small className="text-muted">Posted 2 days ago</small>
-                          <a href="#" className="btn btn-primary">
-                            Apply
-                          </a>
+                        {/* Skills + Pay Section */}
+                        <div className="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                          {/* Skills */}
+                          <div className="skills d-flex flex-wrap gap-2">
+                            <span className="skill-badge bg-skill-blue">Sketch</span>
+                            <span className="skill-badge bg-skill-green">UI Design</span>
+                            <span className="skill-badge bg-skill-yellow">UX Research</span>
+                            <span className="skill-badge bg-skill-pink">Wireframing</span>
+                            <span className="skill-badge bg-skill-purple">Prototyping</span>
+                          </div>
+
+                          {/* Pay */}
+                          <p className="mb-0 fw-semibold text-dark">
+                            <span className="text-info">$150k</span>/day
+                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
+
                 ))}
               </div>
             </div>

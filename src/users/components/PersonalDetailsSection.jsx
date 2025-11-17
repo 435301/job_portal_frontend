@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from "react";
+import { Modal, Button, Form, Row, Col, Badge } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import editIcon from "../../assets/img/edit.svg"; // update the path as needed
 
 const PersonalDetailsSection = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
   return (
     <div className="card-section personal-details">
-      <div className="section-header p-3 mb-0 d-flex p-3 justify-content-between align-items-center">
+      {/* ===== Header ===== */}
+      <div className="section-header p-3 mb-0 d-flex justify-content-between align-items-center">
         <div>
-          <i className="bi bi-person-lines-fill"></i> Personal Details
+          <i className="bi bi-person-lines-fill me-2"></i> Personal Details
         </div>
-        <img src="/img/edit.svg" alt="" />
+        {/* === Edit icon instead of Add details === */}
+        <img
+          src={editIcon}
+          alt="Edit"
+          className="edit-icons"
+          style={{ width: "22px", height: "22px", cursor: "pointer" }}
+          onClick={handleShow}
+        />
       </div>
+
+
+      {/* ===== Details Display ===== */}
       <div className="row p-3 names">
         <div className="col-md-3">
           <strong>Full Name:</strong>
@@ -20,7 +39,7 @@ const PersonalDetailsSection = () => {
         </div>
         <div className="col-md-3">
           <strong>Marital Status:</strong>
-          <div>Single/Married</div>
+          <div>Single</div>
         </div>
         <div className="col-md-3">
           <strong>Locality:</strong>
@@ -43,9 +62,153 @@ const PersonalDetailsSection = () => {
           <div>akeebshaik@gmail.com</div>
         </div>
       </div>
-      <a href="#" className="text-primary small px-3 mb-4 mt-2 d-inline-block">
-        <i className="bi bi-plus-circle me-1"></i> Add Category
-      </a>
+
+      {/* ===== Popup Modal ===== */}
+      <Modal show={showModal} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title><i className="bi bi-person-lines-fill"></i> Personal details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            {/* ===== Gender ===== */}
+            <div className="mb-4">
+              <Form.Label className="fw-bold">Gender</Form.Label>
+              <div className="d-flex gap-3">
+                <Form.Check inline label="Male" name="gender" type="radio" />
+                <Form.Check inline label="Female" name="gender" type="radio" />
+                <Form.Check inline label="Transgender" name="gender" type="radio" />
+              </div>
+            </div>
+
+            {/* ===== More Information ===== */}
+            <div className="mb-4">
+              <Form.Label className="fw-bold">More information</Form.Label>
+              <div className="d-flex flex-wrap gap-2">
+                {["Single parent", "Working mother", "Retired (60+)", "LGBTQ+"].map(
+                  (info) => (
+                    <Badge
+                      bg="light"
+                      text="dark"
+                      className="border rounded-pill px-3 py-2"
+                      key={info}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {info}
+                    </Badge>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* ===== Marital Status ===== */}
+            <div className="mb-4">
+              <Form.Label className="fw-bold">Marital status</Form.Label>
+              <div className="d-flex flex-wrap gap-2">
+                {[
+                  "Single/unmarried",
+                  "Married",
+                  "Widowed",
+                  "Divorced",
+                  "Separated",
+                  "Other",
+                ].map((status) => (
+                  <Badge
+                    bg="light"
+                    text="dark"
+                    className="border rounded-pill px-3 py-2"
+                    key={status}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {status}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            {/* ===== Date of Birth ===== */}
+            <Row className="mb-4">
+              <Col md={4}>
+                <Form.Label className="fw-bold">Date of Birth</Form.Label>
+                <Form.Control type="date" />
+              </Col>
+
+            </Row>
+
+            {/* ===== Work Permits ===== */}
+            <Row className="mb-4">
+              <Col md={12}>
+                <Form.Label className="fw-bold">Category</Form.Label>
+                <div className="d-flex flex-wrap gap-2 mb-4">
+                  {[
+                    "General",
+                    "Scheduled Caste (SC)",
+                    "Scheduled Tribe (ST)",
+                    "OBC - Creamy",
+                    "OBC - Non creamy",
+                    "Other",
+                  ].map((cat) => (
+                    <Badge
+                      bg="light"
+                      text="dark"
+                      className="border rounded-pill px-3 py-2"
+                      key={cat}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {cat}
+                    </Badge>
+                  ))}
+                </div>
+              </Col>
+              <Col md={6}>
+                <Form.Label className="fw-bold">Work permit for USA</Form.Label>
+                <Form.Select>
+                  <option>Select work permit</option>
+                  <option>H1B</option>
+                  <option>Green Card</option>
+                  <option>Citizen</option>
+                </Form.Select>
+              </Col>
+              <Col md={6}>
+                <Form.Label className="fw-bold">Work permit for other countries</Form.Label>
+                <Form.Control type="text" placeholder="Enter countries (max 3)" />
+              </Col>
+            </Row>
+
+            {/* ===== Address and Location ===== */}
+            <Row className="mb-4">
+              <Col md={6}>
+                <Form.Label className="fw-bold">Permanent address</Form.Label>
+                <Form.Control type="text" placeholder="Enter your permanent address" />
+              </Col>
+              <Col md={3}>
+                <Form.Label className="fw-bold">Hometown</Form.Label>
+                <Form.Control type="text" />
+              </Col>
+              <Col md={3}>
+                <Form.Label className="fw-bold">Pincode</Form.Label>
+                <Form.Control type="text" />
+              </Col>
+            </Row>
+
+            {/* ===== Language Proficiency ===== */}
+            <div className="mb-3">
+              <Form.Label className="fw-bold">Language proficiency</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Add languages you know (e.g. English, Hindi, Telugu)"
+              />
+            </div>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="dark" onClick={handleClose}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

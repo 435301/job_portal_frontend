@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 body {
-    font-family: "DM Sans", sans-serif;
+  font-family: "Rubik", sans-serif;
 
 }
+
 
 h5,
 .h5 {
     color: #05264E;
     font-size: 21px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 h6,
@@ -26,9 +27,9 @@ h1,
 .h1 {
     margin-top: 0;
     margin-bottom: .5rem;
-    font-family: "DM Sans", sans-serif;
+   font-family: "Rubik", sans-serif;
     line-height: 1.2;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 p {
@@ -50,7 +51,7 @@ p {
 
 /*** Button Start ***/
 .btn {
-    font-weight: 600;
+    font-weight: 500;
     transition: .5s;
 }
 
@@ -179,7 +180,25 @@ p {
 }
 
 .text-primary {
-    color: #39C3F2 !important;
+    color: #267AAB !important;
+}
+
+.reac li {
+    font-size: 14px !important;
+    color: #05264E;
+    margin-bottom: 8px;
+    opacity: 100% !important;
+}
+
+.photo-box img {
+    border-radius: 10px;
+}
+
+.owl-theme .owl-nav [class*="owl-"] {
+    background: #f8f9fa !important;
+    color: #000 !important;
+    border-radius: 50%;
+    padding: 4px 10px !important;
 }
 
 .navbar .dropdown-toggle::after {
@@ -460,13 +479,13 @@ p {
 }
 
 .step-card p {
-    font-size: 16px;
+    font-size: 15px;
     color: #05264E;
 }
 
 h2,
 .h2 {
-    font-weight: bold;
+    font-weight: 700;
     color: #252638;
     font-size: 34px;
 }
@@ -538,8 +557,8 @@ h2,
 
 .job-card p {
     color: #474D58;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .floating-card .fs-2 {
@@ -621,7 +640,7 @@ h2,
 
 .banner-text {
     font-size: 32px;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 1.2;
     margin-bottom: 20px;
     color: #fff;
@@ -652,7 +671,7 @@ h2 span {
 
 .stats-number {
     font-size: 33px;
-    font-weight: bold;
+    font-weight: 500;
     color: #fff;
     display: block;
 }
@@ -717,7 +736,7 @@ h2 span {
     font-size: 29px;
     color: #252638;
     margin-bottom: 15px !important;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .section-container .card-text {
@@ -810,7 +829,7 @@ h2 span {
 .job-section h5 {
     color: #05264E;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .job-section .job-card:hover {
@@ -870,17 +889,18 @@ h2 span {
     color: #29A8D3;
 }
 
-.btn-arrow {
+.card-btn .btn-arrow {
     border: 2px solid #05264E;
-    background: transparent;
-    border-radius: 50%;
-    width: 33px;
-    height: 33px;
+    background: transparent !important;
+    border-radius: 50% !important;
+    width: 33px !important;
+    height: 33px !important;
     display: flex;
     align-items: center;
-    color: #05264E;
+    color: #05264E !important;
     justify-content: center;
     transition: 0.3s;
+    padding: inherit;
 }
 
 
@@ -1005,7 +1025,7 @@ h2 span {
 
 .big-card {
     bottom: -25px;
-    right: -51px;
+    right: -29px;
     width: 207px;
 }
 
@@ -1097,7 +1117,7 @@ h2 span {
 }
 
 .footer-links a {
-    color: #cfd8dc;
+    color: #fff;
     text-decoration: none;
     display: inline-block;
     transition: color 0.3s ease;
@@ -1120,7 +1140,7 @@ h2 span {
     font-size: 14px;
     transition: color 0.3s ease;
     background-color: #ffffff5e;
-    padding: 7px 10px;
+    padding: 9px 10px;
     border-radius: 25px;
 }
 
@@ -1128,6 +1148,12 @@ h2 span {
     color: #FFFFFF;
     opacity: 70%;
     font-size: 15px;
+    margin-bottom: 11px;
+}
+
+.bg-primary-1 .form-control {
+    border-radius: 10px;
+    height: 45px;
 }
 
 .footer-section .border-bottom {
@@ -1244,7 +1270,7 @@ h2 span {
 
     .banner-text {
         font-size: 32px;
-        font-weight: bold;
+        font-weight: 500;
         line-height: 1.2;
         margin-top: 45px;
         color: #fff;
@@ -1268,7 +1294,7 @@ h2 span {
     }
 
     body {
-        font-family: "DM Sans", sans-serif;
+       font-family: "Rubik", sans-serif;
         overflow-x: hidden;
         /* Hide horizontal scrollbar */
     }
@@ -1463,7 +1489,7 @@ h2 span {
 .page-header h1 {
     font-size: 36px;
     color: #05264E;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .jobs-list h6 {
@@ -1473,7 +1499,7 @@ h2 span {
 
 .jobs-list .job-title {
     color: #05264E;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 3px;
     font-size: 17px;
     margin: 9px 00 2PX;
@@ -1669,7 +1695,7 @@ li {
     margin: 4px 6px 4px 0;
     border-radius: 20px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight:400;
     color: #333;
 }
 
@@ -1929,8 +1955,15 @@ li {
 
 .timeline-item {
     position: relative;
-    padding-left: 25px;
+    padding-left: 10px;
     margin-bottom: 22px;
+}
+
+.comapny-lg .form-label {
+    margin-bottom: .5rem;
+    font-size: 14px;
+    color: #252638;
+    font-weight: 500;
 }
 
 .timeline-item::before {
@@ -1989,6 +2022,36 @@ li {
     background: #fff;
     border: 1px solid #e5e9f2;
     border-radius: 12px;
+}
+
+.card__header {
+    background: #e8f4ff;
+    color: #1d1d1d;
+    font-weight: 600;
+    padding: 14px 18px;
+    font-size: 16px;
+}
+
+.card__list {
+    list-style: none;
+    padding: 16px 18px;
+    margin: 0;
+}
+
+.card__list li {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.card__label {
+    width: 150px;
+    font-weight: 600;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.card__value {
+    color: #007bff;
 }
 
 .info-list li {
@@ -2087,14 +2150,16 @@ li {
 .verify-card p {
     font-size: 17px;
     line-height: 1.6;
-    color: #252638 ;
+    color: #252638;
 }
+
 .verify-card .btn-dark {
     border-radius: 24px;
     padding: 12px 33px !important;
     font-size: 16px;
     font-weight: 500 !important;
 }
+
 .job-card .btn-primary-2 {
     background-color: #20487D;
     border-color: #20487D;
@@ -2104,6 +2169,7 @@ li {
     font-size: 15px;
     font-weight: 500 !important;
 }
+
 /* new */
 
 
@@ -2170,13 +2236,17 @@ li {
 
 .upload-box {
     /* background-color: #fdfdfd; */
-    border: 2px dashed #8a8d8e96;
+    border: 2px dashed #8a8d8e96 !important;
     border-radius: 10px;
+}
+
+.jobs-list a {
+    text-decoration: none;
 }
 
 .pdf {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .badge-skill {
@@ -2225,6 +2295,23 @@ li {
     margin-bottom: 24px;
 }
 
+.btn-secondary {
+    background-color: #dee2e6;
+    color: #000;
+    font-size: 15px;
+    font-weight: 400 !important;
+    border-color: #dee2e6;
+    border-radius: 19px;
+    padding: 8px 23px;
+}
+
+.modal .btn-dark {
+    border-radius: 24px;
+    padding: 9px 31px;
+    font-size: 14px;
+    font-weight: 500 !important;
+}
+
 .card-section {
     border: 1px solid #e5e7eb;
     border-radius: 10px;
@@ -2257,10 +2344,14 @@ li {
 
 .add-link {
     margin-left: auto;
-    color: #267AAB;
+    color: #267AAB !important;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+}
+
+.text-info {
+    color: #267AAB !important;
 }
 
 .table th {
@@ -2348,9 +2439,11 @@ li {
 }
 
 .modal label {
-    color: #252638;
+    color: #05264E;
     display: inline-block;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 9px;
 }
 
 .modal .form-switch .form-check-input {
@@ -2362,16 +2455,20 @@ li {
     border-radius: 2em;
     transition: background-position 0.15s ease-in-out, background-color 0.15s ease-in-out;
     border: none;
-}@media (min-width: 576px) {
+}
+
+@media (min-width: 576px) {
     .modal-dialog {
-        max-width: 600px;
+        max-width: 650px;
         margin: 1.75rem auto;
     }
 }
+
 .quick-links a {
     color: #267AAB;
     text-decoration: none;
 }
+
 .modal .btn-outline-secondary-1 {
     color: #05264E;
     border-color: #6c757d4d;
@@ -2382,17 +2479,25 @@ li {
 }
 
 .modal .btn-outline-dark {
+    padding: 9px;
     color: #353f4f;
     border-color: #353f4f52;
-    border-radius: 5px;
+    border-radius: 0px;
     border-right: none;
 }
 
 .modal h6 {
     font-size: 15px !important;
     font-weight: 500;
+    color: #05264E;
 }
 
+.yers label {
+    font-size: 13px;
+    color: #000;
+    opacity: 80%;
+    margin-bottom: 3px;
+}
 
 
 .badge-skill button {
@@ -2411,6 +2516,7 @@ li {
 .form-control {
     border-radius: 10px;
     height: 50px;
+    font-size: 14px;
 }
 
 .suggested-skill {
@@ -2444,4 +2550,369 @@ li {
 
 .btn-save:hover {
     background-color: #1b263b;
+}
+
+.job-list-card .btn-dark {
+    border-radius: 24px;
+    padding: 7px 23px;
+    font-size: 14px;
+    font-weight: 500 !important;
+}
+
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px !important;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+
+.slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 13px !important;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 27px !important;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.text-secondary th {
+    background-color: transparent;
+    color: #495057;
+    font-weight: 400;
+    padding: 1px 29px;
+}
+
+.slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 11px !important;
+    height: 18px;
+    margin: 0 3px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.education .form-select {
+    background-image: none;
+    -webkit-appearance: auto;
+    height: 37px;
+}
+
+.can-list .btn.btn-light {
+    background: #EAEAEA;
+    color: #000;
+    font-weight: 400;
+    transition: 0.5s;
+    font-size: 21px;
+    padding: 4px 14px;
+    border-radius: 22px;
+}
+
+.req .btn-outline-primary {
+    border-color: #EAEAEA;
+    color: #05264E;
+    font-size: 15px;
+    padding: 8px 23px;
+    font-weight: 500;
+}
+
+.req .btn-outline-secondary {
+    border-color: #EAEAEA;
+    color: #05264E;
+    font-size: 15px;
+    padding: 8px 23px;
+    font-weight: 500;
+}
+
+.req .col-md-1 {
+    flex: 0 0 auto;
+    width: 4.333333%;
+}
+
+.comapny-lg small {
+    font-style: italic;
+    font-size: 13px;
+    color: #05264E !important;
+}
+
+/* Background overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1050;
+}
+
+.display-4 {
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Popup container */
+.popup-content {
+    background: #fff;
+    width: 440px;
+    height: 100%;
+    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    position: relative;
+    animation: slideInRight 0.4s ease forwards;
+}
+
+/* Slide-in animation */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Body styling */
+.popup-body p {
+    line-height: 1.4;
+}
+
+.job-crm .form-control {
+    font-size: 15px;
+    border-radius: 10px;
+    height: 43px;
+}
+
+
+.education .text-muted {
+    color: #375171 !important;
+}
+
+.education .text-muted i {
+    color: #000;
+}
+
+.filter-panel input {
+
+    border-radius: 5px;
+    height: 45px;
+}
+
+.view-call .border-end {
+    border-right: 2px solid #dee2e6;
+}
+
+.education .form-check {
+    display: flex;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: .125rem;
+    align-items: flex-end;
+}
+
+.education .form-check-input {
+    --bs-form-check-bg: var(--bs-body-bg);
+    flex-shrink: 0;
+    width: 21px;
+    height: 21px;
+}
+
+.cal .btn.btn-primary {
+    background: #20487D;
+    color: var(--bs-white) !important;
+    font-weight: 400;
+    transition: 0.5s;
+    border-color: #20487D;
+    border-radius: 5px !important;
+    font-size: 15px;
+    padding: 8px 12px;
+}
+
+.company-wrapper {
+    min-height: 100vh;
+    background: transparent radial-gradient(closest-side at 78% 50%, #2CB0DD 0%, #20477C 100%) 0% 0% no-repeat padding-box;
+    padding: 40px;
+}
+
+.company-box {
+    background: #ffffff;
+    width: 480px;
+}
+
+.company-box .form-label {
+    margin-bottom: .5rem;
+    font-size: 14px;
+    color: #252638;
+    font-weight: 500;
+}
+
+.company-box .form-control {
+    border-radius: 10px;
+    height: 45px;
+    font-size: 14px;
+}
+
+.company-box h2 {
+    font-size: 26px;
+}
+
+.account-type-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.account-type-btn.active {
+    background: #e9f2ff;
+    border-color: #2f6fed;
+    color: #2f6fed;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 40px;
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 18px;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+}
+
+.continue-btn {
+    background: #252638 !important;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    font-weight: 500 !important;
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.continue-btn:hover {
+    background: #0d1322 !important;
+    border: 1px solid !important;
+    color: #fff !important;
+}
+
+.success-wrapper {
+    min-height: 90vh;
+    background: transparent radial-gradient(closest-side at 78% 50%, #2CB0DD 0%, #20477C 100%) 0% 0% no-repeat padding-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.fs-6 {
+    font-size: 15px !important;
+}
+
+.rounded-4 {
+    border-radius: 8px;
+}
+
+.bg-breadcrumb .border-end {
+    border: 1px #fff !important;
+}
+
+.apa {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+
+.details h6 {
+    font-size: 20PX;
+    COLOR: #05264E;
+}
+
+.email {
+    font-weight: 600 !important;
+    font-size: 17px !important;
+    color: #05264E !important;
+}
+
+.success-card {
+    background: #ffffff;
+    width: 450px;
+}
+
+.success-icon {
+    width: 95px;
+    height: 95px;
+    background: #22B157;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #E5F9F3;
+}
+
+.checkmark {
+    font-size: 45px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.success-card h3 {
+    color: #222;
+}
+
+.success-card p {
+    line-height: 1.6;
 }
