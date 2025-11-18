@@ -17,7 +17,7 @@ const Footer = () => {
                 <a href="#"><i className="bi bi-instagram"></i></a>
               </div>
             </Col>
-            <Col lg={6} className="text-end">
+            {/* <Col lg={6} className="text-end">
               <Row className="text-center">
                 <Col xs={6} md={3} className="mb-3 mb-md-0">
                   <h4 className="mb-0 fw-bold text-white">2548</h4>
@@ -36,7 +36,7 @@ const Footer = () => {
                   <small>Companies</small>
                 </Col>
               </Row>
-            </Col>
+            </Col> */}
           </Row>
         </Container>
       </div>

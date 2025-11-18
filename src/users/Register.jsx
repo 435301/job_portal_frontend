@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     new WOW.WOW({ live: false }).init();
   }, []);
@@ -100,7 +100,7 @@ const Register = () => {
 
         <div className="hero-header-2 overflow-hidden px-5 pt-5">
           <Row className="align-items-center">
-            
+
             {/* Left Side Image */}
             <Col
               lg={7}
@@ -122,7 +122,7 @@ const Register = () => {
                   <Col xs={12}>
                     <div className="card border-0 rounded-4">
                       <div className="card-body p-3 p-md-4 px-5">
-                        
+
                         <div className="text-center mb-4">
                           <h3>Create an Account</h3>
                         </div>
@@ -145,7 +145,7 @@ const Register = () => {
                         {/* Registration Form */}
                         <Form className="mt-4 pt-3 px-3" onSubmit={handleSubmit}>
                           <Row className="g-3">
-                            
+
                             {/* First Name */}
                             <Form.Group className="col-lg-6">
                               <Form.Label>
@@ -235,6 +235,37 @@ const Register = () => {
                                 {errors.confirmPassword}
                               </Form.Control.Feedback>
                             </Form.Group>
+                            {/* CAPTCHA Row */}
+                            <Form.Group className="col-lg-12">
+
+
+                              {/* CAPTCHA Box */}
+                              <div className="d-flex align-items-center gap-3">
+                                {/* Shown Captcha Text */}
+                                <div>
+                                  Enter CAPTCHA <span className="text-danger">*</span>
+                                </div>
+                                <div
+                                  className="px-3 py-2 rounded bg-light border fw-bold"
+                                  style={{ letterSpacing: "3px", fontSize: "18px" }}
+                                >
+                                  7G5K9
+                                </div>
+
+                                {/* Refresh Captcha Button */}
+                                <Button variant="outline-secondary rounded" className="py-2">
+                                  ↻
+                                </Button>
+                              </div>
+
+                              {/* Captcha Input */}
+                              <Form.Control
+                                type="text"
+                                name="captcha"
+                                placeholder="Enter the text shown above"
+                                className="mt-3"
+                              />
+                            </Form.Group>
 
                             {/* Button */}
                             <div className="text-center mt-4">
@@ -246,10 +277,11 @@ const Register = () => {
                                 <a href="#">Privacy Policy</a> and{" "}
                                 <a href="#">Terms of Use</a>.
                               </Form.Text>
+
                             </div>
                           </Row>
                         </Form>
-                        
+
                       </div>
                     </div>
                   </Col>
