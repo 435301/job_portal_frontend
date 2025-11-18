@@ -10,7 +10,6 @@ import { ToastContainer } from "react-toastify";
 
 // User Pages
 import Login from './users/Login';
-import Register from './users/Register';
 import Jobs from './users/Jobs';
 import JobDetails from './users/JobDetails';
 import Candidates from './users/Candidates';
@@ -53,6 +52,7 @@ import CourseManage from './admin/pages/CourseManage.tsx';
 import CreateCourse from './admin/pages/CreateCourse.tsx';
 import CourseTypeManage from './admin/pages/CourseTypeManage.tsx';
 import CreateCourseType from './admin/pages/CreateCourseType.tsx';
+import Register from './users/Register.tsx';
 
 
 

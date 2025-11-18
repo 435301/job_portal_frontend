@@ -2,23 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
-import WOW from "wowjs";
-
+// import WOW from "wowjs";
 import candidateImage from "../assets/img/reg-1.png";
 import employerImage from "../assets/img/reg-2.png";
-
 import "../assets/css/login.css";
 import "../assets/css/style.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { FormErrors, validateRegisterForm } from "../common/validation.tsx";
+import { useAppSelector } from "../redux/hooks.tsx"
+import { clearRegisterState, registerEmployee } from "../redux/slices/registerSlice.tsx";
+import { fetchCaptcha } from "../redux/slices/captchaSlice.tsx";
+import { AppDispatch } from "../redux/store.tsx";
+import { getUserIpAddress } from "../common/ipAddress.tsx";
 
 const Register = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch<AppDispatch>();
+    const { loading, message, error, verificationCode } = useAppSelector((state) => state.register);
+ const { captchaSvg, captchaText } = useAppSelector((state) => state.captcha);
+ console.log('captchaText', captchaText, captchaSvg);
   useEffect(() => {
-    new WOW.WOW({ live: false }).init();
-  }, []);
+    // new WOW.WOW({ live: false }).init();
+     dispatch(fetchCaptcha());
+    return () => {
+      dispatch(clearRegisterState());
+    };
+  }, [dispatch]);
+
 
   const [activeTab, setActiveTab] = useState("candidate");
 
@@ -29,65 +42,47 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    captcha: "",
+    city: "",
+    selfOrOther: 1,
+    ipAddress: "",
   });
 
+
   // Validation Errors
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
   };
-
-  // Validation
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required";
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address";
-    }
-
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (!formData.confirmPassword.trim()) {
-      newErrors.confirmPassword = "Please confirm your password";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    return newErrors;
-  };
+  const handleFetchCaptcha = () => dispatch(fetchCaptcha());
 
   // Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formErrors = validateForm();
+    const formErrors = validateRegisterForm(formData);
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      alert(`${activeTab} registration successful!`);
-      navigate("/verify-email");
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
+      try {
+        const ip = await getUserIpAddress();
+        // Update selfOrOther based on activeTab
+        const payload = {
+          ...formData,
+           captcha: captchaText.trim(),
+          selfOrOther: activeTab === "candidate" ? 1 : 2,
+          ipAddress: ip,
+        };
+        const resultAction = await dispatch(registerEmployee(payload));
+        if (registerEmployee.fulfilled.match(resultAction)) {
+          navigate("/verify-email");
+        }
+      } catch (err) {
+        console.error("Registration failed", err);
+      }
     }
   };
 
@@ -131,7 +126,7 @@ const Register = () => {
                         <Nav
                           variant="tabs"
                           activeKey={activeTab}
-                          onSelect={(k) => setActiveTab(k)}
+                          onSelect={(k: any) => setActiveTab(k)}
                           className="mt-4"
                         >
                           <Nav.Item>
@@ -248,12 +243,13 @@ const Register = () => {
                                 <div
                                   className="px-3 py-2 rounded bg-light border fw-bold"
                                   style={{ letterSpacing: "3px", fontSize: "18px" }}
+                                   dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
                                 >
-                                  7G5K9
+                                  {/* {cat || "Loading..."} */}
                                 </div>
 
                                 {/* Refresh Captcha Button */}
-                                <Button variant="outline-secondary rounded" className="py-2">
+                                <Button variant="outline-secondary rounded" className="py-2" onClick={handleFetchCaptcha}>
                                   ↻
                                 </Button>
                               </div>
@@ -264,13 +260,19 @@ const Register = () => {
                                 name="captcha"
                                 placeholder="Enter the text shown above"
                                 className="mt-3"
+                                value={formData.captcha}       // Bind value
+                                onChange={handleChange}        // Handle changes
+                                isInvalid={!!errors.captcha}
                               />
+                              <Form.Control.Feedback type="invalid">
+                                {errors.captcha}
+                              </Form.Control.Feedback>
                             </Form.Group>
 
                             {/* Button */}
                             <div className="text-center mt-4">
-                              <Button variant="dark" className="py-2" type="submit">
-                                Register Now
+                              <Button variant="dark" className="py-2" type="submit" disabled={loading}>
+                                {loading ? "Registering..." : "Register Now"}
                               </Button>
                               <Form.Text className="d-block mt-3 text-muted small">
                                 By registering, you agree to our{" "}

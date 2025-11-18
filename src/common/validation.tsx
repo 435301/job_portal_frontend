@@ -12,12 +12,17 @@ export interface FormErrors {
   educationName?: string;
   skillName?: string;
   institutionName?: string;
-  jobTitleName?:string;
+  jobTitleName?: string;
   noticePeriodName?: string;
-  experienceName?:string;
-  courseName?:string;
-  educationId?:string;
-  courseType?:string;
+  experienceName?: string;
+  courseName?: string;
+  educationId?: string;
+  courseType?: string;
+  firstName?: string;
+  lastName?: string;
+  confirmPassword?: string;
+  captcha?: string;
+  captchaText?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -141,14 +146,14 @@ export const validateExperienceForm = (formData: { experienceName?: string; stat
 };
 
 //  COURSE FORM VALIDATION
-export const validateCourseForm = (formData: { educationId?: number; courseName?: string; status?: string | number , ipAddress?:string}): FormErrors => {
+export const validateCourseForm = (formData: { educationId?: number; courseName?: string; status?: string | number, ipAddress?: string }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.courseName || !formData.courseName.trim()) {
     errors.courseName = "Course Name is required";
   }
 
-   if (!formData.educationId || !formData.educationId) {
+  if (!formData.educationId || !formData.educationId) {
     errors.educationId = "Education Name is required";
   }
 
@@ -161,7 +166,7 @@ export const validateCourseForm = (formData: { educationId?: number; courseName?
 };
 
 //  COURSE TYPE FORM VALIDATION
-export const validateCourseTypeForm = (formData: {courseType?: string; status?: string | number , ipAddress?:string}): FormErrors => {
+export const validateCourseTypeForm = (formData: { courseType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.courseType || !formData.courseType.trim()) {
@@ -176,3 +181,36 @@ export const validateCourseTypeForm = (formData: {courseType?: string; status?: 
 
   return errors;
 };
+
+export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?:string;}): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.firstName || !formData.firstName.trim()) {
+    errors.firstName = "First name is required";
+  }
+  if (!formData.lastName || !formData.lastName.trim()) {
+    errors.lastName = "Last name is required";
+  }
+  if (!formData.email || (!formData.email.trim())) {
+    errors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    errors.email = "Enter a valid email address";
+  }
+  if (!formData.password || !formData.password.trim()) {
+    errors.password = "Password is required";
+  } else if (formData.password.length < 6) {
+    errors.password = "Password must be at least 6 characters";
+  }
+
+  if (!formData.confirmPassword || !formData.confirmPassword.trim()) {
+    errors.confirmPassword = "Please confirm your password";
+  } else if (formData.password !== formData.confirmPassword) {
+    errors.confirmPassword = "Passwords do not match";
+  }
+  if (!formData.captcha || !formData.captcha.trim()) {
+    errors.captcha = "Captcha is required";
+  }
+
+  return errors;
+};
+

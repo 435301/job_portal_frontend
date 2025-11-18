@@ -47,6 +47,7 @@ const captchaSlice = createSlice({
     clearCaptcha(state) {
       state.captchaSvg = "";
       state.captchaText = "";
+       state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -60,6 +61,7 @@ const captchaSlice = createSlice({
         (state, action: PayloadAction<CaptchaResponse>) => {
           state.loading = false;
           state.captchaSvg = action.payload.captchaSvg;
+        state.captchaText = action.payload.captchaText;
         }
       )
       .addCase(fetchCaptcha.rejected, (state, action) => {
