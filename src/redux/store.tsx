@@ -10,6 +10,7 @@ import courseReducer from "./slices/courseSlice.tsx";
 import courseTypeReducer from "./slices/courseTypeSlice.tsx";
 import captchaReducer from "./slices/captchaSlice.tsx";
 import registerReducer from "./slices/registerSlice.tsx";
+import schoolBoardReducer from "./slices/schoolBoardSlice.tsx"
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     courseType: courseTypeReducer,
     captcha: captchaReducer,
     register: registerReducer,
+    schoolBoard: schoolBoardReducer,
   },
 });
 

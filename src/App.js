@@ -53,6 +53,8 @@ import CreateCourse from './admin/pages/CreateCourse.tsx';
 import CourseTypeManage from './admin/pages/CourseTypeManage.tsx';
 import CreateCourseType from './admin/pages/CreateCourseType.tsx';
 import Register from './users/Register.tsx';
+import SchoolBoardManage from './admin/pages/SchoolBoardManage.tsx';
+import CreateSchoolBoard from './admin/pages/CreateSchoolBoard.tsx';
 
 
 
@@ -97,6 +99,7 @@ const App = () => {
         <Route path="/admin/manage-experience" element={<ExperienceManage />} />
         <Route path="/admin/manage-courses" element={<CourseManage />} />
         <Route path="/admin/manage-course-types" element={<CourseTypeManage />} />
+        <Route path="/admin/manage-school-boards" element={<SchoolBoardManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
@@ -105,6 +108,7 @@ const App = () => {
         <Route path="/admin/create-experience" element={<CreateExperience />} />
         <Route path="/admin/create-course" element={<CreateCourse />} />
         <Route path="/admin/create-course-type" element={<CreateCourseType />} />
+        <Route path="/admin/create-school-board" element={<CreateSchoolBoard />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

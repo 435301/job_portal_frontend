@@ -2,19 +2,19 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-interface CourseType {
+interface SchoolBoard {
   id: number;
-  courseType: string;
+  boardName: string;
   status: number | any;
 }
 
-interface CourseViewModalProps {
+interface SchoolBoardViewModalProps {
   show: boolean;
   onHide: () => void;
-  item: CourseType | null;
+  item: SchoolBoard | null;
 }
 
-const CourseTypeViewModal: React.FC<CourseViewModalProps> = ({ show, onHide, item }) => {
+const SchoolBoardViewModal: React.FC<SchoolBoardViewModalProps> = ({ show, onHide, item }) => {
   if (!item) return null;
 
   return (
@@ -28,12 +28,12 @@ const CourseTypeViewModal: React.FC<CourseViewModalProps> = ({ show, onHide, ite
     >
       <Modal.Header closeButton className="bg-light text-white">
         <Modal.Title>
-          <i className="bi bi-eye me-2"></i>View Course Type
+          <i className="bi bi-eye me-2"></i>View School Board
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="px-4 py-3">
         <div className="fs-6">
-           <p><strong>Course Type:</strong> {item.courseType}</p>
+           <p><strong>Board Name:</strong> {item.boardName}</p>
           <p>
             <strong>Status:</strong>{" "}
             <span
@@ -55,4 +55,4 @@ const CourseTypeViewModal: React.FC<CourseViewModalProps> = ({ show, onHide, ite
   );
 };
 
-export default CourseTypeViewModal;
+export default SchoolBoardViewModal;

@@ -23,6 +23,7 @@ export interface FormErrors {
   confirmPassword?: string;
   captcha?: string;
   captchaText?: string;
+  boardName?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -214,3 +215,17 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   return errors;
 };
 
+//  SCHOOL FORM VALIDATION
+export const validateSchoolBoardForm = (formData: { boardName?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.boardName || !formData.boardName.trim()) {
+    errors.boardName = "Board Name is required";
+  }
+
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
