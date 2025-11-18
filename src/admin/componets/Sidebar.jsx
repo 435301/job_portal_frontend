@@ -28,6 +28,7 @@ const Sidebar = ({
       children: [
         { id: "education", text: "Education", path: "/admin/manage-education" },
         { id: "course", text: "Course", path: "/admin/manage-courses" },
+        { id: "specialization", text: "Specialization", path: "/admin/manage-specializations" },
         { id: "institutions", text: "Institutions", path: "/admin/manage-institutions" },
         { id: "skill", text: "Skill", path: "/admin/manage-skills" },
         { id: "jobTitle", text: "Job Title", path: "/admin/manage-job-titles" },

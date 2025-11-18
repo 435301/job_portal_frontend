@@ -12,6 +12,7 @@ import captchaReducer from "./slices/captchaSlice.tsx";
 import registerReducer from "./slices/registerSlice.tsx";
 import schoolBoardReducer from "./slices/schoolBoardSlice.tsx";
 import schoolMediumReducer from "./slices/schoolMediumSlice.tsx";
+import specializationReducer from "./slices/specializationSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     register: registerReducer,
     schoolBoard: schoolBoardReducer,
     schoolMedium: schoolMediumReducer,
+    specialization: specializationReducer,
   },
 });
 

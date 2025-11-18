@@ -17,6 +17,7 @@ export interface FormErrors {
   experienceName?: string;
   courseName?: string;
   educationId?: string;
+  courseId?: string;
   courseType?: string;
   firstName?: string;
   lastName?: string;
@@ -25,6 +26,7 @@ export interface FormErrors {
   captchaText?: string;
   boardName?: string;
   schoolMedium?: string;
+  specializationName?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -160,6 +162,28 @@ export const validateCourseForm = (formData: { educationId?: number; courseName?
   }
 
   // If status is expected to be 0 or 1, handle both string/number cases
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  SPECIALIZATION FORM VALIDATION
+export const validateSpecializationForm = (formData: { specializationName?: string;  educationId?: number; status?: string | number, ipAddress?: string , courseId?:number; }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.specializationName || !formData.specializationName.trim()) {
+    errors.specializationName = "Specialization Name  is required";
+  }
+
+  if (!formData.educationId || !formData.educationId) {
+    errors.educationId = "Education Name is required";
+  }
+    if (!formData.courseId || !formData.courseId) {
+    errors.courseId = "Course Name is required";
+  }
+
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
   }

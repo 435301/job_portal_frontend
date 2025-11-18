@@ -57,6 +57,8 @@ import SchoolBoardManage from './admin/pages/SchoolBoardManage.tsx';
 import CreateSchoolBoard from './admin/pages/CreateSchoolBoard.tsx';
 import SchoolMediumManage from './admin/pages/SchoolMediumManage.tsx';
 import CreateSchoolMedium from './admin/pages/CreateSchoolMedium.tsx';
+import CreateSpecialization from './admin/pages/CreateSpecialization.tsx';
+import SpecializationManage from './admin/pages/SpecializationManage.tsx';
 
 
 
@@ -100,6 +102,7 @@ const App = () => {
         <Route path="/admin/manage-notice-periods" element={<NoticePeriodManage />} />
         <Route path="/admin/manage-experience" element={<ExperienceManage />} />
         <Route path="/admin/manage-courses" element={<CourseManage />} />
+        <Route path="/admin/manage-specializations" element={<SpecializationManage />} />
         <Route path="/admin/manage-course-types" element={<CourseTypeManage />} />
         <Route path="/admin/manage-school-boards" element={<SchoolBoardManage />} />
         <Route path="/admin/manage-school-medium" element={<SchoolMediumManage />} />
@@ -110,6 +113,7 @@ const App = () => {
         <Route path="/admin/create-notice-period" element={<CreateNoticePeriod />} />
         <Route path="/admin/create-experience" element={<CreateExperience />} />
         <Route path="/admin/create-course" element={<CreateCourse />} />
+        <Route path="/admin/create-specialization" element={<CreateSpecialization />} />
         <Route path="/admin/create-course-type" element={<CreateCourseType />} />
         <Route path="/admin/create-school-board" element={<CreateSchoolBoard />} />
         <Route path="/admin/create-school-medium" element={<CreateSchoolMedium />} />
