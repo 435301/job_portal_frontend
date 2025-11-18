@@ -24,6 +24,7 @@ export interface FormErrors {
   captcha?: string;
   captchaText?: string;
   boardName?: string;
+  schoolMedium?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -215,12 +216,27 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   return errors;
 };
 
-//  SCHOOL FORM VALIDATION
+//  SCHOOL BOARD FORM VALIDATION
 export const validateSchoolBoardForm = (formData: { boardName?: string; status?: string | number, ipAddress?: string }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.boardName || !formData.boardName.trim()) {
     errors.boardName = "Board Name is required";
+  }
+
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  SCHOOL MEDIUM FORM VALIDATION
+export const validateSchoolMediumForm = (formData: { schoolMedium?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.schoolMedium || !formData.schoolMedium.trim()) {
+    errors.schoolMedium = "School Medium is required";
   }
 
   if (formData.status === undefined || formData.status === null || formData.status === "") {

@@ -5,9 +5,9 @@ import BASE_URL_JOB from "../../config/config";
 import getAuthAdminHeaders from "../../utils/auth";
 
 // MODEL
-export interface SchoolBoard {
+export interface SchoolMedium {
     id: number;
-    boardName: string;
+    schoolMedium: string;
     status: number;
     ipAddress: string;
     createdBy?: number;
@@ -23,18 +23,18 @@ interface Pagination {
     page: number;
 }
 
-interface SchoolBoardState {
+interface SchoolMediumState {
     loading: boolean;
-    schoolBoardList: SchoolBoard[];
-    selectedSchoolBoardList: SchoolBoard | null;
+    schoolMediumList: SchoolMedium[];
+    selectedSchoolMediumList: SchoolMedium | null;
     error: string | null;
     pagination: Pagination;
 }
 
-const initialState: SchoolBoardState = {
+const initialState: SchoolMediumState = {
     loading: false,
-    schoolBoardList: [],
-    selectedSchoolBoardList: null,
+    schoolMediumList: [],
+    selectedSchoolMediumList: null,
     error: null,
     pagination: {
         total: 0,
@@ -44,11 +44,11 @@ const initialState: SchoolBoardState = {
 };
 
 // THUNKS
-export const createSchoolBoard = createAsyncThunk<SchoolBoard, any>(
-    "schoolBoard/create",
+export const createSchoolMedium = createAsyncThunk<SchoolMedium, any>(
+    "schoolMedium/create",
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${BASE_URL_JOB}/schoolBoard/create`, formData, getAuthAdminHeaders(false));
+            const response = await axios.post(`${BASE_URL_JOB}/schoolMedium/create`, formData, getAuthAdminHeaders(false));
             toast.success(response.data.message);
             return response.data.data;
         } catch (error: any) {
@@ -58,11 +58,11 @@ export const createSchoolBoard = createAsyncThunk<SchoolBoard, any>(
     }
 );
 
-export const getAllSchoolBoards = createAsyncThunk<any, { page?: number; status?: string | number; search?: string, } | void>(
-    "schoolBoard/getAll",
+export const getAllSchoolMedium = createAsyncThunk<any, { page?: number; status?: string | number; search?: string, } | void>(
+    "schoolMedium/getAll",
     async (params = { page: 1, status: 1, search: "", }, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${BASE_URL_JOB}/schoolBoard/list`, params, getAuthAdminHeaders());
+            const response = await axios.post(`${BASE_URL_JOB}/schoolMedium/list`, params, getAuthAdminHeaders());
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message);
@@ -70,11 +70,11 @@ export const getAllSchoolBoards = createAsyncThunk<any, { page?: number; status?
     }
 );
 
-export const getSchoolBoardById = createAsyncThunk<SchoolBoard, number>(
-    "schoolBoard/getById",
+export const getSchoolMediumById = createAsyncThunk<SchoolMedium, number>(
+    "schoolMedium/getById",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${BASE_URL_JOB}/schoolBoard/${id}`, getAuthAdminHeaders());
+            const response = await axios.get(`${BASE_URL_JOB}/schoolMedium/${id}`, getAuthAdminHeaders());
             return response.data.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message);
@@ -82,114 +82,114 @@ export const getSchoolBoardById = createAsyncThunk<SchoolBoard, number>(
     }
 );
 
-export const updateSchoolBoard = createAsyncThunk<SchoolBoard, { id: number; updateData: SchoolBoard }>(
-    "schoolBoard/update",
+export const updateSchoolMedium = createAsyncThunk<SchoolMedium, { id: number; updateData: SchoolMedium }>(
+    "schoolMedium/update",
     async ({ id, updateData }, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`${BASE_URL_JOB}/schoolBoard/update/${id}`, updateData, getAuthAdminHeaders(false));
+            const response = await axios.put(`${BASE_URL_JOB}/schoolMedium/update/${id}`, updateData, getAuthAdminHeaders(false));
             toast.success(response.data.message);
             return response.data.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to update school board");
+            toast.error(error.response?.data?.message || "Failed to update school medium");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
-export const deleteSchoolBoard = createAsyncThunk<number, number>(
-    "schoolBoard/delete",
+export const deleteSchoolMedium = createAsyncThunk<number, number>(
+    "schoolMedium/delete",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${BASE_URL_JOB}/schoolBoard/delete/${id}`, getAuthAdminHeaders());
+            const response = await axios.delete(`${BASE_URL_JOB}/schoolMedium/delete/${id}`, getAuthAdminHeaders());
             toast.success(response.data.message);
             return id;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to delete school board");
+            toast.error(error.response?.data?.message || "Failed to delete school medium");
             return rejectWithValue(error.response?.data?.message);
         }
     }
 );
 
 // SLICE
-const schoolBoardSlice = createSlice({
-    name: "schoolBoard",
+const SchoolMediumSlice = createSlice({
+    name: "schoolMedium",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
 
             // CREATE
-            .addCase(createSchoolBoard.pending, (state) => {
+            .addCase(createSchoolMedium.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(createSchoolBoard.fulfilled, (state, action: PayloadAction<SchoolBoard>) => {
+            .addCase(createSchoolMedium.fulfilled, (state, action: PayloadAction<SchoolMedium>) => {
                 state.loading = false;
-                state.schoolBoardList.unshift(action.payload);
+                state.schoolMediumList.unshift(action.payload);
             })
-            .addCase(createSchoolBoard.rejected, (state, action) => {
+            .addCase(createSchoolMedium.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // GET ALL
-            .addCase(getAllSchoolBoards.pending, (state) => {
+            .addCase(getAllSchoolMedium.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getAllSchoolBoards.fulfilled, (state, action) => {
+            .addCase(getAllSchoolMedium.fulfilled, (state, action) => {
                 state.loading = false;
 
                 // Correct backend mapping
-                state.schoolBoardList = action.payload.data.boardTypes;
+                state.schoolMediumList = action.payload.data.schoolMediums;
                 state.pagination.total = action.payload.data.pagination.total;
                 state.pagination.pages = action.payload.data.pagination.pages;
                 state.pagination.page = action.payload.data.pagination.page;
             })
-            .addCase(getAllSchoolBoards.rejected, (state, action) => {
+            .addCase(getAllSchoolMedium.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // GET BY ID
-            .addCase(getSchoolBoardById.pending, (state) => {
+            .addCase(getSchoolMediumById.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getSchoolBoardById.fulfilled, (state, action: PayloadAction<SchoolBoard>) => {
+            .addCase(getSchoolMediumById.fulfilled, (state, action: PayloadAction<SchoolMedium>) => {
                 state.loading = false;
-                state.selectedSchoolBoardList = action.payload;
+                state.selectedSchoolMediumList = action.payload;
             })
-            .addCase(getSchoolBoardById.rejected, (state, action) => {
+            .addCase(getSchoolMediumById.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // UPDATE
-            .addCase(updateSchoolBoard.pending, (state) => {
+            .addCase(updateSchoolMedium.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(updateSchoolBoard.fulfilled, (state, action: PayloadAction<SchoolBoard>) => {
+            .addCase(updateSchoolMedium.fulfilled, (state, action: PayloadAction<SchoolMedium>) => {
                 state.loading = false;
-                state.schoolBoardList = state.schoolBoardList.map((course) =>
+                state.schoolMediumList = state.schoolMediumList.map((course) =>
                     course.id === action.payload.id ? action.payload : course
                 );
             })
-            .addCase(updateSchoolBoard.rejected, (state, action) => {
+            .addCase(updateSchoolMedium.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
 
             // DELETE
-            .addCase(deleteSchoolBoard.pending, (state) => {
+            .addCase(deleteSchoolMedium.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(deleteSchoolBoard.fulfilled, (state, action: PayloadAction<number>) => {
+            .addCase(deleteSchoolMedium.fulfilled, (state, action: PayloadAction<number>) => {
                 state.loading = false;
-                state.schoolBoardList = state.schoolBoardList.filter((c) => c.id !== action.payload);
+                state.schoolMediumList = state.schoolMediumList.filter((c) => c.id !== action.payload);
             })
-            .addCase(deleteSchoolBoard.rejected, (state, action) => {
+            .addCase(deleteSchoolMedium.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });
     },
 });
 
-export default schoolBoardSlice.reducer;
+export default SchoolMediumSlice.reducer;
