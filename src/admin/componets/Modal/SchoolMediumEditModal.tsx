@@ -48,7 +48,7 @@ const SchoolMediumEditModal: React.FC<SchoolMediumEditModalProps> = ({ show, onH
                 <Form>
                 
                     <Form.Group className="mb-3">
-                        <Form.Label>School Medium </Form.Label>
+                        <Form.Label>School Medium <span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="schoolMedium"
@@ -59,7 +59,7 @@ const SchoolMediumEditModal: React.FC<SchoolMediumEditModalProps> = ({ show, onH
 
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
+                        <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                         <Form.Select
                             name="status"
                             value={formData.status}

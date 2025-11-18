@@ -47,7 +47,7 @@ const JobTitleEditModal: React.FC<JobTitleEditModalProps> = ({ show, onHide, ite
       <Modal.Body className="px-4 py-3">
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Job Title Name</Form.Label>
+            <Form.Label>Job Title Name<span className="text-danger"> *</span></Form.Label>
             <Form.Control
               type="text"
               name="jobTitleName"
@@ -58,7 +58,7 @@ const JobTitleEditModal: React.FC<JobTitleEditModalProps> = ({ show, onHide, ite
 
 
           <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
             <Form.Select
               name="status"
               value={formData.status}

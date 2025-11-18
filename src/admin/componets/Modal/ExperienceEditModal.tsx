@@ -48,7 +48,7 @@ const ExperienceEditModal: React.FC<ExperienceEditModalProps> = ({ show, onHide,
       <Modal.Body className="px-4 py-3">
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Experience Name</Form.Label>
+            <Form.Label>Experience Name<span className="text-danger"> *</span></Form.Label>
             <Form.Control
               type="text"
               name="experienceName"
@@ -59,7 +59,7 @@ const ExperienceEditModal: React.FC<ExperienceEditModalProps> = ({ show, onHide,
 
 
           <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
             <Form.Select
               name="status"
               value={formData.status}

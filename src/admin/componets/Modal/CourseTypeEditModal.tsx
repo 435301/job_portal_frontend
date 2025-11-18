@@ -49,7 +49,7 @@ const CourseTypeEditModal: React.FC<CourseTypeEditModalProps> = ({ show, onHide,
                 <Form>
                 
                     <Form.Group className="mb-3">
-                        <Form.Label>Course Name</Form.Label>
+                        <Form.Label>Course Name<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="courseType"
@@ -60,7 +60,7 @@ const CourseTypeEditModal: React.FC<CourseTypeEditModalProps> = ({ show, onHide,
 
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
+                        <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                         <Form.Select
                             name="status"
                             value={formData.status}

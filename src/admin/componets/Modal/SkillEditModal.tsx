@@ -47,7 +47,7 @@ const SkillEditModal: React.FC<SkillEditModalProps> = ({ show, onHide, item, onS
       <Modal.Body className="px-4 py-3">
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Skill Name</Form.Label>
+            <Form.Label>Skill Name<span className="text-danger"> *</span></Form.Label>
             <Form.Control
               type="text"
               name="skillName"
@@ -58,7 +58,7 @@ const SkillEditModal: React.FC<SkillEditModalProps> = ({ show, onHide, item, onS
 
 
           <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
             <Form.Select
               name="status"
               value={formData.status}

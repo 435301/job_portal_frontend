@@ -52,7 +52,7 @@ const CourseEditModal: React.FC<CourseEditModalProps> = ({ show, onHide, item, o
             <Modal.Body className="px-4 py-3">
                 <Form>
                     <Form.Group>
-                        <Form.Label>Select Education</Form.Label>
+                        <Form.Label>Select Education<span className="text-danger"> *</span></Form.Label>
                         <Form.Select
                             name="educationId"
                             value={formData.educationId}
@@ -69,7 +69,7 @@ const CourseEditModal: React.FC<CourseEditModalProps> = ({ show, onHide, item, o
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Course Name</Form.Label>
+                        <Form.Label>Course Name<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="courseName"
@@ -80,7 +80,7 @@ const CourseEditModal: React.FC<CourseEditModalProps> = ({ show, onHide, item, o
 
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
+                        <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                         <Form.Select
                             name="status"
                             value={formData.status}

@@ -117,7 +117,7 @@ function CreateNoticePeriod() {
                                 <Row className="g-3">
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Notice Period Name</Form.Label>
+                                            <Form.Label>Notice Period Name<span className="text-danger"> *</span></Form.Label>
                                             <Form.Control
                                                 type="text"
                                                 name="noticePeriodName"
@@ -133,7 +133,7 @@ function CreateNoticePeriod() {
                                     </Col>
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Status</Form.Label>
+                                            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}

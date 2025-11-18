@@ -123,7 +123,7 @@ function CreateSchoolMedium() {
                                   
                                      <Col md={4}>
                                             <Form.Group>
-                                                <Form.Label>Medium Name</Form.Label>
+                                                <Form.Label>Medium Name<span className="text-danger"> *</span></Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     name="schoolMedium"
@@ -139,7 +139,7 @@ function CreateSchoolMedium() {
                                         </Col>
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Status</Form.Label>
+                                            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}

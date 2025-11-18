@@ -50,7 +50,7 @@ const SchoolBoardEditModal: React.FC<SchoolBoardEditModalProps> = ({ show, onHid
                 <Form>
                 
                     <Form.Group className="mb-3">
-                        <Form.Label>Board Name</Form.Label>
+                        <Form.Label>Board Name<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="boardName"
@@ -61,7 +61,7 @@ const SchoolBoardEditModal: React.FC<SchoolBoardEditModalProps> = ({ show, onHid
 
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
+                        <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                         <Form.Select
                             name="status"
                             value={formData.status}

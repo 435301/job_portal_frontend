@@ -48,7 +48,7 @@ const NoticePeriodEditModal: React.FC<NoticePeriodEditModalProps> = ({ show, onH
       <Modal.Body className="px-4 py-3">
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Notice Period Name</Form.Label>
+            <Form.Label>Notice Period Name<span className="text-danger"> *</span></Form.Label>
             <Form.Control
               type="text"
               name="educationName"
@@ -59,7 +59,7 @@ const NoticePeriodEditModal: React.FC<NoticePeriodEditModalProps> = ({ show, onH
 
 
           <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
             <Form.Select
               name="status"
               value={formData.status}

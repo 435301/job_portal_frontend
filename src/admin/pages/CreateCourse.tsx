@@ -124,7 +124,7 @@ function CreateCourse() {
                                 <Row className="g-3">
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Select Education</Form.Label>
+                                            <Form.Label>Select Education<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="educationId"
                                                 value={formData.educationId}
@@ -147,7 +147,7 @@ function CreateCourse() {
                                     </Col>
                                      <Col md={4}>
                                             <Form.Group>
-                                                <Form.Label>Course Name</Form.Label>
+                                                <Form.Label>Course Name<span className="text-danger"> *</span></Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     name="courseName"
@@ -163,7 +163,7 @@ function CreateCourse() {
                                         </Col>
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Status</Form.Label>
+                                            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}

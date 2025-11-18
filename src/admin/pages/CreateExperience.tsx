@@ -117,7 +117,7 @@ function CreateExperience() {
                                 <Row className="g-3">
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Experience Name</Form.Label>
+                                            <Form.Label>Experience Name<span className="text-danger"> *</span></Form.Label>
                                             <Form.Control
                                                 type="text"
                                                 name="experienceName"
@@ -133,7 +133,7 @@ function CreateExperience() {
                                     </Col>
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Status</Form.Label>
+                                            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}

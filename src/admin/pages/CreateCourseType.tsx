@@ -124,7 +124,7 @@ function CreateCourseType() {
                                   
                                      <Col md={4}>
                                             <Form.Group>
-                                                <Form.Label>Course Name</Form.Label>
+                                                <Form.Label>Course Name<span className="text-danger"> *</span></Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     name="courseType"
@@ -140,7 +140,7 @@ function CreateCourseType() {
                                         </Col>
                                     <Col md={4}>
                                         <Form.Group>
-                                            <Form.Label>Status</Form.Label>
+                                            <Form.Label>Status<span className="text-danger"> *</span></Form.Label>
                                             <Form.Select
                                                 name="status"
                                                 value={formData.status}
