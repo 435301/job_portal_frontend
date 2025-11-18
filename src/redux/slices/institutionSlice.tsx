@@ -65,7 +65,6 @@ export const getAllInstitutions = createAsyncThunk<
       const response = await axios.post(`${BASE_URL_JOB}/institutions/list`, params, getAuthAdminHeaders());
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch institutions");
       return rejectWithValue(error.response?.data?.message);
     }
   }
@@ -78,7 +77,6 @@ export const getInstitutionById = createAsyncThunk<Institution, number>(
       const response = await axios.get(`${BASE_URL_JOB}/institutions/${id}`, getAuthAdminHeaders());
       return response.data.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch institutions");
       return rejectWithValue(error.response?.data?.message);
     }
   }

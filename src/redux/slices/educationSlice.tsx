@@ -65,7 +65,6 @@ export const getAllEducations = createAsyncThunk<
       const response = await axios.post(`${BASE_URL_JOB}/educations/list`, params, getAuthAdminHeaders());
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch educations");
       return rejectWithValue(error.response?.data?.message);
     }
   }
@@ -78,7 +77,6 @@ export const getEducationById = createAsyncThunk<Education, number>(
       const response = await axios.get(`${BASE_URL_JOB}/educations/${id}`, getAuthAdminHeaders());
       return response.data.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch education");
       return rejectWithValue(error.response?.data?.message);
     }
   }

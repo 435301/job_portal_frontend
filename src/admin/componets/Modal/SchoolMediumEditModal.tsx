@@ -35,16 +35,6 @@ const SchoolMediumEditModal: React.FC<SchoolMediumEditModalProps> = ({ show, onH
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSave = async () => {
-        try {
-            await dispatch(updateSchoolMedium({ id: formData.id, updateData: formData }));
-            onSave(formData); // update parent UI
-            onHide();
-        } catch (error) {
-            console.error("Failed to update school medium:", error);
-        }
-    };
-
     if (!item) return null;
 
     return (
@@ -86,7 +76,7 @@ const SchoolMediumEditModal: React.FC<SchoolMediumEditModalProps> = ({ show, onH
                 <Button variant="secondary" onClick={onHide}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={()=>onSave(formData)}>
                     Save Changes
                 </Button>
             </Modal.Footer>

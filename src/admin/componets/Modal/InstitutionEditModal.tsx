@@ -35,16 +35,6 @@ const InstitutionEditModal: React.FC<InstitutionEditModalProps> = ({ show, onHid
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = async () => {
-    try {
-      await dispatch(updateInstitution({ id: formData.id, updateData: formData }));
-      onSave(formData); // update parent UI
-      onHide();
-    } catch (error) {
-      console.error("Failed to update education:", error);
-    }
-  };
-
   if (!item) return null;
 
   return (
@@ -85,7 +75,7 @@ const InstitutionEditModal: React.FC<InstitutionEditModalProps> = ({ show, onHid
         <Button variant="secondary" onClick={onHide}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="primary" onClick={()=>onSave(formData)}>
           Save Changes
         </Button>
       </Modal.Footer>

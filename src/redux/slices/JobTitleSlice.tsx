@@ -65,7 +65,6 @@ export const getAllJobTitle = createAsyncThunk<
       const response = await axios.post(`${BASE_URL_JOB}/jobTitles/list`, params, getAuthAdminHeaders());
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch jobTitles");
       return rejectWithValue(error.response?.data?.message);
     }
   }
@@ -78,7 +77,6 @@ export const getJobTitleById = createAsyncThunk<JobTitle, number>(
       const response = await axios.get(`${BASE_URL_JOB}/jobTitles/${id}`, getAuthAdminHeaders());
       return response.data.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch jobTitles");
       return rejectWithValue(error.response?.data?.message);
     }
   }

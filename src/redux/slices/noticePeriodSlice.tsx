@@ -65,7 +65,6 @@ export const getAllNoticePeriods = createAsyncThunk<
       const response = await axios.post(`${BASE_URL_JOB}/noticeperiods/list`, params, getAuthAdminHeaders());
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch notice periods");
       return rejectWithValue(error.response?.data?.message);
     }
   }
@@ -78,7 +77,6 @@ export const getNoticePeriodById = createAsyncThunk<NoticePeriod, number>(
       const response = await axios.get(`${BASE_URL_JOB}/noticeperiods/${id}`, getAuthAdminHeaders());
       return response.data.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch notice periods");
       return rejectWithValue(error.response?.data?.message);
     }
   }

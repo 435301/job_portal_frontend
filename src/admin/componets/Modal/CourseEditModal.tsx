@@ -40,16 +40,6 @@ const CourseEditModal: React.FC<CourseEditModalProps> = ({ show, onHide, item, o
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSave = async () => {
-        try {
-            await dispatch(updateCourse({ id: formData.id, updateData: formData }));
-            onSave(formData); // update parent UI
-            onHide();
-        } catch (error) {
-            console.error("Failed to update course:", error);
-        }
-    };
-
     if (!item) return null;
 
     return (
@@ -107,7 +97,7 @@ const CourseEditModal: React.FC<CourseEditModalProps> = ({ show, onHide, item, o
                 <Button variant="secondary" onClick={onHide}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={()=>onSave(formData)}>
                     Save Changes
                 </Button>
             </Modal.Footer>

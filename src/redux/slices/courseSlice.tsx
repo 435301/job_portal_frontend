@@ -67,7 +67,6 @@ export const getAllCourses = createAsyncThunk<any, { page?: number; status?: str
             const response = await axios.post(`${BASE_URL_JOB}/course/list`,params,getAuthAdminHeaders() );
             return response.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to fetch courses");
             return rejectWithValue(error.response?.data?.message);
         }
     }
@@ -80,7 +79,6 @@ export const getCourseById = createAsyncThunk<Course, number>(
             const response = await axios.get(`${BASE_URL_JOB}/course/${id}`, getAuthAdminHeaders());
             return response.data.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to fetch course");
             return rejectWithValue(error.response?.data?.message);
         }
     }

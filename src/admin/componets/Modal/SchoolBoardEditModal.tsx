@@ -37,16 +37,6 @@ const SchoolBoardEditModal: React.FC<SchoolBoardEditModalProps> = ({ show, onHid
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSave = async () => {
-        try {
-            await dispatch(updateSchoolBoard({ id: formData.id, updateData: formData }));
-            onSave(formData); // update parent UI
-            onHide();
-        } catch (error) {
-            console.error("Failed to update school board:", error);
-        }
-    };
-
     if (!item) return null;
 
     return (
@@ -88,7 +78,7 @@ const SchoolBoardEditModal: React.FC<SchoolBoardEditModalProps> = ({ show, onHid
                 <Button variant="secondary" onClick={onHide}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={()=>onSave(formData)}>
                     Save Changes
                 </Button>
             </Modal.Footer>
