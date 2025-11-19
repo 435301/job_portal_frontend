@@ -36,6 +36,7 @@ export interface FormErrors {
   stateId?:string;
   employmentType?:string;
   availability?:string;
+  gradingType?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -394,5 +395,18 @@ export const validateAvailabilityForm = (formData: { availability?: string; stat
     errors.status = "Status is required";
   }
 
+  return errors;
+};
+
+//  GRADING SYSTEM FORM VALIDATION
+export const validateGradingSystemForm = (formData: { gradingType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.gradingType || !formData.gradingType.trim()) {
+    errors.gradingType = "Grading System is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
   return errors;
 };
