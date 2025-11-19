@@ -3,24 +3,24 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useAppDispatch } from "../../../redux/hooks.tsx";
 
-interface Gender {
+interface WorkPermit {
     id: number;
-    gender: string;
+    workPermit: string;
     status: number | any;
     ipAddress: string;
 }
 
-interface GenderEditModalProps {
+interface WorkPermitEditModalProps {
     show: boolean;
     onHide: () => void;
-    item: Gender | null;
-    onSave: (updated: Gender) => void;
+    item: WorkPermit | null;
+    onSave: (updated: WorkPermit) => void;
 }
 
-const GenderEditModal: React.FC<GenderEditModalProps> = ({ show, onHide, item, onSave }) => {
-    const [formData, setFormData] = useState<Gender>({
+const WorkPermitEditModal: React.FC<WorkPermitEditModalProps> = ({ show, onHide, item, onSave }) => {
+    const [formData, setFormData] = useState<WorkPermit>({
         id: 0,
-        gender: "",
+        workPermit: "",
         status: "",
         ipAddress: "",
     });
@@ -39,18 +39,18 @@ const GenderEditModal: React.FC<GenderEditModalProps> = ({ show, onHide, item, o
         <Modal show={show} onHide={onHide} centered size={"md" as any} backdrop="static">
             <Modal.Header closeButton className="bg-light text-white">
                 <Modal.Title>
-                    <i className="bi bi-pencil-square me-2"></i>Edit Gender
+                    <i className="bi bi-pencil-square me-2"></i>Edit Work Permit
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="px-4 py-3">
                 <Form>
                 
                     <Form.Group className="mb-3">
-                        <Form.Label>Gender<span className="text-danger"> *</span></Form.Label>
+                        <Form.Label>Work Permit<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
-                            name="gender"
-                            value={formData.gender}
+                            name="workPermit"
+                            value={formData.workPermit}
                             onChange={handleChange}
                         />
                     </Form.Group>
@@ -82,4 +82,4 @@ const GenderEditModal: React.FC<GenderEditModalProps> = ({ show, onHide, item, o
     );
 };
 
-export default GenderEditModal;
+export default WorkPermitEditModal;

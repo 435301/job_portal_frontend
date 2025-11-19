@@ -39,6 +39,7 @@ export interface FormErrors {
   gradingType?:string;
   title?:string;
   percentage?:number;
+  workPermit?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -430,3 +431,17 @@ export const validateProfilePercentageForm = (formData: { title?: string; percen
   }
   return errors;
 };
+
+//   WORK PERMIT FORM VALIDATION
+export const validateWorkPermitForm = (formData: { workPermit?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.workPermit || !formData.workPermit.trim()) {
+    errors.workPermit = "Work Permit is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}
+  

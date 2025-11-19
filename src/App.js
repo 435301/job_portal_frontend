@@ -77,6 +77,8 @@ import GradingSystemManage from './admin/pages/GradingSystemManage.tsx';
 import CreateGradingSystem from './admin/pages/CreateGradingSystem.tsx';
 import ProfilePercentageManage from './admin/pages/ProfilePercentageManage.tsx';
 import CreateProfilePercentage from './admin/pages/CreateProfilePercentage.tsx';
+import WorkPermitManage from './admin/pages/WorkPermitManage.tsx';
+import CreateWorkPermit from './admin/pages/CreateWorkPermit.tsx';
 
 
 
@@ -133,6 +135,7 @@ const App = () => {
         <Route path="/admin/manage-availability" element={<AvailabilityManage />} />
         <Route path="/admin/manage-grading-system" element={<GradingSystemManage />} />
         <Route path="/admin/manage-profile-percentage" element={<ProfilePercentageManage />} />
+        <Route path="/admin/manage-work-permit" element={<WorkPermitManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
@@ -153,6 +156,7 @@ const App = () => {
         <Route path="/admin/create-availability" element={<CreateAvailability />} />
         <Route path="/admin/create-grading-system" element={<CreateGradingSystem />} />
         <Route path="/admin/create-profile-percentage" element={<CreateProfilePercentage />} />
+        <Route path="/admin/create-work-permit" element={<CreateWorkPermit />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
