@@ -80,26 +80,6 @@ const PersonalDetailsSection = () => {
               </div>
             </div>
 
-            {/* ===== More Information ===== */}
-            <div className="mb-4">
-              <Form.Label className="fw-bold">More information</Form.Label>
-              <div className="d-flex flex-wrap gap-2">
-                {["Single parent", "Working mother", "Retired (60+)", "LGBTQ+"].map(
-                  (info) => (
-                    <Badge
-                      bg="light"
-                      text="dark"
-                      className="border rounded-pill px-3 py-2"
-                      key={info}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {info}
-                    </Badge>
-                  )
-                )}
-              </div>
-            </div>
-
             {/* ===== Marital Status ===== */}
             <div className="mb-4">
               <Form.Label className="fw-bold">Marital status<span className="text-danger"> *</span></Form.Label>
@@ -138,7 +118,7 @@ const PersonalDetailsSection = () => {
             <Row className="mb-4">
              
               <Col md={6}>
-                <Form.Label className="fw-bold">Work permit for USA<span className="text-danger"> *</span></Form.Label>
+                <Form.Label className="fw-bold">Work permit for USA</Form.Label>
                 <Form.Select>
                   <option>Select work permit</option>
                   <option>H1B</option>
