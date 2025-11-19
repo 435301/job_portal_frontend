@@ -43,6 +43,7 @@ const Sidebar = ({
         { id: "state", text: "State", path: "/admin/manage-states" },
         { id: "city", text: "City", path: "/admin/manage-cities" },
         { id: "employmentType", text: "Employment Type", path: "/admin/manage-employment-type" },
+        { id: "availability", text: "Availability", path: "/admin/manage-availability" },
       ],
     },
     {

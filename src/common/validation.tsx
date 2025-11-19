@@ -35,6 +35,7 @@ export interface FormErrors {
   cityName?:string;
   stateId?:string;
   employmentType?:string;
+  availability?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -372,6 +373,21 @@ export const validateEmploymentTypeForm = (formData: {  employmentType?: string;
 
   if (!formData.employmentType || !formData.employmentType.trim()) {
     errors.employmentType = "Employment Type is required";
+  }
+
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  AVAILABILITY FORM VALIDATION
+export const validateAvailabilityForm = (formData: { availability?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.availability || !formData.availability.trim()) {
+    errors.availability = "Availability is required";
   }
 
   if (formData.status === undefined || formData.status === null || formData.status === "") {
