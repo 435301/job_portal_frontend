@@ -68,18 +68,21 @@ const Register = () => {
       setErrors(formErrors);
     } else {
       try {
-        const ip = await getUserIpAddress();
+        // const ip = await getUserIpAddress();
         // Update selfOrOther based on activeTab
         const payload = {
           ...formData,
            captcha: captchaText.trim(),
           selfOrOther: activeTab === "candidate" ? 1 : 2,
-          ipAddress: ip,
+          ipAddress: "127.02.99.11",
         };
         const resultAction = await dispatch(registerEmployee(payload));
         if (registerEmployee.fulfilled.match(resultAction)) {
-          navigate("/verify-email");
-        }
+  navigate("/verify-email", {
+    state: { email: formData.email }
+  });
+}
+
       } catch (err) {
         console.error("Registration failed", err);
       }

@@ -9,11 +9,15 @@ import "../assets/css/style.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-// 🖼️ Import left-side image
+//  Import left-side image
 import verifyImage from "../assets/img/reg-2.png"; // update path if needed
 import emailIcon from "../assets/img/email.png";
+import { useLocation } from "react-router-dom";
 
 const VerifyEmail = () => {
+  const location = useLocation();
+  const email = location.state?.email
+  console.log('email', email)
   useEffect(() => {
     new WOW.WOW({ live: false }).init();
   }, []);
@@ -25,7 +29,6 @@ const VerifyEmail = () => {
 
         <div className="hero-header-2 overflow-hidden px-5 pt-5">
           <Row className="align-items-center">
-            {/* 🖼️ Left Image Section */}
             <Col
               lg={7}
               className="text-center wow fadeInLeft d-none d-lg-block"
@@ -43,7 +46,6 @@ const VerifyEmail = () => {
               />
             </Col>
 
-            {/* ✅ Right Verify Email Card */}
             <Col lg={5} md={8} sm={10} xs={12}>
               <Container className="bg-primary-1">
                 <Row className="align-items-center justify-content-center login-container">
@@ -52,7 +54,6 @@ const VerifyEmail = () => {
                       className="verify-card text-center shadow-sm rounded-4 wow fadeInUp"
                       data-wow-delay="0.3s"
                     >
-                      {/* Pink Header */}
                       <div className="verify-header py-6">
 
                       </div>
@@ -70,7 +71,7 @@ const VerifyEmail = () => {
                           We’ve emailed a verification link to
                         </p>
                         <p className="fw-semibold text-danger mb-4">
-                          padmavathi.richlabz@gmail.com
+                          {email}
                         </p>
                         <p className=" mb-5 pb-2">
                           Please check your inbox and click the link <br></br>to verify your
