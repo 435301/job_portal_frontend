@@ -2,20 +2,20 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-interface Course {
+interface State {
   id: number;
-  educationName: string;
-  courseName: string;
+  countryName: string;
+  stateName: string;
   status: number | any;
 }
 
-interface CourseEditModalProps {
+interface StateEditModalProps {
   show: boolean;
   onHide: () => void;
-  item: Course | null;
+  item: State | null;
 }
 
-const CourseViewModal: React.FC<CourseEditModalProps> = ({ show, onHide, item }) => {
+const StateViewModal: React.FC<StateEditModalProps> = ({ show, onHide, item }) => {
   if (!item) return null;
 
   return (
@@ -29,13 +29,13 @@ const CourseViewModal: React.FC<CourseEditModalProps> = ({ show, onHide, item })
     >
       <Modal.Header closeButton className="bg-light text-white">
         <Modal.Title>
-          <i className="bi bi-eye me-2"></i>View Course
+          <i className="bi bi-eye me-2"></i>View State
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="px-4 py-3">
         <div className="fs-6">
-          <p><strong>Education Name:</strong> {item.educationName}</p>
-           <p><strong>Course Name:</strong> {item.courseName}</p>
+          <p><strong>Country Name:</strong> {item.countryName}</p>
+           <p><strong>State Name:</strong> {item.stateName}</p>
           <p>
             <strong>Status:</strong>{" "}
             <span
@@ -57,4 +57,4 @@ const CourseViewModal: React.FC<CourseEditModalProps> = ({ show, onHide, item })
   );
 };
 
-export default CourseViewModal;
+export default StateViewModal;

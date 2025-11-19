@@ -16,6 +16,7 @@ import specializationReducer from "./slices/specializationSlice.tsx";
 import maritalStatusReducer from "./slices/maritalStatusSlice.tsx";
 import genderReducer from "./slices/genderSlice.tsx";
 import countryReducer from "./slices/countrySlice.tsx";
+import stateReducer from "./slices/stateSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ export const store = configureStore({
     maritalStatus: maritalStatusReducer,
     gender: genderReducer,
     country:countryReducer,
+    state: stateReducer, 
   },
 });
 

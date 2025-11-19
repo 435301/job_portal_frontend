@@ -65,6 +65,8 @@ import GenderManage from './admin/pages/GnderManage.tsx';
 import CreateGender from './admin/pages/CreateGender.tsx';
 import CountryManage from './admin/pages/CountryManage.tsx';
 import CreateCountry from './admin/pages/CreateCountry.tsx';
+import StateManage from './admin/pages/StateManage.tsx';
+import CreateState from './admin/pages/CreateState.tsx';
 
 
 
@@ -115,6 +117,7 @@ const App = () => {
         <Route path="/admin/manage-marital-status" element={<MaritalStatusManage />} />
         <Route path="/admin/manage-gender" element={<GenderManage />} />
         <Route path="/admin/manage-country" element={<CountryManage />} />
+        <Route path="/admin/manage-states" element={<StateManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
@@ -129,6 +132,7 @@ const App = () => {
         <Route path="/admin/create-marital-status" element={<CreateMaritalStatus />} />
         <Route path="/admin/create-gender" element={<CreateGender />} />
         <Route path="/admin/create-country" element={<CreateCountry />} />
+        <Route path="/admin/create-state" element={<CreateState />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

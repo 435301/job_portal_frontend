@@ -40,6 +40,7 @@ const Sidebar = ({
         { id: "maritalStatus", text: "Marital Status", path: "/admin/manage-marital-status" },
         { id: "gender", text: "Gender", path: "/admin/manage-gender" },
         { id: "country", text: "Country", path: "/admin/manage-country" },
+        { id: "state", text: "State", path: "/admin/manage-states" },
       ],
     },
     {
