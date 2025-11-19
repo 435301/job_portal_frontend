@@ -104,7 +104,7 @@ const ITSkillsSection = () => {
               </Col>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label className="fw-semibold">Last used</Form.Label>
+                  <Form.Label className="fw-semibold">Last used<span className="text-danger">*</span></Form.Label>
                   <Form.Select className="py-2">
                     <option>Last used</option>
                     <option>2025</option>
@@ -117,7 +117,7 @@ const ITSkillsSection = () => {
 
             {/* Experience */}
             <Form.Group className="mb-3">
-              <Form.Label className="fw-semibold">Experience</Form.Label>
+              <Form.Label className="fw-semibold">Experience<span className="text-danger">*</span></Form.Label>
               <Row>
                 <Col md={6}>
                   <Form.Select className="py-2">

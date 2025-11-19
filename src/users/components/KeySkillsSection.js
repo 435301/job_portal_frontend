@@ -92,7 +92,7 @@ const KeySkillsSection = () => {
             Add skills that best define your expertise (Minimum 1)
           </p>
 
-          <h6 className="fw-semibold mb-2">Skills</h6>
+          <h6 className="fw-semibold mb-2">Skills<span className="text-danger"> *</span></h6>
 
           {/* ===== Skills Inside Modal ALSO with Remove ===== */}
           <div className="mb-3 d-flex flex-wrap gap-2">

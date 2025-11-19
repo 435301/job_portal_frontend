@@ -83,7 +83,7 @@ const EmploymentSection = () => {
             {/* Current Employment Section */}
             <div className="radio-row mb-4">
               <div className="mb-3 d-flex align-items-center flex-wrap">
-                <h6 className="mb-2 me-3">Is this your current employment?</h6>
+                <h6 className="mb-2 me-3">Is this your current employment?<span className="text-danger"> *</span></h6>
                 <div className="d-flex align-items-center">
                   <label
                     className="form-check-label fs-6 text-muted small me-3"
@@ -108,7 +108,7 @@ const EmploymentSection = () => {
               </div>
 
               <div className="mb-3">
-                <h6 className="mb-3">Employment type</h6>
+                <h6 className="mb-3">Employment type<span className="text-danger"> *</span></h6>
                 <div className="d-flex">
                   <button className="btn btn-outline-secondary-1 me-1">Full time</button>
                   <button className="btn btn-outline-secondary-1">Internship</button>
@@ -118,7 +118,7 @@ const EmploymentSection = () => {
 
             {/* Total Experience */}
             <div className="row mb-3 yers">
-              <h6 className="mb-3">Total experience</h6>
+              <h6 className="mb-3">Total experience<span className="text-danger"> *</span></h6>
               <div className="col-md-6 ">
                 <label htmlFor="expYears">Years</label>
                 <Form.Select id="expYears">
@@ -142,11 +142,11 @@ const EmploymentSection = () => {
             {/* Company and Title */}
             <div className="row mb-3 g-3">
               <div className="col-md-12">
-                <label className="form-section-label">Current company name</label>
+                <label className="form-section-label">Current company name<span className="text-danger"> *</span></label>
                 <Form.Control type="text" placeholder="Type your company name" />
               </div>
               <div className="col-md-12">
-                <label className="form-section-label">Current job title</label>
+                <label className="form-section-label">Current job title<span className="text-danger"> *</span></label>
                 <Form.Control type="text" placeholder="Type your designation" />
               </div>
             </div>
@@ -154,7 +154,7 @@ const EmploymentSection = () => {
             {/* Joining Date */}
             <div className="row mb-3">
               <div className="col-md-12">
-                <label className="form-section-label">Joining date</label>
+                <label className="form-section-label">Joining date<span className="text-danger"> *</span></label>
                 <div className="d-flex gap-2">
                   <Form.Select>
                     <option>Year</option>
@@ -176,7 +176,7 @@ const EmploymentSection = () => {
             <div className="row mb-3">
               <div className="col-md-12">
                 <label className="form-section-label fw-semibold mb-2">
-                  Current Salary
+                  Current Salary<span className="text-danger"> *</span>
                 </label>
                 <div className="input-group">
                   <Dropdown>
@@ -196,7 +196,7 @@ const EmploymentSection = () => {
             {/* Skills Used */}
             <div className="row mb-3">
               <div className="col-md-12">
-                <label className="form-section-label">Skills used</label>
+                <label className="form-section-label">Skills used<span className="text-danger"> *</span></label>
                 <Form.Control type="text" placeholder="Add Skills" />
               </div>
             </div>
@@ -212,7 +212,7 @@ const EmploymentSection = () => {
             {/* Notice Period */}
             <div className="row mb-3">
               <div className="col-md-12">
-                <label className="form-section-label">Notice period</label>
+                <label className="form-section-label">Notice period<span className="text-danger"> *</span></label>
                 <Form.Select>
                   <option>Select notice period</option>
                   <option>15 Days</option>

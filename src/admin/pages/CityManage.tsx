@@ -245,7 +245,7 @@ function CityManage() {
                                         <thead className="bg-light">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Country Name</th>
+                                                <th>Country Name</th>v 
                                                 <th>State Name</th>
                                                 <th>City Name</th>
                                                 <th>Status</th>

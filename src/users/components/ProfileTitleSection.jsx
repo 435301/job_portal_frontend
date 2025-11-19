@@ -54,7 +54,7 @@ const ProfileTitleSection = () => {
           </p>
           <Form>
             <Form.Group>
-              <Form.Label className="fw-semibold">Profile Title</Form.Label>
+              <Form.Label className="fw-semibold">Profile Title<span className="text-danger"> *</span></Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}

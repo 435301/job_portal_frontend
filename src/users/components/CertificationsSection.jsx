@@ -86,111 +86,26 @@ const CertificationsSection = () => {
             {/* Certification ID */}
             <Form.Group className="mb-3">
               <Form.Label className="fw-semibold">
-                Certification completion ID
+                Issued By<span className="text-danger"> *</span>
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Please mention your course completion ID"
+                placeholder="Please mention the issuer name "
                 className="py-2"
               />
             </Form.Group>
 
             {/* Certification URL */}
             <Form.Group className="mb-3">
-              <Form.Label className="fw-semibold">Certification URL</Form.Label>
+              <Form.Label className="fw-semibold">Level</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Please mention your completion URL"
+                placeholder="Please mention the level (Beginner, Intermediate, Expert)"
                 className="py-2"
               />
             </Form.Group>
 
-            {/* Certification Validity */}
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-semibold">
-                Certification validity
-              </Form.Label>
-              <Row className="align-items-center gy-2 gx-2 flex-wrap-nowrap">
-                {/* From Month */}
-                <Col xs="auto" className="flex-grow-1">
-                  <Form.Select className="py-2">
-                    <option>MM</option>
-                    {[
-                      "Jan",
-                      "Feb",
-                      "Mar",
-                      "Apr",
-                      "May",
-                      "Jun",
-                      "Jul",
-                      "Aug",
-                      "Sep",
-                      "Oct",
-                      "Nov",
-                      "Dec",
-                    ].map((m) => (
-                      <option key={m}>{m}</option>
-                    ))}
-                  </Form.Select>
-                </Col>
-
-                {/* From Year */}
-                <Col xs="auto" className="flex-grow-1">
-                  <Form.Select className="py-2">
-                    <option>YYYY</option>
-                    {[2025, 2024, 2023, 2022, 2021].map((y) => (
-                      <option key={y}>{y}</option>
-                    ))}
-                  </Form.Select>
-                </Col>
-
-                {/* "To" label */}
-                <Col xs="auto" className="text-center fw-semibold">
-                  To
-                </Col>
-
-                {/* To Month */}
-                <Col xs="auto" className="flex-grow-1">
-                  <Form.Select className="py-2">
-                    <option>MM</option>
-                    {[
-                      "Jan",
-                      "Feb",
-                      "Mar",
-                      "Apr",
-                      "May",
-                      "Jun",
-                      "Jul",
-                      "Aug",
-                      "Sep",
-                      "Oct",
-                      "Nov",
-                      "Dec",
-                    ].map((m) => (
-                      <option key={m}>{m}</option>
-                    ))}
-                  </Form.Select>
-                </Col>
-
-                {/* To Year */}
-                <Col xs="auto" className="flex-grow-1">
-                  <Form.Select className="py-2">
-                    <option>YYYY</option>
-                    {[2025, 2024, 2023, 2022, 2021].map((y) => (
-                      <option key={y}>{y}</option>
-                    ))}
-                  </Form.Select>
-                </Col>
-              </Row>
-
-
-              {/* Expiry Checkbox */}
-              <Form.Check
-                type="checkbox"
-                label="This certification does not expire"
-                className="mt-3"
-              />
-            </Form.Group>
+         
           </Modal.Body>
 
           <Modal.Footer className="border-0">

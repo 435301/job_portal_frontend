@@ -72,7 +72,7 @@ const PersonalDetailsSection = () => {
           <Form>
             {/* ===== Gender ===== */}
             <div className="mb-4">
-              <Form.Label className="fw-bold">Gender</Form.Label>
+              <Form.Label className="fw-bold">Gender<span className="text-danger"> *</span></Form.Label>
               <div className="d-flex gap-3">
                 <Form.Check inline label="Male" name="gender" type="radio" />
                 <Form.Check inline label="Female" name="gender" type="radio" />
@@ -102,7 +102,7 @@ const PersonalDetailsSection = () => {
 
             {/* ===== Marital Status ===== */}
             <div className="mb-4">
-              <Form.Label className="fw-bold">Marital status</Form.Label>
+              <Form.Label className="fw-bold">Marital status<span className="text-danger"> *</span></Form.Label>
               <div className="d-flex flex-wrap gap-2">
                 {[
                   "Single/unmarried",
@@ -128,7 +128,7 @@ const PersonalDetailsSection = () => {
             {/* ===== Date of Birth ===== */}
             <Row className="mb-4">
               <Col md={4}>
-                <Form.Label className="fw-bold">Date of Birth</Form.Label>
+                <Form.Label className="fw-bold">Date of Birth<span className="text-danger"> *</span></Form.Label>
                 <Form.Control type="date" />
               </Col>
 
@@ -136,31 +136,9 @@ const PersonalDetailsSection = () => {
 
             {/* ===== Work Permits ===== */}
             <Row className="mb-4">
-              <Col md={12}>
-                <Form.Label className="fw-bold">Category</Form.Label>
-                <div className="d-flex flex-wrap gap-2 mb-4">
-                  {[
-                    "General",
-                    "Scheduled Caste (SC)",
-                    "Scheduled Tribe (ST)",
-                    "OBC - Creamy",
-                    "OBC - Non creamy",
-                    "Other",
-                  ].map((cat) => (
-                    <Badge
-                      bg="light"
-                      text="dark"
-                      className="border rounded-pill px-3 py-2"
-                      key={cat}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {cat}
-                    </Badge>
-                  ))}
-                </div>
-              </Col>
+             
               <Col md={6}>
-                <Form.Label className="fw-bold">Work permit for USA</Form.Label>
+                <Form.Label className="fw-bold">Work permit for USA<span className="text-danger"> *</span></Form.Label>
                 <Form.Select>
                   <option>Select work permit</option>
                   <option>H1B</option>
@@ -177,15 +155,15 @@ const PersonalDetailsSection = () => {
             {/* ===== Address and Location ===== */}
             <Row className="mb-4">
               <Col md={6}>
-                <Form.Label className="fw-bold">Permanent address</Form.Label>
+                <Form.Label className="fw-bold">Permanent address<span className="text-danger"> *</span></Form.Label>
                 <Form.Control type="text" placeholder="Enter your permanent address" />
               </Col>
               <Col md={3}>
-                <Form.Label className="fw-bold">Hometown</Form.Label>
+                <Form.Label className="fw-bold">Hometown<span className="text-danger"> *</span></Form.Label>
                 <Form.Control type="text" />
               </Col>
               <Col md={3}>
-                <Form.Label className="fw-bold">Pincode</Form.Label>
+                <Form.Label className="fw-bold">Pincode<span className="text-danger"> *</span></Form.Label>
                 <Form.Control type="text" />
               </Col>
             </Row>

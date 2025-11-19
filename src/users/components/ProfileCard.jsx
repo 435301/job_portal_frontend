@@ -133,7 +133,7 @@ const ProfileCard = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content p-3 rounded-4">
 
-              <h5 className="fw-bold mb-3">Edit Mobile Number</h5>
+              <h5 className="fw-bold mb-3">Edit Mobile Number<span className="text-danger"> *</span></h5>
 
               <input
                 type="text"
