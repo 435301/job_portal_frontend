@@ -69,6 +69,8 @@ import StateManage from './admin/pages/StateManage.tsx';
 import CreateState from './admin/pages/CreateState.tsx';
 import CityManage from './admin/pages/CityManage.tsx';
 import CreateCity from './admin/pages/CreateCity.tsx';
+import EmploymentTypeManage from './admin/pages/EmploymentManage.tsx';
+import CreateEmploymentType from './admin/pages/CreateEmploymentType.tsx';
 
 
 
@@ -121,6 +123,7 @@ const App = () => {
         <Route path="/admin/manage-country" element={<CountryManage />} />
         <Route path="/admin/manage-states" element={<StateManage />} />
         <Route path="/admin/manage-cities" element={<CityManage />} />
+        <Route path="/admin/manage-employment-type" element={<EmploymentTypeManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
@@ -137,6 +140,7 @@ const App = () => {
         <Route path="/admin/create-country" element={<CreateCountry />} />
         <Route path="/admin/create-state" element={<CreateState />} />
         <Route path="/admin/create-city" element={<CreateCity />} />
+        <Route path="/admin/create-employment-type" element={<CreateEmploymentType />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

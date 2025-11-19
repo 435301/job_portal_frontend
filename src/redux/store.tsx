@@ -18,6 +18,7 @@ import genderReducer from "./slices/genderSlice.tsx";
 import countryReducer from "./slices/countrySlice.tsx";
 import stateReducer from "./slices/stateSlice.tsx";
 import cityReducer from "./slices/citiesSlice.tsx";
+import employmentReducer from "./slices/employementTypeSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ export const store = configureStore({
     country:countryReducer,
     state: stateReducer,
     city: cityReducer, 
+    employmentType: employmentReducer,
   },
 });
 
