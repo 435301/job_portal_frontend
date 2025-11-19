@@ -37,6 +37,7 @@ const Sidebar = ({
         { id: "courseType", text: "Course Type", path: "/admin/manage-course-types" },
         { id: "schoolBoard", text: "School Board", path: "/admin/manage-school-boards" },
         { id: "schoolMedium", text: "School Medium", path: "/admin/manage-school-medium" },
+        { id: "maritalStatus", text: "Marital Status", path: "/admin/manage-marital-status" },
       ],
     },
     {

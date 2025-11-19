@@ -59,6 +59,8 @@ import SchoolMediumManage from './admin/pages/SchoolMediumManage.tsx';
 import CreateSchoolMedium from './admin/pages/CreateSchoolMedium.tsx';
 import CreateSpecialization from './admin/pages/CreateSpecialization.tsx';
 import SpecializationManage from './admin/pages/SpecializationManage.tsx';
+import MaritalStatusManage from './admin/pages/MaritalStatusManage.tsx';
+import CreateMaritalStatus from './admin/pages/CreateMaritalStatus.tsx';
 
 
 
@@ -106,6 +108,7 @@ const App = () => {
         <Route path="/admin/manage-course-types" element={<CourseTypeManage />} />
         <Route path="/admin/manage-school-boards" element={<SchoolBoardManage />} />
         <Route path="/admin/manage-school-medium" element={<SchoolMediumManage />} />
+        <Route path="/admin/manage-marital-status" element={<MaritalStatusManage />} />
         <Route path="/admin/create-education" element={<CreateEducation />} />
         <Route path="/admin/create-skill" element={<CreateSkill />} />
         <Route path="/admin/create-institution" element={<CreateInstitution />} />
@@ -117,6 +120,7 @@ const App = () => {
         <Route path="/admin/create-course-type" element={<CreateCourseType />} />
         <Route path="/admin/create-school-board" element={<CreateSchoolBoard />} />
         <Route path="/admin/create-school-medium" element={<CreateSchoolMedium />} />
+        <Route path="/admin/create-marital-status" element={<CreateMaritalStatus />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

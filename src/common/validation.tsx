@@ -27,6 +27,7 @@ export interface FormErrors {
   boardName?: string;
   schoolMedium?: string;
   specializationName?:string;
+  maritalStatus?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -261,6 +262,22 @@ export const validateSchoolMediumForm = (formData: { schoolMedium?: string; stat
 
   if (!formData.schoolMedium || !formData.schoolMedium.trim()) {
     errors.schoolMedium = "School Medium is required";
+  }
+
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+
+//  MARITAL STATUS FORM VALIDATION
+export const validateMaritalStatusForm = (formData: { maritalStatus?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.maritalStatus || !formData.maritalStatus.trim()) {
+    errors.maritalStatus = "Marital Status is required";
   }
 
   if (formData.status === undefined || formData.status === null || formData.status === "") {

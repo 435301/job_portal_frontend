@@ -13,6 +13,7 @@ import registerReducer from "./slices/registerSlice.tsx";
 import schoolBoardReducer from "./slices/schoolBoardSlice.tsx";
 import schoolMediumReducer from "./slices/schoolMediumSlice.tsx";
 import specializationReducer from "./slices/specializationSlice.tsx";
+import maritalStatusReducer from "./slices/maritalStatusSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     schoolBoard: schoolBoardReducer,
     schoolMedium: schoolMediumReducer,
     specialization: specializationReducer,
+    maritalStatus: maritalStatusReducer,
   },
 });
 
