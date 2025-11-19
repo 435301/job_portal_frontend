@@ -37,6 +37,8 @@ export interface FormErrors {
   employmentType?:string;
   availability?:string;
   gradingType?:string;
+  title?:string;
+  percentage?:number;
 }
 
 //  LOGIN FORM VALIDATION
@@ -405,6 +407,24 @@ export const validateGradingSystemForm = (formData: { gradingType?: string; stat
   if (!formData.gradingType || !formData.gradingType.trim()) {
     errors.gradingType = "Grading System is required";
   }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+};
+
+//  PROFILE PERCENTAGE FORM VALIDATION
+export const validateProfilePercentageForm = (formData: { title?: string; percentage?: number; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.title || !formData.title.trim()) {
+    errors.title = "Title is required";
+  }
+
+   if (formData.percentage === undefined || formData.percentage === null) {
+    errors.percentage = "Percentage is required";
+  }
+
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
   }

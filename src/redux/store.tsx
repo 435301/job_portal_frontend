@@ -21,6 +21,7 @@ import cityReducer from "./slices/citiesSlice.tsx";
 import employmentReducer from "./slices/employementTypeSlice.tsx";
 import availabilityReducer from "./slices/availabilitySlice.tsx";
 import gradingSystemReducer from "./slices/gradingSystemSlice.tsx";
+import profilePercentageReducer from "./slices/profilePercentageSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -46,6 +47,7 @@ export const store = configureStore({
     employmentType: employmentReducer,
     availability: availabilityReducer,
     gradingSystem: gradingSystemReducer,
+    profilePercentage: profilePercentageReducer,
   },
 });
 

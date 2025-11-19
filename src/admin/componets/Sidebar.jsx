@@ -45,6 +45,7 @@ const Sidebar = ({
         { id: "employmentType", text: "Employment Type", path: "/admin/manage-employment-type" },
         { id: "availability", text: "Availability", path: "/admin/manage-availability" },
         { id: "gradingSystem", text: "Gender System", path: "/admin/manage-grading-system" },
+        { id: "profilePercentage", text: "Profile Percentage", path: "/admin/manage-profile-percentage" },
       ],
     },
     {
