@@ -39,6 +39,7 @@ const Sidebar = ({
         { id: "schoolMedium", text: "School Medium", path: "/admin/manage-school-medium" },
         { id: "maritalStatus", text: "Marital Status", path: "/admin/manage-marital-status" },
         { id: "gender", text: "Gender", path: "/admin/manage-gender" },
+        { id: "country", text: "Country", path: "/admin/manage-country" },
       ],
     },
     {
