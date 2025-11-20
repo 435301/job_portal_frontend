@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 // User Pages
 
 // User Pages
-import Login from './users/Login';
+import Login from './users/Login.tsx';
 import Jobs from './users/Jobs';
 import JobDetails from './users/JobDetails';
 import Candidates from './users/Candidates';

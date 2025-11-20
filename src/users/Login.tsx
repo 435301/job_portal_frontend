@@ -1,83 +1,64 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { Container, Row, Col, Form, Button, Nav, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
-import WOW from "wowjs";
 import "../assets/css/login.css";
 import "../assets/css/style.css";
-
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-
-// 🖼️ Import both images
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.js";
 import candidateImage from "../assets/img/login-1.png";
 import employerImage from "../assets/img/reg-2.png";
 import { useNavigate } from "react-router-dom";
+import { employeeLogin } from "../redux/slices/loginSlice.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { validateLoginForm, FormErrors } from "../common/validation.tsx";
+import { AppDispatch, RootState } from "../redux/store.tsx";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    new WOW.WOW({ live: false }).init();
+    // new WOW.WOW({ live: false }).init();
   }, []);
+
+  const { loading, error, employeeToken } = useSelector((state: RootState) => state.employeeLogin);
 
   // Tabs
   const [activeTab, setActiveTab] = useState("candidate");
-
-  // Form data
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  // Validation errors
-  const [errors, setErrors] = useState({});
-
-  // Show/Hide password
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  // Form validation
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address";
-    }
-
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    return newErrors;
-  };
 
   // Handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const formErrors = validateForm();
-
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-    } else {
-      alert(`${activeTab} login successful! 🎉`);
-      setFormData({
-        email: "",
-        password: "",
-      });
-      setErrors({});
+    const validationErrors = validateLoginForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+    try {
+      const response = await dispatch(employeeLogin(formData));;
+      if (employeeLogin.fulfilled.match(response)) {
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
 
-  // 🖼️ Dynamic image based on tab
+  //  Dynamic image based on tab
   const sideImage = activeTab === "candidate" ? candidateImage : employerImage;
 
   return (
@@ -87,7 +68,7 @@ const Login = () => {
 
         <div className="hero-header-2 overflow-hidden px-5 pt-5">
           <Row className="align-items-center">
-            {/* 🖼️ Left Image Section */}
+            {/*  Left Image Section */}
             <Col
               lg={7}
               className="text-center wow fadeInLeft d-none d-lg-block"
@@ -105,7 +86,7 @@ const Login = () => {
               />
             </Col>
 
-            {/* 🧾 Login Form */}
+            {/*  Login Form */}
             <Col lg={5}>
               <Container className="bg-primary-1">
                 <Row className="align-items-center login-container">
@@ -123,7 +104,7 @@ const Login = () => {
                         <Nav
                           variant="tabs"
                           activeKey={activeTab}
-                          onSelect={(k) => setActiveTab(k)}
+                          onSelect={(k: any) => setActiveTab(k)}
                           className="mt-4"
                         >
                           <Nav.Item>
@@ -143,10 +124,10 @@ const Login = () => {
                             <Form.Control
                               type="email"
                               name="email"
-                              placeholder="you@example.com"
+                              placeholder="Enter your Registered email"
                               value={formData.email}
                               onChange={handleChange}
-                              isInvalid={!!errors.email}  // ✅ Bootstrap validation
+                              isInvalid={!!errors.email}
                             />
                             <Form.Control.Feedback type="invalid">
                               {errors.email}
@@ -175,9 +156,9 @@ const Login = () => {
                               />
                             </div>
 
-                            <Form.Control.Feedback type="invalid">
-                              {errors.password}
-                            </Form.Control.Feedback>
+                            {errors.password && (
+                              <div className="invalid-feedback d-block">{errors.password}</div>
+                            )}
                           </Form.Group>
 
 
@@ -190,15 +171,16 @@ const Login = () => {
 
                           {/* Login Button */}
                           <div className="text-center mt-3">
-                            <Button
-                              variant="dark"
-                              className="  px-4"
-                              type="button"
-                              onClick={() => navigate(
-                                activeTab === "candidate" ? "/profile" : "/employer-profile"
+                            <Button variant="dark" type="submit" className="px-4" disabled={loading}>
+                              {loading ? (
+                                <>
+                                  <Spinner animation="border" size="sm" className="me-2" /> Logging in...
+                                </>
+                              ) : (
+                                <>
+                                   Login
+                                </>
                               )}
-                            >
-                              Login  {activeTab === "" ? "Candidate" : ""}
                             </Button>
 
 

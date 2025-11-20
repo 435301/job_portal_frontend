@@ -45,15 +45,12 @@ export interface FormErrors {
 //  LOGIN FORM VALIDATION
 export const validateLoginForm = (formData: { email?: string; password?: string }): FormErrors => {
   const errors: FormErrors = {};
-
-  // Validate Email or Mobile
   if (!formData.email) {
     errors.email = "Email is required";
   } else if (!emailRegex.test(formData.email) && !mobileRegex.test(formData.email)) {
     errors.email = "Enter a valid email or mobile number";
   }
 
-  // Validate Password
   if (!formData.password) {
     errors.password = "Password is required";
   } else if (formData.password.length < 6) {

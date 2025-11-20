@@ -23,6 +23,7 @@ import availabilityReducer from "./slices/availabilitySlice.tsx";
 import gradingSystemReducer from "./slices/gradingSystemSlice.tsx";
 import profilePercentageReducer from "./slices/profilePercentageSlice.tsx";
 import workPermitReducer from "./slices/WorkPermitSlice.tsx";
+import loginReducer from "./slices/loginSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -50,6 +51,7 @@ export const store = configureStore({
     gradingSystem: gradingSystemReducer,
     profilePercentage: profilePercentageReducer,
     workPermit:workPermitReducer,
+     employeeLogin: loginReducer,
   },
 });
 
