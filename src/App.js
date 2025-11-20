@@ -79,6 +79,7 @@ import ProfilePercentageManage from './admin/pages/ProfilePercentageManage.tsx';
 import CreateProfilePercentage from './admin/pages/CreateProfilePercentage.tsx';
 import WorkPermitManage from './admin/pages/WorkPermitManage.tsx';
 import CreateWorkPermit from './admin/pages/CreateWorkPermit.tsx';
+import { AdminRoute } from './utils/roleRoute.js';
 
 
 
@@ -113,50 +114,51 @@ const App = () => {
         <Route path="/looking-jobs" element={<LokkingJobs />} />
 
         {/* ===== Admin Routes ===== */}
-        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /> </ProtectedRoute>
+
+        <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute> 
         } />
-        <Route path="/admin/manage-education" element={<EducationManage />} />
-        <Route path="/admin/manage-skills" element={<SkillManage />} />
-        <Route path="/admin/manage-institutions" element={<InstitutionManage />} />
-        <Route path="/admin/manage-job-titles" element={<JobTitleManage />} />
-        <Route path="/admin/manage-notice-periods" element={<NoticePeriodManage />} />
-        <Route path="/admin/manage-experience" element={<ExperienceManage />} />
-        <Route path="/admin/manage-courses" element={<CourseManage />} />
-        <Route path="/admin/manage-specializations" element={<SpecializationManage />} />
-        <Route path="/admin/manage-course-types" element={<CourseTypeManage />} />
-        <Route path="/admin/manage-school-boards" element={<SchoolBoardManage />} />
-        <Route path="/admin/manage-school-medium" element={<SchoolMediumManage />} />
-        <Route path="/admin/manage-marital-status" element={<MaritalStatusManage />} />
-        <Route path="/admin/manage-gender" element={<GenderManage />} />
-        <Route path="/admin/manage-country" element={<CountryManage />} />
-        <Route path="/admin/manage-states" element={<StateManage />} />
-        <Route path="/admin/manage-cities" element={<CityManage />} />
-        <Route path="/admin/manage-employment-type" element={<EmploymentTypeManage />} />
-        <Route path="/admin/manage-availability" element={<AvailabilityManage />} />
-        <Route path="/admin/manage-grading-system" element={<GradingSystemManage />} />
-        <Route path="/admin/manage-profile-percentage" element={<ProfilePercentageManage />} />
-        <Route path="/admin/manage-work-permit" element={<WorkPermitManage />} />
-        <Route path="/admin/create-education" element={<CreateEducation />} />
-        <Route path="/admin/create-skill" element={<CreateSkill />} />
-        <Route path="/admin/create-institution" element={<CreateInstitution />} />
-        <Route path="/admin/create-job-title" element={<CreateJobTitle />} />
-        <Route path="/admin/create-notice-period" element={<CreateNoticePeriod />} />
-        <Route path="/admin/create-experience" element={<CreateExperience />} />
-        <Route path="/admin/create-course" element={<CreateCourse />} />
-        <Route path="/admin/create-specialization" element={<CreateSpecialization />} />
-        <Route path="/admin/create-course-type" element={<CreateCourseType />} />
-        <Route path="/admin/create-school-board" element={<CreateSchoolBoard />} />
-        <Route path="/admin/create-school-medium" element={<CreateSchoolMedium />} />
-        <Route path="/admin/create-marital-status" element={<CreateMaritalStatus />} />
-        <Route path="/admin/create-gender" element={<CreateGender />} />
-        <Route path="/admin/create-country" element={<CreateCountry />} />
-        <Route path="/admin/create-state" element={<CreateState />} />
-        <Route path="/admin/create-city" element={<CreateCity />} />
-        <Route path="/admin/create-employment-type" element={<CreateEmploymentType />} />
-        <Route path="/admin/create-availability" element={<CreateAvailability />} />
-        <Route path="/admin/create-grading-system" element={<CreateGradingSystem />} />
-        <Route path="/admin/create-profile-percentage" element={<CreateProfilePercentage />} />
-        <Route path="/admin/create-work-permit" element={<CreateWorkPermit />} />
+        <Route path="/admin/manage-education" element={<AdminRoute><EducationManage /></AdminRoute>} />
+        <Route path="/admin/manage-skills" element={<AdminRoute><SkillManage /></AdminRoute>} />
+        <Route path="/admin/manage-institutions" element={<AdminRoute><InstitutionManage /></AdminRoute>} />
+        <Route path="/admin/manage-job-titles" element={<AdminRoute><JobTitleManage /></AdminRoute>} />
+        <Route path="/admin/manage-notice-periods" element={<AdminRoute><NoticePeriodManage /></AdminRoute>} />
+        <Route path="/admin/manage-experience" element={<AdminRoute><ExperienceManage /></AdminRoute>} />
+        <Route path="/admin/manage-courses" element={<AdminRoute><CourseManage /></AdminRoute>} />
+        <Route path="/admin/manage-specializations" element={<AdminRoute><SpecializationManage /></AdminRoute>} />
+        <Route path="/admin/manage-course-types" element={<AdminRoute><CourseTypeManage /></AdminRoute>} />
+        <Route path="/admin/manage-school-boards" element={<AdminRoute><SchoolBoardManage /></AdminRoute>} />
+        <Route path="/admin/manage-school-medium" element={<AdminRoute><SchoolMediumManage /></AdminRoute>} />
+        <Route path="/admin/manage-marital-status" element={<AdminRoute><MaritalStatusManage /></AdminRoute>} />
+        <Route path="/admin/manage-gender" element={<AdminRoute><GenderManage /></AdminRoute>} />
+        <Route path="/admin/manage-country" element={<AdminRoute><CountryManage /></AdminRoute>} />
+        <Route path="/admin/manage-states" element={<AdminRoute><StateManage /></AdminRoute>} />
+        <Route path="/admin/manage-cities" element={<AdminRoute><CityManage /></AdminRoute>} />
+        <Route path="/admin/manage-employment-type" element={<AdminRoute><EmploymentTypeManage /></AdminRoute>} />
+        <Route path="/admin/manage-availability" element={<AdminRoute><AvailabilityManage /></AdminRoute>} />
+        <Route path="/admin/manage-grading-system" element={<AdminRoute><GradingSystemManage /></AdminRoute>} />
+        <Route path="/admin/manage-profile-percentage" element={<AdminRoute><ProfilePercentageManage /></AdminRoute>} />
+        <Route path="/admin/manage-work-permit" element={<AdminRoute><WorkPermitManage /></AdminRoute>} />
+        <Route path="/admin/create-education" element={<AdminRoute><CreateEducation /></AdminRoute>} />
+        <Route path="/admin/create-skill" element={<AdminRoute><CreateSkill /></AdminRoute>} />
+        <Route path="/admin/create-institution" element={<AdminRoute><CreateInstitution /></AdminRoute>} />
+        <Route path="/admin/create-job-title" element={<AdminRoute><CreateJobTitle /></AdminRoute>} />
+        <Route path="/admin/create-notice-period" element={<AdminRoute><CreateNoticePeriod /></AdminRoute>} />
+        <Route path="/admin/create-experience" element={<AdminRoute><CreateExperience /></AdminRoute>} />
+        <Route path="/admin/create-course" element={<AdminRoute><CreateCourse /></AdminRoute>} />
+        <Route path="/admin/create-specialization" element={<AdminRoute><CreateSpecialization /></AdminRoute>} />
+        <Route path="/admin/create-course-type" element={<AdminRoute><CreateCourseType /></AdminRoute>} />
+        <Route path="/admin/create-school-board" element={<AdminRoute><CreateSchoolBoard /></AdminRoute>} />
+        <Route path="/admin/create-school-medium" element={<AdminRoute><CreateSchoolMedium /></AdminRoute>} />
+        <Route path="/admin/create-marital-status" element={<AdminRoute><CreateMaritalStatus /></AdminRoute>} />
+        <Route path="/admin/create-gender" element={<AdminRoute><CreateGender /></AdminRoute>} />
+        <Route path="/admin/create-country" element={<AdminRoute><CreateCountry /></AdminRoute>} />
+        <Route path="/admin/create-state" element={<AdminRoute><CreateState /></AdminRoute>} />
+        <Route path="/admin/create-city" element={<AdminRoute><CreateCity /></AdminRoute>} />
+        <Route path="/admin/create-employment-type" element={<AdminRoute><CreateEmploymentType /></AdminRoute>} />
+        <Route path="/admin/create-availability" element={<AdminRoute><CreateAvailability /></AdminRoute>} />
+        <Route path="/admin/create-grading-system" element={<AdminRoute><CreateGradingSystem /></AdminRoute>} />
+        <Route path="/admin/create-profile-percentage" element={<AdminRoute><CreateProfilePercentage /></AdminRoute>} />
+        <Route path="/admin/create-work-permit" element={<AdminRoute><CreateWorkPermit /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
