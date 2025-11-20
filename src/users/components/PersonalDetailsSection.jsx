@@ -34,25 +34,54 @@ const PersonalDetailsSection = () => {
           <div>Akeeb Shaik</div>
         </div>
         <div className="col-md-3">
-          <strong>DOB:</strong>
-          <div>July 10, 1997</div>
+          <strong>Gender:</strong>
+          <div>Male</div>
         </div>
         <div className="col-md-3">
           <strong>Marital Status:</strong>
           <div>Single</div>
         </div>
         <div className="col-md-3">
+          <strong>DOB:</strong>
+          <div>July 10, 1997</div>
+        </div>
+
+        <div className="col-md-3">
           <strong>Locality:</strong>
           <div>Hyderabad</div>
         </div>
         <div className="col-md-3">
-          <strong>Languages:</strong>
-          <div>Telugu, Hindi, English</div>
+          <strong>Availability:</strong>
+          <div>within 15 days</div>
         </div>
         <div className="col-md-3">
+          <strong>Experience:</strong>
+          <div> +3 years</div>
+        </div>
+
+        <div className="col-md-3">
+          <strong>Work Permit for USA:</strong>
+          <div>-</div>
+        </div>
+
+        <div className="col-md-3">
+          <strong>Work permit for other countries:</strong>
+          <div>-</div>
+        </div>
+          <div className="col-md-3">
+          <strong>Address:</strong>
+          <div>Akshyanagar, Bengaluru - 560068</div>
+        </div>
+          <div className="col-md-3">
           <strong>Nationality:</strong>
           <div>Indian</div>
         </div>
+
+        <div className="col-md-3">
+          <strong>Languages:</strong>
+          <div>Telugu, Hindi, English</div>
+        </div>
+      
         <div className="col-md-3">
           <strong>Mobile Number:</strong>
           <div>7780515180</div>
@@ -70,6 +99,13 @@ const PersonalDetailsSection = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Row className="mb-4">
+              <Col md={6}>
+                <Form.Label className="fw-bold">Full Name<span className="text-danger"> *</span></Form.Label>
+                <Form.Control type="text" placeholder="Enter your full name" />
+              </Col>
+            </Row>
+
             {/* ===== Gender ===== */}
             <div className="mb-4">
               <Form.Label className="fw-bold">Gender<span className="text-danger"> *</span></Form.Label>
@@ -105,18 +141,48 @@ const PersonalDetailsSection = () => {
               </div>
             </div>
 
+
+
             {/* ===== Date of Birth ===== */}
             <Row className="mb-4">
-              <Col md={4}>
+              <Col md={6}>
                 <Form.Label className="fw-bold">Date of Birth<span className="text-danger"> *</span></Form.Label>
                 <Form.Control type="date" />
               </Col>
+              <Col md={6}>
+                <Form.Label className="fw-bold">Locality<span className="text-danger"> *</span></Form.Label>
+                <Form.Select>
+                  <option>Select city</option>
+                  <option>Hyderabad</option>
+                  <option>Bengaluru</option>
+                  <option>Chennai</option>
+                </Form.Select>
+              </Col>
+            </Row>
 
+            <Row className="mb-4">
+              <Col md={6}>
+                <Form.Label className="fw-bold">Availability<span className="text-danger"> *</span></Form.Label>
+                <Form.Select>
+                  <option>Select availability</option>
+                  <option>within 15 days</option>
+                  <option>within 30 days</option>
+                  <option>within 45 days</option>
+                </Form.Select>
+              </Col>
+              <Col md={6}>
+                <Form.Label className="fw-bold">Experience<span className="text-danger"> *</span></Form.Label>
+                <Form.Select>
+                  <option>Select experience</option>
+                  <option>+3 years</option>
+                  <option>2-3 years</option>
+                  <option>+5 years</option>
+                </Form.Select>
+              </Col>
             </Row>
 
             {/* ===== Work Permits ===== */}
             <Row className="mb-4">
-             
               <Col md={6}>
                 <Form.Label className="fw-bold">Work permit for USA</Form.Label>
                 <Form.Select>
@@ -147,6 +213,13 @@ const PersonalDetailsSection = () => {
                 <Form.Control type="text" />
               </Col>
             </Row>
+            <Row className="mb-4">
+              <Col md={6}>
+                <Form.Label className="fw-bold">Nationality<span className="text-danger"> *</span></Form.Label>
+                <Form.Control type="text" placeholder="Enter your nationality" />
+              </Col>
+            </Row>
+
 
             {/* ===== Language Proficiency ===== */}
             <div className="mb-3">
