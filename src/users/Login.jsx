@@ -158,27 +158,28 @@ const Login = () => {
                             <Form.Label>
                               Password <span className="text-danger">*</span>
                             </Form.Label>
-                            <Form.Control
-                              type={showPassword ? "text" : "password"}
-                              name="password"
-                              placeholder="Enter password"
-                              value={formData.password}
-                              onChange={handleChange}
-                              isInvalid={!!errors.password}  // ✅ Bootstrap validation
-                            />
-                            <Button
-                              variant="link"
-                              size="sm"
-                              className="position-absolute end-0 me-2 text-decoration-none "
-                              onClick={() => setShowPassword(!showPassword)}
-                              type="button"
-                            >
-                              {/* {showPassword ? "Hide" : "Show"} */}
-                            </Button>
+
+                            <div className="password-field-wrapper">
+                              <Form.Control
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Enter password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                isInvalid={!!errors.password}
+                              />
+
+                              <i
+                                className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                onClick={() => setShowPassword(!showPassword)}
+                              />
+                            </div>
+
                             <Form.Control.Feedback type="invalid">
                               {errors.password}
                             </Form.Control.Feedback>
                           </Form.Group>
+
 
                           {/* Forgot password */}
                           <div className="text-end mb-3">

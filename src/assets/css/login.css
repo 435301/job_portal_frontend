@@ -193,3 +193,26 @@ body {
         padding: 15px 0px !important;
     }
 }
+
+.password-field-wrapper {
+  position: relative;
+}
+
+.password-eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+  transition: color 0.2s ease-in-out;
+}
+
+.password-eye-icon:hover {
+  color: #000;
+}
+
+.password-field-wrapper .form-control {
+  padding-right: 40px !important;
+}

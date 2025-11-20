@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Container, Row, Col, Form, Button, Nav, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 // import WOW from "wowjs";
@@ -21,12 +21,19 @@ import { getUserIpAddress } from "../common/ipAddress.tsx";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-    const { loading, message, error, verificationCode } = useAppSelector((state) => state.register);
- const { captchaSvg, captchaText } = useAppSelector((state) => state.captcha);
- console.log('captchaText', captchaText, captchaSvg);
+  const didFetch = useRef(false);
+  const { loading, message, error, verificationCode } = useAppSelector((state) => state.register);
+  const { captchaSvg, captchaText } = useAppSelector((state) => state.captcha);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  console.log('captchaText', captchaText, captchaSvg);
   useEffect(() => {
     // new WOW.WOW({ live: false }).init();
-     dispatch(fetchCaptcha());
+    if (!didFetch.current) {
+      dispatch(fetchCaptcha());
+      didFetch.current = true;
+    }
     return () => {
       dispatch(clearRegisterState());
     };
@@ -72,16 +79,16 @@ const Register = () => {
         // Update selfOrOther based on activeTab
         const payload = {
           ...formData,
-           captcha: captchaText.trim(),
+          captcha: captchaText.trim(),
           selfOrOther: activeTab === "candidate" ? 1 : 2,
           ipAddress: "127.02.99.11",
         };
         const resultAction = await dispatch(registerEmployee(payload));
         if (registerEmployee.fulfilled.match(resultAction)) {
-  navigate("/verify-email", {
-    state: { email: formData.email }
-  });
-}
+          navigate("/verify-email", {
+            state: { email: formData.email }
+          });
+        }
 
       } catch (err) {
         console.error("Registration failed", err);
@@ -152,7 +159,7 @@ const Register = () => {
                               <Form.Control
                                 type="text"
                                 name="firstName"
-                                placeholder="John"
+                                placeholder="Enter the first name"
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 isInvalid={!!errors.firstName}
@@ -170,7 +177,7 @@ const Register = () => {
                               <Form.Control
                                 type="text"
                                 name="lastName"
-                                placeholder="Doe"
+                                placeholder="Enter the last name"
                                 value={formData.lastName}
                                 onChange={handleChange}
                                 isInvalid={!!errors.lastName}
@@ -188,7 +195,7 @@ const Register = () => {
                               <Form.Control
                                 type="email"
                                 name="email"
-                                placeholder="you@example.com"
+                                placeholder="Enter the email address"
                                 value={formData.email}
                                 onChange={handleChange}
                                 isInvalid={!!errors.email}
@@ -199,40 +206,62 @@ const Register = () => {
                             </Form.Group>
 
                             {/* Password */}
-                            <Form.Group className="col-lg-6 mb-2">
+                            <Form.Group className="col-lg-6 mb-2 position-relative">
                               <Form.Label>
                                 Password <span className="text-danger">*</span>
                               </Form.Label>
-                              <Form.Control
-                                type="password"
-                                name="password"
-                                placeholder="Enter password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                isInvalid={!!errors.password}
-                              />
+
+                              <div className="password-field-wrapper">
+                                <Form.Control
+                                  type={showPassword ? "text" : "password"}
+                                  name="password"
+                                  placeholder="Enter password"
+                                  value={formData.password}
+                                  onChange={handleChange}
+                                  isInvalid={!!errors.password}
+                                  style={{ paddingRight: "40px" }}   // space for icon
+                                />
+
+                                <i
+                                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                  onClick={() => setShowPassword(!showPassword)}
+                                />
+                              </div>
+
                               <Form.Control.Feedback type="invalid">
                                 {errors.password}
                               </Form.Control.Feedback>
                             </Form.Group>
 
+
                             {/* Confirm Password */}
-                            <Form.Group className="col-lg-6 mb-2">
+                            <Form.Group className="col-lg-6 mb-2 position-relative">
                               <Form.Label>
                                 Confirm Password <span className="text-danger">*</span>
                               </Form.Label>
-                              <Form.Control
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Re-enter password"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                isInvalid={!!errors.confirmPassword}
-                              />
+
+                              <div  className="password-field-wrapper">
+                                <Form.Control
+                                  type={showConfirmPassword ? "text" : "password"}
+                                  name="confirmPassword"
+                                  placeholder="Re-enter password"
+                                  value={formData.confirmPassword}
+                                  onChange={handleChange}
+                                  isInvalid={!!errors.confirmPassword}
+                                  style={{ paddingRight: "40px" }}
+                                />
+
+                                <i
+                                  className={`bi ${showConfirmPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                />
+                              </div>
+
                               <Form.Control.Feedback type="invalid">
                                 {errors.confirmPassword}
                               </Form.Control.Feedback>
                             </Form.Group>
+
                             {/* CAPTCHA Row */}
                             <Form.Group className="col-lg-12">
 
@@ -246,7 +275,7 @@ const Register = () => {
                                 <div
                                   className="px-3 py-2 rounded bg-light border fw-bold"
                                   style={{ letterSpacing: "3px", fontSize: "18px" }}
-                                   dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
+                                  dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
                                 >
                                   {/* {cat || "Loading..."} */}
                                 </div>
