@@ -47,6 +47,7 @@ const Sidebar = ({
         { id: "gradingSystem", text: "Grading System", path: "/admin/manage-grading-system" },
         { id: "profilePercentage", text: "Profile Percentage", path: "/admin/manage-profile-percentage" },
         { id: "workPermit", text: "Work Permit", path: "/admin/manage-work-permit" },
+        { id: "currencyType", text: "Currency Type", path: "/admin/manage-currency-type" },
       ],
     },
     {

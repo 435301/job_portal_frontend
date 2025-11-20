@@ -80,6 +80,8 @@ import CreateProfilePercentage from './admin/pages/CreateProfilePercentage.tsx';
 import WorkPermitManage from './admin/pages/WorkPermitManage.tsx';
 import CreateWorkPermit from './admin/pages/CreateWorkPermit.tsx';
 import { AdminRoute } from './utils/roleRoute.js';
+import CurrencyTypeManage from './admin/pages/CurrencyTypeManage.tsx';
+import CreateCurrencyType from './admin/pages/CreateCurrencyType.tsx';
 
 
 
@@ -138,6 +140,7 @@ const App = () => {
         <Route path="/admin/manage-grading-system" element={<AdminRoute><GradingSystemManage /></AdminRoute>} />
         <Route path="/admin/manage-profile-percentage" element={<AdminRoute><ProfilePercentageManage /></AdminRoute>} />
         <Route path="/admin/manage-work-permit" element={<AdminRoute><WorkPermitManage /></AdminRoute>} />
+        <Route path="/admin/manage-currency-type" element={<AdminRoute><CurrencyTypeManage /></AdminRoute>} />
         <Route path="/admin/create-education" element={<AdminRoute><CreateEducation /></AdminRoute>} />
         <Route path="/admin/create-skill" element={<AdminRoute><CreateSkill /></AdminRoute>} />
         <Route path="/admin/create-institution" element={<AdminRoute><CreateInstitution /></AdminRoute>} />
@@ -159,6 +162,7 @@ const App = () => {
         <Route path="/admin/create-grading-system" element={<AdminRoute><CreateGradingSystem /></AdminRoute>} />
         <Route path="/admin/create-profile-percentage" element={<AdminRoute><CreateProfilePercentage /></AdminRoute>} />
         <Route path="/admin/create-work-permit" element={<AdminRoute><CreateWorkPermit /></AdminRoute>} />
+        <Route path="/admin/create-currency-type" element={<AdminRoute><CreateCurrencyType /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>

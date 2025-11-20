@@ -25,6 +25,7 @@ import profilePercentageReducer from "./slices/profilePercentageSlice.tsx";
 import workPermitReducer from "./slices/WorkPermitSlice.tsx";
 import loginReducer from "./slices/loginSlice.tsx";
 import forgotPasswordReducer from "./slices/forgotPasswordSlice.tsx";
+import currencyTypeReducer from "./slices/currencyTypeSlice.tsx"
 
 export const store = configureStore({
   reducer: {
@@ -44,16 +45,17 @@ export const store = configureStore({
     specialization: specializationReducer,
     maritalStatus: maritalStatusReducer,
     gender: genderReducer,
-    country:countryReducer,
+    country: countryReducer,
     state: stateReducer,
-    city: cityReducer, 
+    city: cityReducer,
     employmentType: employmentReducer,
     availability: availabilityReducer,
     gradingSystem: gradingSystemReducer,
     profilePercentage: profilePercentageReducer,
-    workPermit:workPermitReducer,
-     employeeLogin: loginReducer,
-     orgotPassword: forgotPasswordReducer,
+    workPermit: workPermitReducer,
+    employeeLogin: loginReducer,
+    forgotPassword: forgotPasswordReducer,
+    currencyType: currencyTypeReducer,
   },
 });
 

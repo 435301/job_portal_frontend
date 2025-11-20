@@ -40,6 +40,7 @@ export interface FormErrors {
   title?:string;
   percentage?:number;
   workPermit?:string;
+  currencyType?:string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -442,3 +443,18 @@ export const validateWorkPermitForm = (formData: { workPermit?: string; status?:
   return errors;
 }
   
+
+//  CURRENCY TYPE FORM VALIDATION
+export const validateCurrencyTypeForm = (formData: { currencyType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.currencyType || !formData.currencyType.trim()) {
+    errors.currencyType = "Currency Type is required";
+  }
+
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+
+  return errors;
+};
