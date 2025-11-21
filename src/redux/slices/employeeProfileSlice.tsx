@@ -16,6 +16,8 @@ const initialState: EmployeeProfileState = {
   error: null,
 };
 
+ const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
+
 export const fetchEmployeeProfile = createAsyncThunk(
   "employees/profile",
   async (employeeId: number, { rejectWithValue }) => {
@@ -52,6 +54,25 @@ export const updateProfileTitle = createAsyncThunk(
       }, getAuthAdminHeaders(false),);
       toast.success(response.data.message)
       return { newTitle };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const addKeySkills = createAsyncThunk(
+  "employee/addKeySkills",
+  async (skillIds: number[], { rejectWithValue , dispatch}) => {
+    try {
+      const response = await axios.post(`${BASE_URL_JOB}/employees/addKeySkills`, { skillIds }, getAuthAdminHeaders(false));
+      toast.success(response.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return {
+        addedSkills: skillIds,
+        message: response.data.message
+      };
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
@@ -119,6 +140,32 @@ const employeeProfileSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+    //edit skills
+    builder
+      .addCase(addKeySkills.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addKeySkills.fulfilled, (state, action) => {
+        state.loading = false;
+        const newSkillIds = action.payload.addedSkills;
+        if (state.data && state.data.keySkills) {
+          const existingSkillIds = state.data.keySkills.map((s: any) => s.skillId);
+          newSkillIds.forEach((id) => {
+            if (!existingSkillIds.includes(id)) {
+              state.data.keySkills.push({
+                skillId: id,
+                skillName: "", // You can fill after fetching skills master
+              });
+            }
+          });
+        }
+      })
+      .addCase(addKeySkills.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
   },
 });
 

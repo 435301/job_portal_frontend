@@ -2,23 +2,32 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface KeySkillsProps {
   keySkills: any;
+  skillList: any;
+  onSave: (sikllIds: number[]) => void;
 }
-const KeySkillsSection :React.FC<KeySkillsProps> = ({keySkills}) => {
+const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave }) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-const [skills, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<string[]>([]);
+  const [selectedSkillIds, setSelectedSkillIds] = useState<number[]>([]);
+  const [searchText, setSearchText] = useState("");
+  const [filteredSkills, setFilteredSkills] = useState<any[]>([]);
 
-useEffect(() => {
-  if (keySkills?.length) {
-    setSkills(keySkills.map((item: any) => item.skill.skillName));
-  }
-}, [keySkills]);
+  useEffect(() => {
+    if (keySkills?.length) {
+      setSkills(keySkills.map((item: any) => item?.skill?.skillName));
+      setSelectedSkillIds(keySkills.map((item: any) => item?.skillId));
+    }
+  }, [keySkills]);
 
   const skillIcons: any = {
     Bootstrap: "bi-bootstrap-fill",
@@ -29,6 +38,41 @@ useEffect(() => {
     HTML: "bi-filetype-html",
     JavaScript: "bi-filetype-js",
     "React.JS": "bi-lightning-charge-fill",
+  };
+
+  const handleSearchChange = (e: any) => {
+    const value = e.target.value;
+    setSearchText(value);
+    if (!value.trim()) {
+      setFilteredSkills([]);
+      return;
+    }
+    const filtered = skillList.filter((item: any) =>
+      item.skillName.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredSkills(filtered);
+  };
+
+  const handleSelectSkill = (item: any) => {
+    if (!selectedSkillIds.includes(item.id)) {
+      setSelectedSkillIds([...selectedSkillIds, item.id]);
+      setSkills([...skills, item.skillName]);
+    }
+    setSearchText("");
+    setFilteredSkills([]);
+  };
+
+  const handleSuggestedSkillClick = (item: any) => {
+  if (!selectedSkillIds.includes(item.id)) {
+    setSelectedSkillIds([...selectedSkillIds, item.id]);
+    setSkills([...skills, item?.skillName]);
+  }
+};
+
+
+  const handleSave = () => {
+    onSave(selectedSkillIds);
+    setShow(false);
   };
 
   // ---- REMOVE SKILL FUNCTION ----
@@ -115,7 +159,21 @@ useEffect(() => {
             ))}
           </div>
 
-          <Form.Control type="text" placeholder="Add new skill..." className="mt-3" />
+          <Form.Control type="text" placeholder="Add new skill..." className="mt-3" value={searchText} onChange={handleSearchChange} />
+          {filteredSkills.length > 0 && (
+            <div className="border rounded mt-1 p-2" style={{ maxHeight: "150px", overflowY: "auto" }}>
+              {filteredSkills.map((item: any) => (
+                <div
+                  key={item.id}
+                  className="dropdown-item"
+                  style={{ cursor: "pointer", padding: "6px" }}
+                  onClick={() => handleSelectSkill(item)}
+                >
+                  {item.skillName}
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Suggested Skills */}
           <p className="text-muted small mt-4 mb-2">
@@ -123,12 +181,11 @@ useEffect(() => {
           </p>
 
           <div className="d-flex flex-wrap gap-2">
-            {["Next.js", "Redux", "Webpack", "Ember.js", "Node.js"].map(
-              (suggestion, index) => (
-                <span key={index} className="suggested-skill">
-                  + {suggestion}
-                </span>
-              )
+            {skillList.map((item: any) => (
+              <span key={item.id} className="suggested-skill"  style={{cursor:"pointer"}}  onClick={() => handleSuggestedSkillClick(item)}>
+                + {item.skillName}
+              </span>
+            )
             )}
           </div>
         </Modal.Body>
@@ -141,7 +198,7 @@ useEffect(() => {
           >
             Cancel
           </Button>
-          <Button variant="dark" className="rounded-pill px-4" onClick={handleClose}>
+          <Button variant="dark" className="rounded-pill px-4" onClick={handleSave}>
             Save
           </Button>
         </Modal.Footer>

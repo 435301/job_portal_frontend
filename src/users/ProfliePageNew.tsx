@@ -14,19 +14,20 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { fetchEmployeeProfile, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
+import { addKeySkills, fetchEmployeeProfile, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
+import { getAllSkills } from '../redux/slices/skillSlice.tsx';
 
 
 function ProfilePageNew() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, data, error } = useAppSelector((state: RootState) => state.employeeProfile);
-  console.log('data', data)
+    const { skillList } = useAppSelector((state: RootState) => state.skill);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
-  console.log('employeeId', employeeId)
 
   useEffect(() => {
     if (employeeId) {
       dispatch(fetchEmployeeProfile(employeeId));
+      dispatch(getAllSkills());
     }
   }, []);
 
@@ -38,6 +39,9 @@ function ProfilePageNew() {
     dispatch(updateProfileTitle(newTitle))
   }
 
+  const handleSaveKeySkills =(skillIds:number[])=>{
+    dispatch(addKeySkills(skillIds));
+  }
   return (
     <div className="ProfilePage">
       <Header />
@@ -50,7 +54,7 @@ function ProfilePageNew() {
           <div className="col-lg-9">
             <ResumeSection resumes={data?.resumes} />
             <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
-            <KeySkillsSection keySkills={data?.keySkills} />
+            <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
             <EmploymentSection employmentDetails={data?.employmentDetails} />
             <EducationSection educationDetails={data?.educationDetails} />
             <ITSkillsSection itSkills={data?.itSkills} />
