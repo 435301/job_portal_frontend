@@ -43,6 +43,21 @@ export const updatePersonalDetails = createAsyncThunk(
   }
 );
 
+export const updateProfileTitle = createAsyncThunk(
+  "employee/updateProfileTitle",
+  async (newTitle: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${BASE_URL_JOB}/employees/updateProfileTitle`, {
+        profileTitle: newTitle
+      }, getAuthAdminHeaders(false),);
+      toast.success(response.data.message)
+      return { newTitle };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
   initialState,
@@ -85,6 +100,22 @@ const employeeProfileSlice = createSlice({
         }
       })
       .addCase(updatePersonalDetails.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    //update profile title
+    builder
+      .addCase(updateProfileTitle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfileTitle.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.data && state.data.profileTitle?.length > 0) {
+          state.data.profileTitle[0].title = action.payload.newTitle;
+        }
+      })
+      .addCase(updateProfileTitle.rejected, (state, action: any) => {
         state.loading = false;
         state.error = action.payload;
       });

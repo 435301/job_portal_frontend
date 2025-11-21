@@ -3,18 +3,25 @@ import { Modal, Button, Form } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-interface ProfileTitleProps{
-  profileTitle: any;
+interface ProfileTitleProps {
+  profileTitle: { title: string }[];
+  onSave: (newTitle: string) => void;
 }
 
-const ProfileTitleSection :React.FC<ProfileTitleProps> = ({profileTitle}) => {
+const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave }) => {
   const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState(profileTitle?.[0]?.title || "");
 
-  const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
+  const handleShow = () => {
+    setTitle(profileTitle?.[0]?.title || "");
+    setShowModal(true);
+  };
+
+
   const handleSave = () => {
-    // You can integrate API/update logic here
+    onSave(title);
     setShowModal(false);
   };
 
@@ -47,9 +54,7 @@ const ProfileTitleSection :React.FC<ProfileTitleProps> = ({profileTitle}) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="text-muted mb-3">
-            Write a short and clear profile title highlighting your skills.
-          </p>
+
           <Form>
             <Form.Group>
               <Form.Label className="fw-semibold">Profile Title<span className="text-danger"> *</span></Form.Label>
@@ -57,8 +62,8 @@ const ProfileTitleSection :React.FC<ProfileTitleProps> = ({profileTitle}) => {
                 as="textarea"
                 rows={3}
                 className="h-100"
-                value={profileTitle}
-                // onChange={(e) => setProfileTitle(e.target.value)}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Frontend Developer skilled in React.js, HTML, CSS, and JavaScript"
               />
             </Form.Group>
