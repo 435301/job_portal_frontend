@@ -45,7 +45,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
             </h5>
 
             <p className="mb-2">
-              Profile last updated: <strong> {personalDetails?.lastLogin &&new Date(personalDetails.lastLogin).toLocaleString("en-IN")}</strong>
+              Profile last updated: <strong> {personalDetails?.lastLogin &&new Date(personalDetails?.lastLogin).toLocaleString("en-IN")}</strong>
             </p>
 
             <div className="d-flex align-items-center">
@@ -68,7 +68,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Location</div>
-                <div className="text-muted small">{personalDetails?.city.cityName}, {personalDetails?.country.countryName}</div>
+                <div className="text-muted small">{personalDetails?.city?.cityName}, {personalDetails?.country?.countryName}</div>
               </div>
             </div>
 
@@ -100,7 +100,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Experience</div>
-                <div className="text-muted small">{personalDetails.experience.experienceName}</div>
+                <div className="text-muted small">{personalDetails?.experience?.experienceName}</div>
               </div>
             </div>
 

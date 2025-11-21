@@ -1,16 +1,99 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import editIcon from "../../assets/img/edit.svg";
+import { AppDispatch, RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePersonalDetails } from "../../redux/slices/employeeProfileSlice.tsx";
+import { getAllMaritalStatus } from "../../redux/slices/maritalStatusSlice.tsx";
+import { getAllCities } from "../../redux/slices/citiesSlice.tsx";
+import { getAllAvailability } from "../../redux/slices/availabilitySlice.tsx";
+import { getAllExperiences } from "../../redux/slices/experienceSlice.tsx";
+import { getAllWorkPermit } from "../../redux/slices/WorkPermitSlice.tsx";
 
 interface ProfileCardProps {
-  personalDetails: any; 
+  personalDetails: any;
 }
 
-const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails }) =>{
+const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails }) => {
+  console.log('personalDetails',personalDetails)
+  const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+
+  const { maritalStatusList } = useSelector((state: RootState) => state.maritalStatus);
+  const { CityList } = useSelector((state: RootState) => state.city);
+  const { AvailabilityList } = useSelector((state: RootState) => state.availability);
+  const { experienceList } = useSelector((state: RootState) => state.experience);
+  const { WorkPermitList } = useSelector((state: RootState) => state.workPermit);
+  console.log('experienceList', experienceList)
+
+  useEffect(() => {
+    dispatch(getAllMaritalStatus());
+    dispatch(getAllCities());
+    dispatch(getAllAvailability());
+    dispatch(getAllExperiences());
+    dispatch(getAllWorkPermit());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (showModal && personalDetails) {
+      setForm({
+        firstName: personalDetails?.firstName || "",
+        lastName: personalDetails?.lastName || "",
+        genderId: personalDetails?.genderId || "",
+        maritalStatusId: personalDetails?.maritalStatusId || "",
+        dob: personalDetails?.dateOfBirth || "",
+        cityId: personalDetails?.cityId || "",
+        availabilityId: personalDetails?.availabilityId || "",
+        experienceId: personalDetails?.experienceId || "",
+        workPermitId: personalDetails?.workPermitId || "",
+        workPermitCountries: personalDetails?.workPermitCountries || "",
+        permanentAddress: personalDetails?.permanentAddress || "",
+        homeTown: personalDetails?.hometown || "",
+        pincode: personalDetails?.pincode || "",
+        nationality: personalDetails?.nationality || "",
+        languages: personalDetails?.languageProficiency || "",
+      });
+    }
+  }, [showModal, personalDetails]);
+
+
+  const [form, setForm] = useState({
+    firstName: personalDetails?.firstName || "",
+    lastName: personalDetails?.lastName || "",
+    genderId: personalDetails?.genderId || "",
+    maritalStatusId: personalDetails?.maritalStatusId || "",
+    dob: personalDetails?.dateOfBirth || "",
+    cityId: personalDetails?.cityId || "",
+    availabilityId: personalDetails?.availabilityId || "",
+    experienceId: personalDetails?.experienceId || "",
+    workPermitId: personalDetails?.workPermitId || "",
+    workPermitCountries: personalDetails?.workPermitCountries || "",
+    permanentAddress: personalDetails?.permanentAddress || "",
+    homeTown: personalDetails?.hometown || "",
+    pincode: personalDetails?.pincode || "",
+    nationality: personalDetails?.nationality || "",
+    languages: personalDetails?.languageProficiency || "",
+  });
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = () => {
+    try {
+      dispatch(updatePersonalDetails(form))
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  const handleMaritalSelect = (id: number) => {
+    setForm({ ...form, maritalStatusId: id });
+  };
+
 
   return (
     <div className="card-section personal-details">
@@ -64,18 +147,18 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
 
         <div className="col-md-3">
           <strong>Work Permit for USA:</strong>
-          <div>{personalDetails?.workPermit || "-"}</div>
+          <div>{personalDetails?.workPermit?.workPermit  || "-"}</div>
         </div>
 
         <div className="col-md-3">
           <strong>Work permit for other countries:</strong>
           <div>{personalDetails?.workPermitCountries || "-"}</div>
         </div>
-          <div className="col-md-3">
+        <div className="col-md-3">
           <strong>Address:</strong>
-          <div>{personalDetails.permanentAddress} - {personalDetails?.pincode}</div>
+          <div>{personalDetails?.permanentAddress} - {personalDetails?.pincode}</div>
         </div>
-          <div className="col-md-3">
+        <div className="col-md-3">
           <strong>Nationality:</strong>
           <div>{personalDetails?.nationality}</div>
         </div>
@@ -84,7 +167,7 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
           <strong>Languages:</strong>
           <div>{personalDetails?.languageProficiency}</div>
         </div>
-      
+
         <div className="col-md-3">
           <strong>Mobile Number:</strong>
           <div>{personalDetails?.mobile || "-"}</div>
@@ -105,7 +188,7 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Full Name<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" placeholder="Enter your full name" />
+                <Form.Control type="text" name="firstName" value={form.firstName} onChange={handleChange} placeholder="Enter your full name" />
               </Col>
             </Row>
 
@@ -113,9 +196,8 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <div className="mb-4">
               <Form.Label className="fw-bold">Gender<span className="text-danger"> *</span></Form.Label>
               <div className="d-flex gap-3">
-                <Form.Check inline label="Male" name="gender" type="radio" />
-                <Form.Check inline label="Female" name="gender" type="radio" />
-                <Form.Check inline label="Transgender" name="gender" type="radio" />
+                <Form.Check inline label="Male" name="genderId" type="radio" value="1" checked={form.genderId == 1} onChange={handleChange} />
+                <Form.Check inline label="Female" name="genderId" type="radio" value="2" checked={form.genderId == 2} onChange={handleChange} />
               </div>
             </div>
 
@@ -123,22 +205,16 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <div className="mb-4">
               <Form.Label className="fw-bold">Marital status<span className="text-danger"> *</span></Form.Label>
               <div className="d-flex flex-wrap gap-2">
-                {[
-                  "Single/unmarried",
-                  "Married",
-                  "Widowed",
-                  "Divorced",
-                  "Separated",
-                  "Other",
-                ].map((status) => (
+                {maritalStatusList?.map((item) => (
                   <Badge
-                    bg="light"
-                    text="dark"
+                    key={item.id}
+                    bg={form.maritalStatusId === item.id ? "dark" : "light"}
+                    text={form.maritalStatusId === item.id ? "light" : "dark"}
                     className="border rounded-pill px-3 py-2"
-                    key={status}
                     style={{ cursor: "pointer" }}
+                    onClick={() => handleMaritalSelect(item.id)}
                   >
-                    {status}
+                    {item?.maritalStatus}
                   </Badge>
                 ))}
               </div>
@@ -150,15 +226,23 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Date of Birth<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="date" />
+                <Form.Control type="date" name="dob" value={form.dob} onChange={handleChange} />
               </Col>
               <Col md={6}>
                 <Form.Label className="fw-bold">Locality<span className="text-danger"> *</span></Form.Label>
-                <Form.Select>
-                  <option>Select city</option>
-                  <option>Hyderabad</option>
-                  <option>Bengaluru</option>
-                  <option>Chennai</option>
+                <Form.Select
+                  name="cityId"
+                  value={form.cityId}
+                  onChange={handleChange}
+                >
+                  <option value="">Select city</option>
+                  {CityList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.cityName}
+                    </option>
+                  )
+                  )}
+
                 </Form.Select>
               </Col>
             </Row>
@@ -166,20 +250,33 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Availability<span className="text-danger"> *</span></Form.Label>
-                <Form.Select>
-                  <option>Select availability</option>
-                  <option>within 15 days</option>
-                  <option>within 30 days</option>
-                  <option>within 45 days</option>
+                <Form.Select
+                  name="availabilityId"
+                  value={form.availabilityId}
+                  onChange={handleChange}>
+                  <option value="">Select availability</option>
+                  {AvailabilityList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.availability}
+                    </option>
+                  )
+                  )}
+
                 </Form.Select>
               </Col>
               <Col md={6}>
                 <Form.Label className="fw-bold">Experience<span className="text-danger"> *</span></Form.Label>
-                <Form.Select>
-                  <option>Select experience</option>
-                  <option>+3 years</option>
-                  <option>2-3 years</option>
-                  <option>+5 years</option>
+                <Form.Select
+                  name="experienceId"
+                  value={form.experienceId}
+                  onChange={handleChange}>
+                  <option value="">Select experience</option>
+                  {experienceList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.experienceName}
+                    </option>
+                  )
+                  )}
                 </Form.Select>
               </Col>
             </Row>
@@ -188,16 +285,24 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Work permit for USA</Form.Label>
-                <Form.Select>
-                  <option>Select work permit</option>
-                  <option>H1B</option>
-                  <option>Green Card</option>
-                  <option>Citizen</option>
+                <Form.Select
+                  name="workPermitId"
+                  value={form.workPermitId}
+                  onChange={handleChange}>
+                  <option value="">Select work permit</option>
+                  {WorkPermitList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.workPermit}
+                    </option>
+                  )
+                  )}
                 </Form.Select>
               </Col>
               <Col md={6}>
                 <Form.Label className="fw-bold">Work permit for other countries</Form.Label>
-                <Form.Control type="text" placeholder="Enter countries (max 3)" />
+                <Form.Control type="text" placeholder="Enter countries (max 3)" name="workPermitCountries"
+                  value={form.workPermitCountries}
+                  onChange={handleChange} />
               </Col>
             </Row>
 
@@ -205,21 +310,21 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Permanent address<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" placeholder="Enter your permanent address" />
+                <Form.Control type="text" placeholder="Enter your permanent address" name="permanentAddress" value={form.permanentAddress} onChange={handleChange} />
               </Col>
               <Col md={3}>
                 <Form.Label className="fw-bold">Hometown<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" placeholder="Enter your home town" name="homeTown" value={form.homeTown} onChange={handleChange} />
               </Col>
               <Col md={3}>
                 <Form.Label className="fw-bold">Pincode<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" name="pincode" placeholder="Enter your picode" value={form.pincode} onChange={handleChange} />
               </Col>
             </Row>
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Nationality<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" placeholder="Enter your nationality" />
+                <Form.Control type="text" placeholder="Enter your nationality" name="nationality" value={form.nationality} onChange={handleChange} />
               </Col>
             </Row>
 
@@ -230,6 +335,9 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
               <Form.Control
                 type="text"
                 placeholder="Add languages you know (e.g. English, Hindi, Telugu)"
+                name="languages"
+                value={form.languages}
+                onChange={handleChange}
               />
             </div>
           </Form>
@@ -238,7 +346,7 @@ const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails })
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="dark" onClick={handleClose}>
+          <Button variant="dark" onClick={handleSave}>
             Save
           </Button>
         </Modal.Footer>

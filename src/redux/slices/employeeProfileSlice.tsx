@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import BASE_URL_JOB from "../../config/config";
+import getAuthAdminHeaders from "../../utils/auth";
+import { toast } from "react-toastify";
 
 interface EmployeeProfileState {
   loading: boolean;
@@ -18,9 +20,7 @@ export const fetchEmployeeProfile = createAsyncThunk(
   "employees/profile",
   async (employeeId: number, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL_JOB}/employees/profile/${employeeId}`
-      );
+      const response = await axios.get(`${BASE_URL_JOB}/employees/profile/${employeeId}`, getAuthAdminHeaders());
       return response.data; // {status, message, data}
     } catch (error: any) {
       return rejectWithValue(
@@ -30,6 +30,18 @@ export const fetchEmployeeProfile = createAsyncThunk(
   }
 );
 
+export const updatePersonalDetails = createAsyncThunk(
+  "employee/updatePersonalDetails",
+  async (formData: any, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${BASE_URL_JOB}/employees/updatePersonalDetails`, formData, getAuthAdminHeaders(false),);
+      toast.success(response.data.message)
+      return response.data; // { status, message, data }
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
 
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
@@ -42,6 +54,7 @@ const employeeProfileSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
+    //fetch profile details
     builder
       .addCase(fetchEmployeeProfile.pending, (state) => {
         state.loading = true;
@@ -49,9 +62,29 @@ const employeeProfileSlice = createSlice({
       })
       .addCase(fetchEmployeeProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.data; 
+        state.data = action.payload.data;
       })
       .addCase(fetchEmployeeProfile.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+    //update profile details
+    builder
+      .addCase(updatePersonalDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updatePersonalDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.data) {
+          state.data.personalDetails = {
+            ...state.data.personalDetails,
+            ...action.payload.data,
+          };
+        }
+      })
+      .addCase(updatePersonalDetails.rejected, (state, action: any) => {
         state.loading = false;
         state.error = action.payload;
       });
