@@ -1,27 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const KeySkillsSection = () => {
+interface KeySkillsProps {
+  keySkills: any;
+}
+const KeySkillsSection :React.FC<KeySkillsProps> = ({keySkills}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // ---- Manage skills in state ----
-  const [skills, setSkills] = useState([
-    "Bootstrap",
-    "Material UI",
-    "GraphQL",
-    "MongoDB",
-    "TypeScript",
-    "HTML",
-    "JavaScript",
-    "React.JS",
-  ]);
+const [skills, setSkills] = useState<string[]>([]);
 
-  const skillIcons = {
+useEffect(() => {
+  if (keySkills?.length) {
+    setSkills(keySkills.map((item: any) => item.skill.skillName));
+  }
+}, [keySkills]);
+
+  const skillIcons: any = {
     Bootstrap: "bi-bootstrap-fill",
     "Material UI": "bi-palette-fill",
     GraphQL: "bi-diagram-3-fill",
@@ -33,7 +32,7 @@ const KeySkillsSection = () => {
   };
 
   // ---- REMOVE SKILL FUNCTION ----
-  const removeSkill = (skillName) => {
+  const removeSkill = (skillName: any) => {
     setSkills((prev) => prev.filter((skill) => skill !== skillName));
   };
 

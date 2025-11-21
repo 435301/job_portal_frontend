@@ -3,7 +3,10 @@ import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CertificationsSection = () => {
+interface CertificationProps{
+  certificationDetails: any;
+}
+const CertificationsSection : React.FC<CertificationProps> = ({certificationDetails}) => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);

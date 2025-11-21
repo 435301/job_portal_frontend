@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Dropdown } from "react-bootstrap";
-import editIcon from "../../assets/img/edit.svg"; // ✅ Correct image import
+import editIcon from "../../assets/img/edit.svg"; 
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const EmploymentSection = () => {
+interface EmploymentProps{
+  employmentDetails: any;
+}
+const EmploymentSection : React.FC<EmploymentProps> = ({employmentDetails}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

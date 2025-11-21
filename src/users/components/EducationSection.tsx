@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import editIcon from "../../assets/img/edit.svg"; // ✅ Correct image import path
+import editIcon from "../../assets/img/edit.svg"; 
 
-const EducationSection = () => {
+interface EducationProps{
+  educationDetails: any;
+}
+const EducationSection : React.FC<EducationProps> = ({educationDetails}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShow = () => setShowModal(true);

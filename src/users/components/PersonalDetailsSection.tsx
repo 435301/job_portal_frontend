@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import editIcon from "../../assets/img/edit.svg"; // update the path as needed
+import editIcon from "../../assets/img/edit.svg";
 
-const PersonalDetailsSection = () => {
+interface ProfileCardProps {
+  personalDetails: any; 
+}
+
+const PersonalDetailsSection :React.FC<ProfileCardProps> = ({ personalDetails }) =>{
   const [showModal, setShowModal] = useState(false);
-
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -31,64 +34,64 @@ const PersonalDetailsSection = () => {
       <div className="row p-3 names">
         <div className="col-md-3">
           <strong>Full Name:</strong>
-          <div>Akeeb Shaik</div>
+          <div>{personalDetails?.firstName} {personalDetails?.lastName}</div>
         </div>
         <div className="col-md-3">
           <strong>Gender:</strong>
-          <div>Male</div>
+          <div>{personalDetails?.gender?.gender || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>Marital Status:</strong>
-          <div>Single</div>
+          <div>{personalDetails?.maritalStatus?.maritalStatus || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>DOB:</strong>
-          <div>July 10, 1997</div>
+          <div>{personalDetails?.dateOfBirth || "-"}</div>
         </div>
 
         <div className="col-md-3">
           <strong>Locality:</strong>
-          <div>Hyderabad</div>
+          <div>{personalDetails?.city?.cityName || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>Availability:</strong>
-          <div>within 15 days</div>
+          <div>{personalDetails?.availability?.availability || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>Experience:</strong>
-          <div> +3 years</div>
+          <div>{personalDetails?.experience?.experienceName || "-"}</div>
         </div>
 
         <div className="col-md-3">
           <strong>Work Permit for USA:</strong>
-          <div>-</div>
+          <div>{personalDetails?.workPermit || "-"}</div>
         </div>
 
         <div className="col-md-3">
           <strong>Work permit for other countries:</strong>
-          <div>-</div>
+          <div>{personalDetails?.workPermitCountries || "-"}</div>
         </div>
           <div className="col-md-3">
           <strong>Address:</strong>
-          <div>Akshyanagar, Bengaluru - 560068</div>
+          <div>{personalDetails.permanentAddress} - {personalDetails?.pincode}</div>
         </div>
           <div className="col-md-3">
           <strong>Nationality:</strong>
-          <div>Indian</div>
+          <div>{personalDetails?.nationality}</div>
         </div>
 
         <div className="col-md-3">
           <strong>Languages:</strong>
-          <div>Telugu, Hindi, English</div>
+          <div>{personalDetails?.languageProficiency}</div>
         </div>
       
         <div className="col-md-3">
           <strong>Mobile Number:</strong>
-          <div>7780515180</div>
+          <div>{personalDetails?.mobile || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>Email ID:</strong>
-          <div>akeebshaik@gmail.com</div>
+          <div>{personalDetails?.email || "-"}</div>
         </div>
       </div>
 

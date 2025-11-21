@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap"; // ✅ Added this line
+import { Modal, Button } from "react-bootstrap"; 
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ResumeSection = () => {
+interface ResumeProps {
+  resumes: any; 
+}
+
+const ResumeSection :React.FC<ResumeProps> = ({ resumes }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [headline, setHeadline] = useState(
     "Looking for jobs requiring following skills: HTML, CSS, React.js, JavaScript, UI Design"

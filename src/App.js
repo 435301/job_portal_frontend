@@ -18,7 +18,6 @@ import CandidatesDetail from './users/CandidatesDetail';
 import EmployerAccount from './users/EmployerAccount';
 import VerifyEmail from './users/VerifyEmail';
 import EmailVerifiedSuccess from './users/EmailVerifiedSuccess';
-import ProfilePage from './users/ProfilePage';
 import Company from './users/Company';
 import EmployeeDashboard from './users/EmployeeDashboard';
 import ManageJobPostings from './users/ManageJobPostings';
@@ -82,6 +81,7 @@ import CreateWorkPermit from './admin/pages/CreateWorkPermit.tsx';
 import { AdminRoute } from './utils/roleRoute.js';
 import CurrencyTypeManage from './admin/pages/CurrencyTypeManage.tsx';
 import CreateCurrencyType from './admin/pages/CreateCurrencyType.tsx';
+import ProfilePageNew from './users/ProfliePageNew.tsx';
 
 
 
@@ -102,8 +102,7 @@ const App = () => {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/verify-email-success" element={<EmailVerifiedSuccess />} />
         <Route path="/company-verify-email-success" element={<CompanyEmailVerifiedSuccess />} />
-
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePageNew/>} />
         <Route path="/company" element={<Company />} />
         <Route path="/company-details" element={<CompanyDetails />} />
         <Route path="/employer-dashboard" element={<EmployeeDashboard />} />

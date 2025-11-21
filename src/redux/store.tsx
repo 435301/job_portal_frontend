@@ -25,7 +25,8 @@ import profilePercentageReducer from "./slices/profilePercentageSlice.tsx";
 import workPermitReducer from "./slices/WorkPermitSlice.tsx";
 import loginReducer from "./slices/loginSlice.tsx";
 import forgotPasswordReducer from "./slices/forgotPasswordSlice.tsx";
-import currencyTypeReducer from "./slices/currencyTypeSlice.tsx"
+import currencyTypeReducer from "./slices/currencyTypeSlice.tsx";
+import employeeProfileReducer from "./slices/employeeProfileSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -56,6 +57,7 @@ export const store = configureStore({
     employeeLogin: loginReducer,
     forgotPassword: forgotPasswordReducer,
     currencyType: currencyTypeReducer,
+    employeeProfile: employeeProfileReducer,
   },
 });
 

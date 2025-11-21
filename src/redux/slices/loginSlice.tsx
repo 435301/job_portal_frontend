@@ -49,8 +49,11 @@ export const employeeLogin = createAsyncThunk<
         email,
         password,
       });
-
+            //  Save token and admin details to localStorage
+      localStorage.setItem("employeeToken", response.data.token);
+      localStorage.setItem("employee", JSON.stringify(response.data.data));
       return response.data;
+      
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Server error");
     }

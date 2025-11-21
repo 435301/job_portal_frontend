@@ -3,11 +3,12 @@ import { Modal, Button, Form } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ProfileTitleSection = () => {
+interface ProfileTitleProps{
+  profileTitle: any;
+}
+
+const ProfileTitleSection :React.FC<ProfileTitleProps> = ({profileTitle}) => {
   const [showModal, setShowModal] = useState(false);
-  const [profileTitle, setProfileTitle] = useState(
-    "Looking for jobs requiring following skills: HTML, CSS, React.js, JavaScript, UI design"
-  );
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -35,10 +36,7 @@ const ProfileTitleSection = () => {
 
       {/* ===== Profile Text ===== */}
       <p className="mb-0 text-muted p-3">
-        {profileTitle.split(":")[0]}:{" "}
-        <span className="text-dark fw-medium">
-          {profileTitle.split(":")[1]}
-        </span>
+        {profileTitle?.[0].title}
       </p>
 
       {/* ===== Modal ===== */}
@@ -60,7 +58,7 @@ const ProfileTitleSection = () => {
                 rows={3}
                 className="h-100"
                 value={profileTitle}
-                onChange={(e) => setProfileTitle(e.target.value)}
+                // onChange={(e) => setProfileTitle(e.target.value)}
                 placeholder="e.g. Frontend Developer skilled in React.js, HTML, CSS, and JavaScript"
               />
             </Form.Group>

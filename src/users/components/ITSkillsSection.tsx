@@ -3,7 +3,10 @@ import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ITSkillsSection = () => {
+interface ITSkillsProps{
+  itSkills: any;
+}
+const ITSkillsSection : React.FC<ITSkillsProps> = ({itSkills}) => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);

@@ -4,7 +4,11 @@ import editIcon from "../../assets/img/edit-63.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, Badge, Row, Col } from "react-bootstrap";
 
-const ProfileCard = () => {
+interface ProfileCardProps {
+  personalDetails: any; 
+}
+
+const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
   // ▬▬▬ MOBILE POPUP ▬▬▬
   const [showPopup, setShowPopup] = useState(false);
   const [mobile, setMobile] = useState("9880087932");
@@ -35,13 +39,13 @@ const ProfileCard = () => {
 
           <div>
             <h5 className="mb-1 fw-semibold text-dark availability-1">
-              Michel Velayudhan
+             {personalDetails?.firstName} {personalDetails?.lastName}
               <img src={editIcon} alt="Edit Icon" className="ms-4" style={{ cursor: "pointer" }}
                 onClick={handleShow} />
             </h5>
 
             <p className="mb-2">
-              Profile last updated: <strong>10 July, 2024</strong>
+              Profile last updated: <strong> {personalDetails?.lastLogin &&new Date(personalDetails.lastLogin).toLocaleString("en-IN")}</strong>
             </p>
 
             <div className="d-flex align-items-center">
@@ -64,7 +68,7 @@ const ProfileCard = () => {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Location</div>
-                <div className="text-muted small">Bengaluru, INDIA</div>
+                <div className="text-muted small">{personalDetails?.city.cityName}, {personalDetails?.country.countryName}</div>
               </div>
             </div>
 
@@ -85,7 +89,7 @@ const ProfileCard = () => {
                     onClick={openPopup}
                   />
                 </div>
-                <div className="text-muted small">{mobile}</div>
+                <div className="text-muted small">{personalDetails?.mobile}</div>
               </div>
             </div>
 
@@ -96,7 +100,7 @@ const ProfileCard = () => {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Experience</div>
-                <div className="text-muted small">5+ Years</div>
+                <div className="text-muted small">{personalDetails.experience.experienceName}</div>
               </div>
             </div>
 
@@ -107,7 +111,7 @@ const ProfileCard = () => {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Email</div>
-                <div className="text-muted small">akeebshaik@gmail.com</div>
+                <div className="text-muted small">{personalDetails?.email}</div>
               </div>
             </div>
 
@@ -118,7 +122,7 @@ const ProfileCard = () => {
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Availability</div>
-                <div className="text-muted small">Join within 15 days</div>
+                <div className="text-muted small">{personalDetails?.availability?.availability}</div>
               </div>
             </div>
 

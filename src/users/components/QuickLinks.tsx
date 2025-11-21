@@ -1,6 +1,6 @@
 import React from "react";
 
-const QuickLinks = ({ onEditClick }) => {
+const QuickLinks = ({ onEditClick }: { onEditClick?: any }) => {
   const items = [
     "Resume",
     "Profile Title",
