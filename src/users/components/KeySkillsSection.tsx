@@ -4,6 +4,8 @@ import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { removeKeySkill } from "../../redux/slices/employeeProfileSlice.tsx";
+import { useAppDispatch } from "../../redux/hooks.tsx";
 
 interface KeySkillsProps {
   keySkills: any;
@@ -11,7 +13,7 @@ interface KeySkillsProps {
   onSave: (sikllIds: number[]) => void;
 }
 const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -63,11 +65,11 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
   };
 
   const handleSuggestedSkillClick = (item: any) => {
-  if (!selectedSkillIds.includes(item.id)) {
-    setSelectedSkillIds([...selectedSkillIds, item.id]);
-    setSkills([...skills, item?.skillName]);
-  }
-};
+    if (!selectedSkillIds.includes(item.id)) {
+      setSelectedSkillIds([...selectedSkillIds, item.id]);
+      setSkills([...skills, item?.skillName]);
+    }
+  };
 
 
   const handleSave = () => {
@@ -79,6 +81,11 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
   const removeSkill = (skillName: any) => {
     setSkills((prev) => prev.filter((skill) => skill !== skillName));
   };
+
+  const handleRemove = (id: number) => {
+    dispatch(removeKeySkill(id));
+  };
+
 
   return (
     <>
@@ -107,7 +114,7 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
               {/* REMOVE BUTTON (VISIBLE OUTSIDE MODAL ALSO) */}
               <button
                 className="remove-btn ms-2"
-                onClick={() => removeSkill(skill)}
+                onClick={() => handleRemove(selectedSkillIds[index])}
                 style={{
                   border: "none",
                   background: "transparent",
@@ -141,11 +148,10 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
           <div className="mb-3 d-flex flex-wrap gap-2">
             {skills.map((skill, index) => (
               <span key={index} className="badge-skill position-relative">
-                <i className={`bi ${skillIcons[skill]} me-1`}></i>
                 {skill}
                 <button
                   className="remove-btn ms-2"
-                  onClick={() => removeSkill(skill)}
+                  onClick={() => handleRemove(selectedSkillIds[index])}
                   style={{
                     border: "none",
                     background: "transparent",
@@ -182,7 +188,7 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
 
           <div className="d-flex flex-wrap gap-2">
             {skillList.map((item: any) => (
-              <span key={item.id} className="suggested-skill"  style={{cursor:"pointer"}}  onClick={() => handleSuggestedSkillClick(item)}>
+              <span key={item.id} className="suggested-skill" style={{ cursor: "pointer" }} onClick={() => handleSuggestedSkillClick(item)}>
                 + {item.skillName}
               </span>
             )

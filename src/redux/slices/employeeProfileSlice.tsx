@@ -16,7 +16,7 @@ const initialState: EmployeeProfileState = {
   error: null,
 };
 
- const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
+const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
 
 export const fetchEmployeeProfile = createAsyncThunk(
   "employees/profile",
@@ -62,7 +62,7 @@ export const updateProfileTitle = createAsyncThunk(
 
 export const addKeySkills = createAsyncThunk(
   "employee/addKeySkills",
-  async (skillIds: number[], { rejectWithValue , dispatch}) => {
+  async (skillIds: number[], { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(`${BASE_URL_JOB}/employees/addKeySkills`, { skillIds }, getAuthAdminHeaders(false));
       toast.success(response.data.message);
@@ -78,6 +78,26 @@ export const addKeySkills = createAsyncThunk(
     }
   }
 );
+
+export const removeKeySkill = createAsyncThunk(
+  "employee/removeKeySkill",
+  async (skillId: number, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.delete(`${BASE_URL_JOB}/employees/removeKeySkill/${skillId}`,
+        getAuthAdminHeaders(false)
+      );
+      toast.success(response.data.message);
+      const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return { removedSkillId: skillId };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+
 
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
@@ -162,6 +182,24 @@ const employeeProfileSlice = createSlice({
         }
       })
       .addCase(addKeySkills.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    // delete skill
+    builder
+      .addCase(removeKeySkill.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(removeKeySkill.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.data?.keySkills) {
+          state.data.keySkills = state.data.keySkills.filter(
+            (item: any) => item.skillId !== action.payload.removedSkillId
+          );
+        }
+      })
+      .addCase(removeKeySkill.rejected, (state, action: any) => {
         state.loading = false;
         state.error = action.payload;
       });
