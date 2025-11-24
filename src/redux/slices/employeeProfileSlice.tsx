@@ -9,6 +9,7 @@ interface EmployeeProfileState {
   data: any | null;
   error: string | null;
   list: string[];
+  certificateList: any[];
 }
 
 const initialState: EmployeeProfileState = {
@@ -16,6 +17,7 @@ const initialState: EmployeeProfileState = {
   data: null,
   error: null,
   list: [],
+  certificateList: [],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -115,7 +117,7 @@ export const addITSkill = createAsyncThunk(
       if (employeeId) {
         await dispatch(fetchEmployeeProfile(employeeId));
       }
-     return res.data;
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
@@ -142,12 +144,63 @@ export const updateITSkill = createAsyncThunk(
     try {
       const res = await axios.put(`${BASE_URL_JOB}/employees/updateITSkill/${id}`, payload, getAuthAdminHeaders(false));
       toast.success(res.data.message);
-       if (employeeId) {
+      if (employeeId) {
         await dispatch(fetchEmployeeProfile(employeeId));
       }
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+//ceriticate 
+export const addCertificate = createAsyncThunk(
+  "employees/addCertificate",
+  async (payload: { certificateName: string; issuedBy: string }, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.post(`${BASE_URL_JOB}/employees/addCertificate`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const updateCertificate = createAsyncThunk(
+  "employees/editCertificate",
+  async (
+    { id, payload }: { id: number; payload: { certificateName: string; issuedBy: string }, },
+    { rejectWithValue , dispatch}
+  ) => {
+    try {
+      const res = await axios.put(`${BASE_URL_JOB}/employees/editCertificate/${id}`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+       if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const deleteCertificate = createAsyncThunk(
+  "certificates/delete",
+  async (id: number, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.delete(`${BASE_URL_JOB}/employees/deleteCertificate/${id}`, getAuthAdminHeaders());
+      toast.success(res.data.message);
+        if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return id;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
     }
   }
 );
@@ -281,6 +334,38 @@ const employeeProfileSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+    builder
+      .addCase(addCertificate.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addCertificate.fulfilled, (state, action: any) => {
+        state.loading = false;
+        state.certificateList = action.payload;
+
+      })
+      .addCase(addCertificate.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(updateCertificate.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateCertificate.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.certificateList = action.payload;
+        }
+      })
+      .addCase(updateCertificate.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(deleteCertificate.fulfilled, (state, action: any) => {
+        state.loading = false;
+        state.certificateList = state.certificateList.filter((item) => item.id !== action.payload);
+      })
   },
 });
 

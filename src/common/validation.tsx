@@ -26,27 +26,27 @@ export interface FormErrors {
   captchaText?: string;
   boardName?: string;
   schoolMedium?: string;
-  specializationName?:string;
-  maritalStatus?:string;
-  gender?:string;
-  countryName?:string;
-  stateName?:string;
-  countryId?:string;
-  cityName?:string;
-  stateId?:string;
-  employmentType?:string;
-  availability?:string;
-  gradingType?:string;
-  title?:string;
-  percentage?:number;
-  workPermit?:string;
-  currencyType?:string;
+  specializationName?: string;
+  maritalStatus?: string;
+  gender?: string;
+  countryName?: string;
+  stateName?: string;
+  countryId?: string;
+  cityName?: string;
+  stateId?: string;
+  employmentType?: string;
+  availability?: string;
+  gradingType?: string;
+  title?: string;
+  percentage?: number;
+  workPermit?: string;
+  currencyType?: string;
   skillId?: number;
-lastUsedYear?: number;
-expYears?: number;
-expMonths?: number;
-
-
+  lastUsedYear?: number;
+  expYears?: number;
+  expMonths?: number;
+  certificateName?: string;
+  issuedBy?: string;
 }
 
 //  LOGIN FORM VALIDATION
@@ -187,7 +187,7 @@ export const validateCourseForm = (formData: { educationId?: number; courseName?
 };
 
 //  SPECIALIZATION FORM VALIDATION
-export const validateSpecializationForm = (formData: { specializationName?: string;  educationId?: number; status?: string | number, ipAddress?: string , courseId?:number; }): FormErrors => {
+export const validateSpecializationForm = (formData: { specializationName?: string; educationId?: number; status?: string | number, ipAddress?: string, courseId?: number; }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.specializationName || !formData.specializationName.trim()) {
@@ -197,7 +197,7 @@ export const validateSpecializationForm = (formData: { specializationName?: stri
   if (!formData.educationId || !formData.educationId) {
     errors.educationId = "Education Name is required";
   }
-    if (!formData.courseId || !formData.courseId) {
+  if (!formData.courseId || !formData.courseId) {
     errors.courseId = "Course Name is required";
   }
 
@@ -225,7 +225,7 @@ export const validateCourseTypeForm = (formData: { courseType?: string; status?:
   return errors;
 };
 
-export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?:string;}): FormErrors => {
+export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?: string; }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.firstName || !formData.firstName.trim()) {
@@ -334,14 +334,14 @@ export const validateCountryForm = (formData: { countryName?: string; status?: s
 };
 
 //  STATE FORM VALIDATION
-export const validateStateForm = (formData: { countryId?: number; status?: string | number, ipAddress?: string , stateName?: string;}): FormErrors => {
+export const validateStateForm = (formData: { countryId?: number; status?: string | number, ipAddress?: string, stateName?: string; }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.countryId || !formData.countryId) {
     errors.countryId = "Country Name is required";
   }
 
-   if (!formData.stateName || !formData.stateName.trim()) {
+  if (!formData.stateName || !formData.stateName.trim()) {
     errors.stateName = "State Name is required";
   }
 
@@ -353,18 +353,18 @@ export const validateStateForm = (formData: { countryId?: number; status?: strin
 };
 
 //  STATE FORM VALIDATION
-export const validateCityForm = (formData: { countryId?: number; stateId?: number; status?: string | number, ipAddress?: string , cityName?: string;}): FormErrors => {
+export const validateCityForm = (formData: { countryId?: number; stateId?: number; status?: string | number, ipAddress?: string, cityName?: string; }): FormErrors => {
   const errors: FormErrors = {};
 
-  if (!formData.countryId ) {
+  if (!formData.countryId) {
     errors.countryId = "Country Name is required";
   }
 
-   if (!formData.stateId) {
+  if (!formData.stateId) {
     errors.stateId = "State Name is required";
   }
 
-   if (!formData.cityName ) {
+  if (!formData.cityName) {
     errors.cityName = "City Name is required";
   }
 
@@ -376,7 +376,7 @@ export const validateCityForm = (formData: { countryId?: number; stateId?: numbe
 };
 
 //  EMPLOYMENT TYPE FORM VALIDATION
-export const validateEmploymentTypeForm = (formData: {  employmentType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
+export const validateEmploymentTypeForm = (formData: { employmentType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.employmentType || !formData.employmentType.trim()) {
@@ -426,7 +426,7 @@ export const validateProfilePercentageForm = (formData: { title?: string; percen
     errors.title = "Title is required";
   }
 
-   if (formData.percentage === undefined || formData.percentage === null) {
+  if (formData.percentage === undefined || formData.percentage === null) {
     errors.percentage = "Percentage is required";
   }
 
@@ -448,7 +448,7 @@ export const validateWorkPermitForm = (formData: { workPermit?: string; status?:
   }
   return errors;
 }
-  
+
 
 //  CURRENCY TYPE FORM VALIDATION
 export const validateCurrencyTypeForm = (formData: { currencyType?: string; status?: string | number, ipAddress?: string }): FormErrors => {
@@ -491,5 +491,17 @@ export const validateITSkillsForm = (formData: {
     errors.expMonths = "Experience (Months) is required";
   }
 
+  return errors;
+};
+
+
+export const validateCertificateForm = (formData: { certificateName?: string; issuedBy?: string }): FormErrors => {
+  const errors: FormErrors = {};
+  if (!formData.certificateName || !formData.certificateName.trim()) {
+    errors.certificateName = "Certificate Name is required";
+  }
+  if (!formData.issuedBy) {
+    errors.issuedBy = "Issued By is required";
+  }
   return errors;
 };
