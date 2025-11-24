@@ -137,11 +137,14 @@ export const updateITSkill = createAsyncThunk(
         expMonths: number;
       };
     },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const res = await axios.put(`${BASE_URL_JOB}/employees/updateITSkill/${id}`, payload, getAuthAdminHeaders(false));
       toast.success(res.data.message);
+       if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Something went wrong");

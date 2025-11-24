@@ -23,11 +23,14 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
   const [selectedSkillIds, setSelectedSkillIds] = useState<number[]>([]);
   const [searchText, setSearchText] = useState("");
   const [filteredSkills, setFilteredSkills] = useState<any[]>([]);
+  const [keySkillRowIds, setKeySkillRowIds] = useState<number[]>([]);
+
 
   useEffect(() => {
     if (keySkills?.length) {
       setSkills(keySkills.map((item: any) => item?.skill?.skillName));
       setSelectedSkillIds(keySkills.map((item: any) => item?.skillId));
+      setKeySkillRowIds(keySkills.map((item: any) => item.id));
     }
   }, [keySkills]);
 
@@ -84,6 +87,9 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
 
   const handleRemove = (id: number) => {
     dispatch(removeKeySkill(id));
+    setSkills((prev) => prev.filter((_, i) => keySkillRowIds[i] !== id));
+    setSelectedSkillIds((prev) => prev.filter((_, i) => keySkillRowIds[i] !== id));
+    setKeySkillRowIds((prev) => prev.filter(itemId => itemId  !== id));
   };
 
 
@@ -114,7 +120,7 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
               {/* REMOVE BUTTON (VISIBLE OUTSIDE MODAL ALSO) */}
               <button
                 className="remove-btn ms-2"
-                onClick={() => handleRemove(selectedSkillIds[index])}
+                onClick={() => handleRemove(keySkillRowIds[index])}
                 style={{
                   border: "none",
                   background: "transparent",
@@ -151,7 +157,7 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
                 {skill}
                 <button
                   className="remove-btn ms-2"
-                  onClick={() => handleRemove(selectedSkillIds[index])}
+                  onClick={() => handleRemove(keySkillRowIds[index])}
                   style={{
                     border: "none",
                     background: "transparent",
