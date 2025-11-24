@@ -57,7 +57,7 @@ function ProfilePageNew() {
             <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
             <EmploymentSection employmentDetails={data?.employmentDetails} />
             <EducationSection educationDetails={data?.educationDetails} />
-            <ITSkillsSection itSkills={data?.itSkills} />
+            <ITSkillsSection itSkills={data?.keySkills} />
             <CertificationsSection certificationDetails={data?.certificationDetails} />
             <PersonalDetailsSection personalDetails={data?.personalDetails} />
           </div>

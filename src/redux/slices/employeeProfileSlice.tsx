@@ -8,12 +8,14 @@ interface EmployeeProfileState {
   loading: boolean;
   data: any | null;
   error: string | null;
+  list: string[];
 }
 
 const initialState: EmployeeProfileState = {
   loading: false,
   data: null,
   error: null,
+  list: [],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -98,6 +100,54 @@ export const removeKeySkill = createAsyncThunk(
   }
 );
 
+export const addITSkill = createAsyncThunk(
+  "employee/addITSkill",
+  async (data: {
+    skillId: number;
+    version?: string;
+    lastUsedYear?: number;
+    expYears: number;
+    expMonths: number;
+  }, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.post(`${BASE_URL_JOB}/employees/addITSkill`, data, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+     return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const updateITSkill = createAsyncThunk(
+  "employee/updateITSkill",
+  async (
+    {
+      id,
+      payload,
+    }: {
+      id: number;
+      payload: {
+        version?: string;
+        lastUsedYear?: number | string;
+        expYears: number;
+        expMonths: number;
+      };
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.put(`${BASE_URL_JOB}/employees/updateITSkill/${id}`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
 
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
@@ -203,7 +253,31 @@ const employeeProfileSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-
+    builder
+      // ADD  IT skills
+      .addCase(addITSkill.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addITSkill.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addITSkill.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+    builder
+      // UPDATE It skills
+      .addCase(updateITSkill.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateITSkill.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = action.payload; // replace list with server updated list
+      })
+      .addCase(updateITSkill.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

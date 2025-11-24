@@ -41,6 +41,12 @@ export interface FormErrors {
   percentage?:number;
   workPermit?:string;
   currencyType?:string;
+  skillId?: number;
+lastUsedYear?: number;
+expYears?: number;
+expMonths?: number;
+
+
 }
 
 //  LOGIN FORM VALIDATION
@@ -454,6 +460,35 @@ export const validateCurrencyTypeForm = (formData: { currencyType?: string; stat
 
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
+  }
+
+  return errors;
+};
+
+//  ADD IT SKILLS FORM VALIDATION
+export const validateITSkillsForm = (formData: {
+  skillId?: number | string;
+  lastUsedYear?: number | string;
+  expYears?: number | string;
+  expMonths?: number | string;
+  ipAddress?: string;
+}): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.skillId) {
+    errors.skillId = "Skill is required";
+  }
+
+  if (!formData.lastUsedYear) {
+    errors.lastUsedYear = "Last used year is required";
+  }
+
+  if (!formData.expYears) {
+    errors.expYears = "Experience (Years) is required";
+  }
+
+  if (!formData.expMonths) {
+    errors.expMonths = "Experience (Months) is required";
   }
 
   return errors;
