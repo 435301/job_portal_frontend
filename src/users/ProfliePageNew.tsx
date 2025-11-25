@@ -14,11 +14,16 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { addCertificate, addEmployment, addKeySkills, deleteCertificate, deleteEmployment, fetchEmployeeProfile, updateCertificate, updateEmployment, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
+import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, fetchEmployeeProfile, updateCertificate, updateEmployment, updateProfileEducation, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
 import { getAllSkills } from '../redux/slices/skillSlice.tsx';
 import { getAllEmploymentType } from '../redux/slices/employementTypeSlice.tsx';
 import { getAllNoticePeriods } from '../redux/slices/noticePeriodSlice.tsx';
 import { getAllCurrencyType } from '../redux/slices/currencyTypeSlice.tsx';
+import { getAllCourses } from '../redux/slices/courseSlice.tsx';
+import { getAllSpecializations } from '../redux/slices/specializationSlice.tsx';
+import { getAllCourseTypes } from '../redux/slices/courseTypeSlice.tsx';
+import { getAllGradingSystem } from '../redux/slices/gradingSystemSlice.tsx';
+import { getAllEducations } from '../redux/slices/educationSlice.tsx';
 
 
 function ProfilePageNew() {
@@ -27,7 +32,12 @@ function ProfilePageNew() {
   const { skillList } = useAppSelector((state: RootState) => state.skill);
   const { EmploymentTypeList } = useAppSelector((state: RootState) => state.employmentType);
   const { NoticePeriodList } = useAppSelector((state: RootState) => state.noticePeriod);
-   const { CurrencyTypeList } = useAppSelector(  (state: RootState) => state.currencyType );
+  const { CurrencyTypeList } = useAppSelector((state: RootState) => state.currencyType);
+  const { educationList } = useAppSelector((state: RootState) => state.education);
+  const { courseList } = useAppSelector((state: RootState) => state.course);
+  const { specializationList } = useAppSelector((state: RootState) => state.specialization);
+  const { courseTypeList } = useAppSelector((state: RootState) => state.courseType);
+  const { GradingSystemList } = useAppSelector((state: RootState) => state.gradingSystem);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
 
   useEffect(() => {
@@ -37,6 +47,11 @@ function ProfilePageNew() {
       dispatch(getAllEmploymentType());
       dispatch(getAllNoticePeriods());
       dispatch(getAllCurrencyType());
+      dispatch(getAllEducations());
+      dispatch(getAllCourses());
+      dispatch(getAllSpecializations());
+      dispatch(getAllCourseTypes());
+      dispatch(getAllGradingSystem());
     }
   }, [dispatch]);
 
@@ -64,37 +79,51 @@ function ProfilePageNew() {
     dispatch(deleteCertificate(id))
   };
 
-const handleAddEmployment = async (formData: any) => {
-  try {
-    const payload = {
-      ...formData,
-      isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
-    };
-    const res = await dispatch(addEmployment(payload));
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-  const handleUpdateEmployment = async (id: number, formData: any) => {
-     try {
-    const payload = {
-      ...formData,
-      isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
-    };
-    const res = await  dispatch(updateEmployment({ id, payload: payload }));
-  } catch (error) {
-    console.log(error);
-  }
+
+  const handleAddEmployment = async (formData: any) => {
+    try {
+      const payload = {
+        ...formData,
+        isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
+      };
+      const res = await dispatch(addEmployment(payload));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-const handleDeleteEmployment = async (id: number) => {
-  try {
-    await dispatch(deleteEmployment(id));
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const handleUpdateEmployment = async (id: number, formData: any) => {
+    try {
+      const payload = {
+        ...formData,
+        isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
+      };
+      const res = await dispatch(updateEmployment({ id, payload: payload }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteEmployment = async (id: number) => {
+    try {
+      await dispatch(deleteEmployment(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAddEducation = (formData: any) => {
+    dispatch(addProfileEducation(formData));
+  };
+
+  const handleUpdateEducation = (id: number, formData: any) => {
+    dispatch(updateProfileEducation({ id, payload: formData }))
+  };
+
+  const handleDeleteEducation = (id: number) => {
+    dispatch(deleteProfileEducation(id))
+  };
 
 
   return (
@@ -111,7 +140,7 @@ const handleDeleteEmployment = async (id: number) => {
             <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
             <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
             <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} />
-            <EducationSection educationDetails={data?.educationDetails} />
+            <EducationSection educationDetails={data?.educationDetails} educationList={educationList} courseList={courseList} specializationList={specializationList} courseTypeList={courseTypeList} GradingSystemList={GradingSystemList} onAdd={handleAddEducation} onUpdate={handleUpdateEducation} onDelete={handleDeleteEducation} />
             <ITSkillsSection itSkills={data?.keySkills} />
             <CertificationsSection certificationDetails={data?.certificationDetails} onAdd={handleAddCertificate} onUpdate={handleUpdateCertificate} onDelete={handleDeleteCertificate} />
             <PersonalDetailsSection personalDetails={data?.personalDetails} />

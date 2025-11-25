@@ -1,5 +1,5 @@
 const getAuthAdminHeaders = (isFormData = false) => {
-const token = localStorage.getItem("adminToken");
+const token = localStorage.getItem("adminToken") ||localStorage.getItem("employeeToken");
 
   if (!token) return {};
   return {

@@ -5,6 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useAppDispatch } from "../../redux/hooks.tsx";
 import { FormErrorsEmployment, validateEmploymentForm, } from "../../common/validation.tsx";
 import "../../assets/css/style.css";
+import DeleteConfirmationModal from "../../admin/componets/Modal/DeleteModal.tsx";
 
 interface EmploymentProps {
   employmentDetails: any;
@@ -39,6 +40,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
   const [editId, setEditId] = useState<number | null>(null);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleShow = () => setShow(true);
 
   const [formData, setFormData] = useState<EmploymentForm>({
@@ -152,8 +155,15 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
     handleClose();
   };
 
-  const handleDeleteClick = (id: number) => {
+  const handleDelete = (id: any) => {
     onDelete(id);
+    setShowDeleteModal(false);
+    setDeleteId(null);
+  };
+
+  const handleDeleteClick = (id: number) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
   };
 
   return (
@@ -226,6 +236,12 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
         </div>
 
       </div>
+      {showDeleteModal &&
+        <DeleteConfirmationModal
+          show={showDeleteModal}
+          handleClose={() => setShowDeleteModal(false)}
+          handleConfirm={() => handleDelete(deleteId)}
+        />}
 
       {/* ===== Employment Modal ===== */}
       <Modal show={show} onHide={handleClose} size="lg" centered>
@@ -302,7 +318,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                 </div>
                 <div className="col-md-6">
                   <label>Months</label>
-                  <Form.Select  name="totalExpMonths" value={formData.totalExpMonths} onChange={handleChange} className={`form-control  ${errors.totalExpMonths ? "is-invalid" : ""}`} >
+                  <Form.Select name="totalExpMonths" value={formData.totalExpMonths} onChange={handleChange} className={`form-control  ${errors.totalExpMonths ? "is-invalid" : ""}`} >
                     <option value="">Months</option>
                     {[...Array(12).keys()].map((y) => (
                       <option key={y} value={y}>

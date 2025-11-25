@@ -64,6 +64,18 @@ export interface EmploymentForm {
   noticePeriodId: number;
 }
 
+export interface EducationForm {
+  educationId: number,
+  courseId: number,
+  specificationId: number,
+  university: string,
+  courseTypeId: number,
+  courseStartYear: number,
+  courseEndYear: number,
+  gradingSystemId: number,
+  marks: string,
+}
+
 export interface FormErrorsEmployment {
   [key: string]: string;
 }
@@ -534,10 +546,10 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (!formData.employmentTypeId) {
     errors.employmentTypeId = "Employment type is required";
   }
-  if ( formData.totalExpYears <= 0 && formData.totalExpYears === null ) {
+  if (formData.totalExpYears <= 0 && formData.totalExpYears === null) {
     errors.totalExpYears = "Total experience years must be a valid number";
   }
-  if ( formData.totalExpMonths < 0 || formData.totalExpMonths > 11) {
+  if (formData.totalExpMonths < 0 || formData.totalExpMonths > 11) {
     errors.totalExpMonths = "Total experience months must be between 0 and 11";
   }
   if (!formData.currentCompanyName || !formData.currentCompanyName.trim()) {
@@ -546,7 +558,7 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (!formData.currentJobTitle || !formData.currentJobTitle.trim()) {
     errors.currentJobTitle = "Job title is required";
   }
-  if (!formData.joiningYear ) {
+  if (!formData.joiningYear) {
     errors.joiningYear = "Enter a valid joining year";
   }
   if (!formData.joiningMonth || formData.joiningMonth < 1 || formData.joiningMonth > 12) {
@@ -564,7 +576,23 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (!formData.noticePeriodId) {
     errors.noticePeriodId = "Notice period is required";
   }
+  return errors;
+};
 
+
+export const validateProfileEducationForm = (formData: EducationForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+
+  if (!formData.educationId) errors.educationId = "Education is required";
+  if (!formData.university.trim()) errors.university = "University is required";
+  if (!formData.courseId) errors.courseId = "Course is required";
+  if (!formData.specificationId) errors.specificationId = "Specialization is required";
+  if (!formData.courseTypeId) errors.courseTypeId = "Course type is required";
+  if (!formData.courseStartYear) errors.courseStartYear = "Start year is required";
+  if (!formData.courseEndYear) errors.courseEndYear = "End year is required";
+  if (!formData.gradingSystemId) errors.gradingSystemId = "Grading system is required";
+  if (!formData.marks.trim()) errors.marks = "Marks/Percentage is required";
 
   return errors;
+
 };

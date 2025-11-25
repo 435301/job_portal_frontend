@@ -11,6 +11,7 @@ interface EmployeeProfileState {
   list: string[];
   certificateList: any[];
   employmentList: any[];
+  educationList: any[];
 }
 
 const initialState: EmployeeProfileState = {
@@ -20,6 +21,7 @@ const initialState: EmployeeProfileState = {
   list: [],
   certificateList: [],
   employmentList: [],
+  educationList:[],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -258,6 +260,58 @@ export const deleteEmployment = createAsyncThunk(
     }
   }
 );
+
+//education 
+export const addProfileEducation = createAsyncThunk(
+  "employees/addEducation",
+  async (payload: any, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.post(`${BASE_URL_JOB}/employees/addEducation`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const updateProfileEducation = createAsyncThunk(
+  "employees/editEducation",
+  async (
+    { id, payload }: { id: number; payload: any },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      const res = await axios.put(`${BASE_URL_JOB}/employees/editEducation/${id}`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const deleteProfileEducation = createAsyncThunk(
+  "employees/deleteEducation",
+  async (id: number, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.delete(`${BASE_URL_JOB}/employees/deleteEducation/${id}`, getAuthAdminHeaders());
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return id;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
   initialState,
@@ -448,6 +502,36 @@ const employeeProfileSlice = createSlice({
     builder
       .addCase(deleteEmployment.fulfilled, ((state, action: any) => {
         state.employmentList = state.employmentList.filter((item) => item.id! = action.payload);
+      }))
+        builder
+      // ADD Employment
+      .addCase(addProfileEducation.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addProfileEducation.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addProfileEducation.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(updateProfileEducation.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProfileEducation.fulfilled, (state, action: any) => {
+        state.loading = false;
+        const updated = action.payload.data;
+        state.educationList = state.educationList.map((item) =>
+          item.id === updated.id ? updated : item
+        );
+      })
+      .addCase(updateProfileEducation.rejected, (state, action: any) => {
+        state.error = action.payload;
+      })
+    builder
+      .addCase(deleteProfileEducation.fulfilled, ((state, action: any) => {
+        state.educationList = state.educationList.filter((item) => item.id! = action.payload);
       }))
   },
 });
