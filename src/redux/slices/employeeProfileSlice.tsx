@@ -52,6 +52,7 @@ export const updatePersonalDetails = createAsyncThunk(
       toast.success(response.data.message)
       return response.data; // { status, message, data }
     } catch (err: any) {
+      toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -67,6 +68,7 @@ export const updateProfileTitle = createAsyncThunk(
       toast.success(response.data.message)
       return { newTitle };
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -86,6 +88,7 @@ export const addKeySkills = createAsyncThunk(
         message: response.data.message
       };
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -105,6 +108,7 @@ export const removeKeySkill = createAsyncThunk(
       }
       return { removedSkillId: skillId };
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -127,6 +131,7 @@ export const addITSkill = createAsyncThunk(
       }
       return res.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -157,6 +162,7 @@ export const updateITSkill = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -173,6 +179,7 @@ export const addCertificate = createAsyncThunk(
       }
       return res.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -192,6 +199,7 @@ export const updateCertificate = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -208,6 +216,7 @@ export const deleteCertificate = createAsyncThunk(
       }
       return id;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -225,6 +234,7 @@ export const addEmployment = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+      toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -244,6 +254,7 @@ export const updateEmployment = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -260,6 +271,7 @@ export const deleteEmployment = createAsyncThunk(
       }
       return id;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -277,6 +289,7 @@ export const addProfileEducation = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -296,6 +309,7 @@ export const updateProfileEducation = createAsyncThunk(
       }
       return res.data.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -312,6 +326,7 @@ export const deleteProfileEducation = createAsyncThunk(
       }
       return id;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }
@@ -330,6 +345,7 @@ export const uploadResume = createAsyncThunk(
       }
       return response.data;
     } catch (error: any) {
+       toast.error(error.response?.data.message);
       return rejectWithValue(error.response?.data || "Upload failed");
     }
   }
@@ -348,6 +364,7 @@ export const uploadPhoto = createAsyncThunk(
       }
       return response.data;
     } catch (error: any) {
+       toast.error(error.response?.data.message);
       return rejectWithValue(error.response?.data || "Upload failed");
     }
   }
@@ -364,6 +381,7 @@ export const deleteResume = createAsyncThunk(
       }
       return { id, ...response.data };
     } catch (error: any) {
+       toast.error(error.response?.data.message);
       return rejectWithValue(error.response?.data || "Delete failed");
     }
   }
@@ -382,6 +400,7 @@ export const updateMobileNumber = createAsyncThunk(
       }
       return res.data;
     } catch (err: any) {
+       toast.error(err.response?.data.message);
       return rejectWithValue(err.response?.data || err.message);
     }
   }

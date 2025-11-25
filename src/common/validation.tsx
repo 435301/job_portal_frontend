@@ -59,6 +59,8 @@ export interface EmploymentForm {
   currentJobTitle: string;
   joiningYear: number;
   joiningMonth: number;
+  endingYear: number;
+  endingMonth: number;
   currencyId: number;
   currentSalary: number;
   skillsUsed: string;
@@ -567,6 +569,12 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   }
   if (!formData.joiningMonth || formData.joiningMonth < 1 || formData.joiningMonth > 12) {
     errors.joiningMonth = "Joining month must be between 1 and 12";
+  }
+  if (!formData.endingYear) {
+    errors.joiningYear = "Enter a valid ending year";
+  }
+  if (!formData.endingMonth || formData.endingMonth < 1 || formData.endingMonth > 12) {
+    errors.endingMonth = "Ending month must be between 1 and 12";
   }
   if (!formData.currencyId) {
     errors.currencyId = "Currency type is required";

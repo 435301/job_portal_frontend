@@ -26,6 +26,8 @@ interface EmploymentForm {
   currentJobTitle: string,
   joiningYear: number,
   joiningMonth: number,
+  endingYear:number,
+  endingMonth: number,
   currencyId: number,
   currentSalary: number,
   skillsUsed: string,
@@ -53,6 +55,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
     currentJobTitle: "",
     joiningYear: 0,
     joiningMonth: 0,
+     endingYear:0,
+  endingMonth: 0,
     currencyId: 0,
     currentSalary: 0,
     skillsUsed: "",
@@ -70,6 +74,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       "totalExpMonths",
       "joiningYear",
       "joiningMonth",
+       "endingYear",
+  "endingMonth",
       "currencyId",
       "currentSalary",
       "noticePeriodId"
@@ -101,6 +107,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       currentJobTitle: "",
       joiningYear: 0,
       joiningMonth: 0,
+       endingYear:0,
+  endingMonth: 0,
       currencyId: 0,
       currentSalary: 0,
       skillsUsed: "",
@@ -121,6 +129,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       currentJobTitle: item.currentJobTitle,
       joiningYear: item.joiningYear,
       joiningMonth: item.joiningMonth,
+       endingYear:item.endingYear,
+  endingMonth: item.endingMonth,
       currencyId: item.currencyId,
       currentSalary: item.currentSalary,
       skillsUsed: item.skillsUsed,
@@ -203,7 +213,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
                 <span className="meta">
                   <i className="bi bi-dot mx-1"></i>
-                  {item.joiningYear}-{item.joiningMonth}
+                  {item.joiningYear}-{item.endingYear}
                 </span>
 
                 <span> <p>{item.jobProfile}</p></span>
@@ -372,6 +382,37 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
                     </Form.Select>
                     {errors.joiningMonth && <div className="invalid-feedback">{errors.joiningMonth}</div>}
+
+                  </div>
+                </div>
+              </div>
+              {/* Ending Date */}
+              <div className="row mb-3">
+                <div className="col-md-12">
+                  <label className="form-section-label">Ending date<span className="text-danger"> *</span></label>
+                  <div className="d-flex gap-2">
+                    <Form.Select name="endingYear" value={formData.endingYear} onChange={handleChange} className={`form-control  ${errors.endingYear ? "is-invalid" : ""}`}>
+                      <option value="">Years</option>
+                      {[...Array(30)].map((_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return <option key={year} value={year}>{year}</option>;
+                      })}
+                    </Form.Select>
+                    {errors.endingYear && <div className="invalid-feedback">{errors.endingYear}</div>}
+
+                    <Form.Select name="endingMonth" value={formData.endingMonth} onChange={handleChange} className={`form-control  ${errors.endingMonth ? "is-invalid" : ""}`} >
+                      <option value="">Months</option>
+                      {[
+                        "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                      ].map((m, i) => (
+                        <option key={i + 1} value={i + 1}>
+                          {m}
+                        </option>
+                      ))}
+
+                    </Form.Select>
+                    {errors.endingMonth && <div className="invalid-feedback">{errors.endingMonth}</div>}
 
                   </div>
                 </div>
