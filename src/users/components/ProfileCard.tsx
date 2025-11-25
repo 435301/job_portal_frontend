@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import avatarImage from "../../assets/img/avatar-27.png";
 import editIcon from "../../assets/img/edit-63.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, Badge, Row, Col } from "react-bootstrap";
 import { FormErrorsEmployment, validateMobileNumber } from "../../common/validation.tsx";
+import BASE_URL_JOB from "../../config/config.jsx";
+import "../../assets/css/style.css";
 
 interface ProfileCardProps {
   personalDetails: any;
   onMobile: (mobile: any) => void;
+  onPhoto: (photo: any) => void
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, onPhoto }) => {
   // ▬▬▬ MOBILE POPUP ▬▬▬
   const [showPopup, setShowPopup] = useState(false);
   const [mobile, setMobile] = useState<any>();
+  const [profilePhoto, setProfilePhoto] = useState<any>();
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
+
+  useEffect(() => {
+    if (personalDetails?.profilePhoto) {
+      setProfilePhoto(personalDetails.profilePhoto);
+    }
+  }, [personalDetails]);
 
   const openPopup = () => {
     setMobile(personalDetails?.mobile || "");
@@ -27,12 +37,26 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile }) 
   const handleClose = () => setShowModal(false);
 
   const handleSave = () => {
-    const payload ={
+    const payload = {
       mobile: mobile
     }
     onMobile(payload);
     setShowPopup(false);
   }
+
+  const handleProfilePhoto = (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const previewUrl = URL.createObjectURL(file);
+    setProfilePhoto(previewUrl);
+    onPhoto(file);
+  };
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const triggerUpload = () => {
+    fileRef.current?.click();
+  };
 
   return (
     <>
@@ -41,14 +65,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile }) 
         {/* LEFT SECTION */}
         <div className="col-md-5 border-end d-flex align-items-center mb-4 mb-md-0">
 
-          {/* CLICK IMAGE -> OPEN PERSONAL DETAILS POPUP */}
-          <img
-            src={avatarImage}
-            alt="Profile Image"
-            className="rounded-circle me-3 profile-img"
+          <div className="profile-photo-wrapper position-relative" style={{ width: "120px" }}>
+            <img
+              src={
+                profilePhoto
+                  ? `${BASE_URL_JOB}${profilePhoto}`
+                  : "/default-profile.png"
+              }
+              alt="Profile"
+              className="rounded-circle profile-img me-3"
+            />
 
-          />
+            {/* Edit Icon */}
+              <img src={editIcon} alt="Edit Icon" className=" edit-icon ms-4 " style={{ cursor: "pointer" }}  onClick={triggerUpload}/>
 
+            {/* Hidden file input */}
+            <input
+              type="file"
+              ref={fileRef}
+              accept="image/*"
+              className="d-none"
+              onChange={handleProfilePhoto}
+            />
+          </div>
           <div>
             <h5 className="mb-1 fw-semibold text-dark availability-1">
               {personalDetails?.firstName} {personalDetails?.lastName}

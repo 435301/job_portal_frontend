@@ -13,6 +13,7 @@ interface EmployeeProfileState {
   employmentList: any[];
   educationList: any[];
   resumes: any[],
+  profilePhoto : any[],
 }
 
 const initialState: EmployeeProfileState = {
@@ -24,6 +25,7 @@ const initialState: EmployeeProfileState = {
   employmentList: [],
   educationList: [],
   resumes: [],
+  profilePhoto:[],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -333,6 +335,24 @@ export const uploadResume = createAsyncThunk(
   }
 );
 
+export const uploadPhoto = createAsyncThunk(
+  "photo/uploadProfilePhoto",
+  async (file: File, { rejectWithValue,dispatch }) => {
+    try {
+      const formData = new FormData();
+      formData.append("photo", file);
+      const response = await axios.patch(`${BASE_URL_JOB}/employees/uploadProfilePhoto`, formData, getAuthAdminHeaders(true));
+      toast.success(response.data.message);
+       if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Upload failed");
+    }
+  }
+);
+
 export const deleteResume = createAsyncThunk(
   "resume/deleteResume",
   async (id: number, { rejectWithValue,  dispatch}) => {
@@ -620,6 +640,11 @@ const employeeProfileSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       });
+       builder
+      .addCase(uploadPhoto.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profilePhoto  = action.payload.profilePhoto;
+      })
   },
 });
 

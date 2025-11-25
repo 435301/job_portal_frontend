@@ -2921,3 +2921,23 @@ li {
   background-color: #0d6efd !important;
   border-color: #0d6efd !important;
 }
+
+.profile-photo-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-photo-wrapper .edit-icon {
+  position: relative;
+  bottom: 0px;
+  right: 0px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-photo-wrapper:hover .edit-icon {
+  opacity: 1;
+}

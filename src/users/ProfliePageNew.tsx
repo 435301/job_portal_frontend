@@ -14,7 +14,7 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, deleteResume, fetchEmployeeProfile, updateCertificate, updateEmployment, updateMobileNumber, updateProfileEducation, updateProfileTitle, uploadResume } from '../redux/slices/employeeProfileSlice.tsx';
+import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, deleteResume, fetchEmployeeProfile, updateCertificate, updateEmployment, updateMobileNumber, updateProfileEducation, updateProfileTitle, uploadPhoto, uploadResume } from '../redux/slices/employeeProfileSlice.tsx';
 import { getAllSkills } from '../redux/slices/skillSlice.tsx';
 import { getAllEmploymentType } from '../redux/slices/employementTypeSlice.tsx';
 import { getAllNoticePeriods } from '../redux/slices/noticePeriodSlice.tsx';
@@ -134,14 +134,17 @@ function ProfilePageNew() {
     const handleMobile = (mobile: any)=>{
     dispatch(updateMobileNumber(mobile));
   }
-
+  
+  const handleProfilePhoto = (photo: any)=>{
+   dispatch(uploadPhoto(photo))
+  }
 
   return (
     <div className="ProfilePage">
       <Header />
       <div className="container-fluid bg-breadcrumb py-5"></div>
       <div className="container py-4">
-        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile}/>
+        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto}/>
       </div>
       <div className="container py-4">
         <div className="row g-4">
