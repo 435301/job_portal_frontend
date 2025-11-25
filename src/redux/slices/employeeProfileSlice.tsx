@@ -348,6 +348,24 @@ export const deleteResume = createAsyncThunk(
     }
   }
 );
+
+export const updateMobileNumber = createAsyncThunk(
+  "employees/editMobile",
+  async (mobile: string,
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      const res = await axios.patch(`${BASE_URL_JOB}/employees/editMobile`, mobile, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
   initialState,
@@ -589,6 +607,18 @@ const employeeProfileSlice = createSlice({
         state.resumes = state.resumes.filter(
           (item: any) => item.id !== action.payload.id
         );
+      });
+       builder
+      .addCase(updateMobileNumber.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateMobileNumber.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateMobileNumber.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

@@ -47,6 +47,7 @@ export interface FormErrors {
   expMonths?: number;
   certificateName?: string;
   issuedBy?: string;
+  mobile?: any;
 }
 
 export interface EmploymentForm {
@@ -80,6 +81,9 @@ export interface FormErrorsEmployment {
   [key: string]: string;
 }
 
+export interface MobileForm {
+  mobile: any,
+}
 
 //  LOGIN FORM VALIDATION
 export const validateLoginForm = (formData: { email?: string; password?: string }): FormErrors => {
@@ -596,3 +600,18 @@ export const validateProfileEducationForm = (formData: EducationForm): FormError
   return errors;
 
 };
+
+export const validateMobileNumber = (formData: MobileForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+
+  if (!formData.mobile || !formData.mobile.trim()) {
+    errors.mobile = "Mobile Number is required";
+    return errors;
+  }
+  if (!/^[0-9]{10}$/.test(formData.mobile)) {
+    errors.mobile = "Enter a valid 10-digit mobile number";
+  }
+
+  return errors;
+};
+

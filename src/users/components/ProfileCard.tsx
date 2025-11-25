@@ -3,24 +3,36 @@ import avatarImage from "../../assets/img/avatar-27.png";
 import editIcon from "../../assets/img/edit-63.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, Badge, Row, Col } from "react-bootstrap";
+import { FormErrorsEmployment, validateMobileNumber } from "../../common/validation.tsx";
 
 interface ProfileCardProps {
-  personalDetails: any; 
+  personalDetails: any;
+  onMobile: (mobile: any) => void;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
+const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile }) => {
   // ▬▬▬ MOBILE POPUP ▬▬▬
   const [showPopup, setShowPopup] = useState(false);
-  const [mobile, setMobile] = useState("9880087932");
+  const [mobile, setMobile] = useState<any>();
+  const [errors, setErrors] = useState<FormErrorsEmployment>({});
 
-  const openPopup = () => setShowPopup(true);
-  const closePopup = () => setShowPopup(false);
-
+  const openPopup = () => {
+    setMobile(personalDetails?.mobile || "");
+    setShowPopup(true);
+  };
   // ▬▬▬ PERSONAL DETAILS MODAL ▬▬▬
   const [showModal, setShowModal] = useState(false);
 
   const handleShow = () => setShowModal(true);       // When clicking profile image
   const handleClose = () => setShowModal(false);
+
+  const handleSave = () => {
+    const payload ={
+      mobile: mobile
+    }
+    onMobile(payload);
+    setShowPopup(false);
+  }
 
   return (
     <>
@@ -39,13 +51,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
 
           <div>
             <h5 className="mb-1 fw-semibold text-dark availability-1">
-             {personalDetails?.firstName} {personalDetails?.lastName}
+              {personalDetails?.firstName} {personalDetails?.lastName}
               <img src={editIcon} alt="Edit Icon" className="ms-4" style={{ cursor: "pointer" }}
                 onClick={handleShow} />
             </h5>
 
             <p className="mb-2">
-              Profile last updated: <strong> {personalDetails?.lastLogin &&new Date(personalDetails?.lastLogin).toLocaleString("en-IN")}</strong>
+              Profile last updated: <strong> {personalDetails?.lastLogin && new Date(personalDetails?.lastLogin).toLocaleString("en-IN")}</strong>
             </p>
 
             <div className="d-flex align-items-center">
@@ -141,16 +153,16 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails }) =>  {
 
               <input
                 type="text"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${errors.mobile}? "is-invalid" : "`}
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
               />
-
+              {errors.mobile && <div className="invalid-feedback">{errors.mobile}</div>}
               <div className="d-flex justify-content-end">
-                <button className="btn btn-secondary me-2" onClick={closePopup}>
+                <button className="btn btn-secondary me-2" onClick={() => setShowPopup(false)}>
                   Cancel
                 </button>
-                <button className="btn btn-primary" onClick={closePopup}>
+                <button className="btn btn-primary" onClick={handleSave}>
                   Save
                 </button>
               </div>
