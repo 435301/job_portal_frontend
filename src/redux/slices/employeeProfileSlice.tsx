@@ -210,10 +210,13 @@ export const deleteCertificate = createAsyncThunk(
 //employement 
 export const addEmployment = createAsyncThunk(
   "employees/addEmployment",
-  async (payload: any, { rejectWithValue }) => {
+  async (payload: any, { rejectWithValue, dispatch }) => {
     try {
       const res = await axios.post(`${BASE_URL_JOB}/employees/addEmployment`, payload, getAuthAdminHeaders(false));
       toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || err.message);
@@ -225,11 +228,14 @@ export const updateEmployment = createAsyncThunk(
   "employees/editEmployment",
   async (
     { id, payload }: { id: number; payload: any },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const res = await axios.put(`${BASE_URL_JOB}/employees/editEmployment/${id}`, payload, getAuthAdminHeaders(false));
       toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || err.message);
