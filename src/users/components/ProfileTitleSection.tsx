@@ -44,7 +44,7 @@ const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave
 
       {/* ===== Profile Text ===== */}
       <p className="mb-0 text-muted p-3">
-        {profileTitle?.[0].title}
+        {profileTitle?.[0]?.title}
       </p>
 
       {/* ===== Modal ===== */}

@@ -9,11 +9,12 @@ import "../../assets/css/style.css";
 
 interface ProfileCardProps {
   personalDetails: any;
+  profileCompletion: any;
   onMobile: (mobile: any) => void;
   onPhoto: (photo: any) => void
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, onPhoto }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, onPhoto, profileCompletion }) => {
   // ▬▬▬ MOBILE POPUP ▬▬▬
   const [showPopup, setShowPopup] = useState(false);
   const [mobile, setMobile] = useState<any>();
@@ -77,7 +78,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
             />
 
             {/* Edit Icon */}
-              <img src={editIcon} alt="Edit Icon" className=" edit-icon ms-4 " style={{ cursor: "pointer" }}  onClick={triggerUpload}/>
+            <img src={editIcon} alt="Edit Icon" className=" edit-icon ms-4 " style={{ cursor: "pointer" }} onClick={triggerUpload} />
 
             {/* Hidden file input */}
             <input
@@ -101,9 +102,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
 
             <div className="d-flex align-items-center">
               <div className="progress flex-grow-1" style={{ height: "8px", maxWidth: "250px" }}>
-                <div className="progress-bar bg-danger" style={{ width: "30%" }}></div>
+                <div className="progress-bar bg-danger" 
+                style={{
+                  width: `${Number(profileCompletion) || 0}%`,
+                  transition: "width 0.5s ease"
+                }}></div>
               </div>
-              <small className="text-muted ms-2">30%</small>
+              <small className="text-muted ms-2">{profileCompletion} %</small>
             </div>
           </div>
         </div>

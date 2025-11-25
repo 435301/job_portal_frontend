@@ -60,12 +60,15 @@ export const updatePersonalDetails = createAsyncThunk(
 
 export const updateProfileTitle = createAsyncThunk(
   "employee/updateProfileTitle",
-  async (newTitle: string, { rejectWithValue }) => {
+  async (newTitle: string, { rejectWithValue , dispatch}) => {
     try {
       const response = await axios.post(`${BASE_URL_JOB}/employees/updateProfileTitle`, {
         profileTitle: newTitle
       }, getAuthAdminHeaders(false),);
       toast.success(response.data.message)
+        if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
       return { newTitle };
     } catch (err: any) {
        toast.error(err.response?.data.message);

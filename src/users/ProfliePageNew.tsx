@@ -154,7 +154,7 @@ function ProfilePageNew() {
       <Header />
       <div className="container-fluid bg-breadcrumb py-5"></div>
       <div className="container py-4">
-        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto} />
+        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto} profileCompletion={data?.profileCompletion} />
       </div>
       <div className="container py-4">
         <div className="row g-4">
