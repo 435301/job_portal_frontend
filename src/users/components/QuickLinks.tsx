@@ -2,7 +2,6 @@ import React from "react";
 
 const QuickLinks = ({ onEditClick, sectionStatus }: { onEditClick?: any; sectionStatus:any; }) => {
    const items = [
-    { key: "resume", label: "Resume" },
     { key: "profileTitle", label: "Profile Title" },
     { key: "keySkills", label: "Key Skills" },
     { key: "employment", label: "Employment" },
@@ -11,6 +10,8 @@ const QuickLinks = ({ onEditClick, sectionStatus }: { onEditClick?: any; section
     { key: "certification", label: "Certifications" },
     { key: "personalDetails", label: "Personal Details" },
   ];
+
+   const editSections = [ "profileTitle", "keySkills", "personalDetails"];
 
   return (
     <div className="card quick-links rounded-4">
@@ -25,14 +26,13 @@ const QuickLinks = ({ onEditClick, sectionStatus }: { onEditClick?: any; section
               className="d-flex justify-content-between align-items-center mb-2"
             >
               <span
-                style={{ cursor: "pointer" }}
-                onClick={sectionStatus[item.key] && onEditClick(item.key)}
+                onClick={()=>sectionStatus[item.key] && onEditClick(item.key)}
               >
                  {item.label}
               </span>
 
-             <a href="#" className="small fw-medium">
-                {sectionStatus[item.key] ? "+ Edit" : "+ Add"}
+             <a className="small fw-medium"  onClick={() => onEditClick(item.key)}  style={{ cursor: "pointer" }}>
+                  {editSections.includes(item.key) ? "Update" : "+ Add"}
               </a>
             </li>
           ))}

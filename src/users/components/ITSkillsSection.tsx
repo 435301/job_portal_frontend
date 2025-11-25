@@ -10,6 +10,7 @@ import { RootState } from "../../redux/store.tsx";
 
 interface ITSkillsProps {
   itSkills: any;
+  activeSection: any;
 }
 
 interface ITSkillsForm {
@@ -19,13 +20,12 @@ interface ITSkillsForm {
   expYears: number | string;
   expMonths: number | string;
 }
-const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills }) => {
+const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) => {
   const dispatch = useAppDispatch();
   const { skillList } = useAppSelector((state: RootState) => state.skill);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
   console.log('skillList', skillList)
   const [show, setShow] = useState(false);
-
 
   const [formData, setFormData] = useState<ITSkillsForm>({
     skillId: "",
@@ -46,6 +46,12 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills }) => {
     dispatch(getAllSkills());
     // }
   }, [dispatch, employeeId]);
+
+  useEffect(() => {
+    if (activeSection === "itSkills") {
+      setShow(true);
+    }
+  }, [activeSection]);
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
@@ -227,7 +233,7 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills }) => {
                     name="version"
                     onChange={handleChange}
                   />
-                 
+
                 </Form.Group>
               </Col>
               <Col md={6}>

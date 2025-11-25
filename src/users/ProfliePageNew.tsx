@@ -40,6 +40,9 @@ function ProfilePageNew() {
   const { GradingSystemList } = useAppSelector((state: RootState) => state.gradingSystem);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
 
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+
   useEffect(() => {
     if (employeeId) {
       dispatch(fetchEmployeeProfile(employeeId));
@@ -67,7 +70,7 @@ function ProfilePageNew() {
   };
 
   const handleEditClick = (section: string) => {
-   
+    setActiveSection(section);
   };
   const handleSaveProfileTitle = (newTitle: string) => {
     dispatch(updateProfileTitle(newTitle))
@@ -160,13 +163,13 @@ function ProfilePageNew() {
         <div className="row g-4">
           <div className="col-lg-9">
             <ResumeSection resumes={data?.resumes} onUpload={handleUpload} onDelete={handleDeleteResume} />
-            <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
-            <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
-            <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} />
-            <EducationSection educationDetails={data?.educationDetails} educationList={educationList} courseList={courseList} specializationList={specializationList} courseTypeList={courseTypeList} GradingSystemList={GradingSystemList} onAdd={handleAddEducation} onUpdate={handleUpdateEducation} onDelete={handleDeleteEducation} />
-            <ITSkillsSection itSkills={data?.keySkills} />
-            <CertificationsSection certificationDetails={data?.certificationDetails} onAdd={handleAddCertificate} onUpdate={handleUpdateCertificate} onDelete={handleDeleteCertificate} />
-            <PersonalDetailsSection personalDetails={data?.personalDetails} />
+            <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} activeSection={activeSection}/>
+            <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} activeSection={activeSection}/>
+            <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} activeSection={activeSection} />
+            <EducationSection educationDetails={data?.educationDetails} educationList={educationList} courseList={courseList} specializationList={specializationList} courseTypeList={courseTypeList} GradingSystemList={GradingSystemList} onAdd={handleAddEducation} onUpdate={handleUpdateEducation} onDelete={handleDeleteEducation} activeSection={activeSection} />
+            <ITSkillsSection itSkills={data?.keySkills} activeSection={activeSection}/>
+            <CertificationsSection certificationDetails={data?.certificationDetails} onAdd={handleAddCertificate} onUpdate={handleUpdateCertificate} onDelete={handleDeleteCertificate} activeSection={activeSection}/>
+            <PersonalDetailsSection personalDetails={data?.personalDetails} activeSection={activeSection}/>
           </div>
           <div className="col-lg-3">
             <QuickLinks onEditClick={handleEditClick} sectionStatus={sectionStatus} />

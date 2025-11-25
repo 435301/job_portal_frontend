@@ -6,12 +6,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 interface ProfileTitleProps {
   profileTitle: { title: string }[];
   onSave: (newTitle: string) => void;
-   show?: boolean;
+  activeSection: any;
 }
 
-const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave ,show}) => {
+const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave ,activeSection}) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(profileTitle?.[0]?.title || "");
+
+   useEffect(() => {
+    if (activeSection === "profileTitle") {
+      setTitle(profileTitle?.[0]?.title || "");
+      setShowModal(true);
+    }
+  }, [activeSection]);
 
   const handleClose = () => setShowModal(false);
 

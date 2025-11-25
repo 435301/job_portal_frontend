@@ -13,10 +13,11 @@ import { getAllWorkPermit } from "../../redux/slices/WorkPermitSlice.tsx";
 
 interface ProfileCardProps {
   personalDetails: any;
+  activeSection: any;
 }
 
-const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails }) => {
-  console.log('personalDetails',personalDetails)
+const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, activeSection }) => {
+  console.log('personalDetails', personalDetails)
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
@@ -59,6 +60,11 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails })
     }
   }, [showModal, personalDetails]);
 
+  useEffect(() => {
+    if (activeSection === "personalDetails") {
+      setShowModal(true);
+    }
+  }, [activeSection]);
 
   const [form, setForm] = useState({
     firstName: personalDetails?.firstName || "",
@@ -147,7 +153,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails })
 
         <div className="col-md-3">
           <strong>Work Permit for USA:</strong>
-          <div>{personalDetails?.workPermit?.workPermit  || "-"}</div>
+          <div>{personalDetails?.workPermit?.workPermit || "-"}</div>
         </div>
 
         <div className="col-md-3">

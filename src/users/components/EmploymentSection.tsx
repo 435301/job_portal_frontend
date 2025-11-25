@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Modal, Button, Form, Dropdown, Badge } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -15,6 +15,7 @@ interface EmploymentProps {
   EmploymentTypeList: any[];
   NoticePeriodList: any[];
   CurrencyTypeList: any[];
+  activeSection: any;
 }
 
 interface EmploymentForm {
@@ -26,7 +27,7 @@ interface EmploymentForm {
   currentJobTitle: string,
   joiningYear: number,
   joiningMonth: number,
-  endingYear:number,
+  endingYear: number,
   endingMonth: number,
   currencyId: number,
   currentSalary: number,
@@ -36,7 +37,7 @@ interface EmploymentForm {
 
 }
 
-const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete }) => {
+const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete, activeSection }) => {
   const dispatch = useAppDispatch();
 
   const [show, setShow] = useState(false);
@@ -55,14 +56,20 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
     currentJobTitle: "",
     joiningYear: 0,
     joiningMonth: 0,
-     endingYear:0,
-  endingMonth: 0,
+    endingYear: 0,
+    endingMonth: 0,
     currencyId: 0,
     currentSalary: 0,
     skillsUsed: "",
     noticePeriodId: 0,
     jobProfile: "",
   });
+
+  useEffect(() => {
+    if (activeSection === "employment") {
+      setShow(true);
+    }
+  }, [activeSection]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -74,8 +81,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       "totalExpMonths",
       "joiningYear",
       "joiningMonth",
-       "endingYear",
-  "endingMonth",
+      "endingYear",
+      "endingMonth",
       "currencyId",
       "currentSalary",
       "noticePeriodId"
@@ -107,8 +114,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       currentJobTitle: "",
       joiningYear: 0,
       joiningMonth: 0,
-       endingYear:0,
-  endingMonth: 0,
+      endingYear: 0,
+      endingMonth: 0,
       currencyId: 0,
       currentSalary: 0,
       skillsUsed: "",
@@ -129,8 +136,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       currentJobTitle: item.currentJobTitle,
       joiningYear: item.joiningYear,
       joiningMonth: item.joiningMonth,
-       endingYear:item.endingYear,
-  endingMonth: item.endingMonth,
+      endingYear: item.endingYear,
+      endingMonth: item.endingMonth,
       currencyId: item.currencyId,
       currentSalary: item.currentSalary,
       skillsUsed: item.skillsUsed,

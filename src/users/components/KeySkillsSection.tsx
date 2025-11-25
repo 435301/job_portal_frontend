@@ -11,8 +11,9 @@ interface KeySkillsProps {
   keySkills: any;
   skillList: any;
   onSave: (sikllIds: number[]) => void;
+   activeSection: any;
 }
-const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave }) => {
+const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave , activeSection}) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
 
@@ -33,6 +34,12 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
       setKeySkillRowIds(keySkills.map((item: any) => item.id));
     }
   }, [keySkills]);
+
+  useEffect(() => {
+    if (activeSection === "keySkills") {
+      setShow(true);
+    }
+  }, [activeSection]);
 
   const skillIcons: any = {
     Bootstrap: "bi-bootstrap-fill",

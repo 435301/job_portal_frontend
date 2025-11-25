@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -14,7 +14,6 @@ interface ResumeProps {
 const ResumeSection: React.FC<ResumeProps> = ({ resumes, onUpload, onDelete }) => {
   console.log('resumes', resumes)
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedResumeId, setSelectedResumeId] = useState<number | null>(null);
 
   const handleUploadButtonClick = () => {
     fileInputRef.current?.click();

@@ -11,13 +11,14 @@ interface CertificationProps {
   onAdd: (formData: any) => void;
   onUpdate: (id: number, formData: any) => void;
   onDelete: (id: number) => void;
+  activeSection: any;
 }
 interface CertificateForm {
   certificateName: "",
   issuedBy: "",
 }
 
-const CertificationsSection: React.FC<CertificationProps> = ({ certificationDetails, onAdd, onUpdate, onDelete }) => {
+const CertificationsSection: React.FC<CertificationProps> = ({ certificationDetails, onAdd, onUpdate, onDelete, activeSection }) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -28,6 +29,12 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
     certificateName: "",
     issuedBy: "",
   });
+
+  useEffect(() => {
+    if (activeSection === "certification") {
+      setShow(true);
+    }
+  }, [activeSection]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

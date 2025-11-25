@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import editIcon from "../../assets/img/edit.svg";
@@ -15,8 +15,9 @@ interface EducationProps {
   onAdd: (formData: any) => void;
   onUpdate: (id: number, formData: any) => void;
   onDelete: (id: number) => void;
+  activeSection: any;
 }
-const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, courseTypeList, GradingSystemList, onAdd, onUpdate, onDelete }) => {
+const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, courseTypeList, GradingSystemList, onAdd, onUpdate, onDelete, activeSection }) => {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
@@ -36,6 +37,12 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
     gradingSystemId: 0,
     marks: "",
   });
+
+  useEffect(() => {
+    if (activeSection === "education") {
+      setShowModal(true);
+    }
+  }, [activeSection]);
 
   const resetForm = () => {
     setEditId(null);
