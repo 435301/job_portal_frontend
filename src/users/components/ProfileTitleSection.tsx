@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import editIcon from "../../assets/img/edit.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,9 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 interface ProfileTitleProps {
   profileTitle: { title: string }[];
   onSave: (newTitle: string) => void;
+   show?: boolean;
 }
 
-const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave }) => {
+const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave ,show}) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(profileTitle?.[0]?.title || "");
 

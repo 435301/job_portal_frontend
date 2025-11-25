@@ -1,16 +1,15 @@
 import React from "react";
 
-const QuickLinks = ({ onEditClick }: { onEditClick?: any }) => {
-  const items = [
-    "Resume",
-    "Profile Title",
-    "Key Skills",
-    "Employment",
-    "Education",
-    "IT Skills",
-    "Certifications",
-    "Person details",
-    "Languages",
+const QuickLinks = ({ onEditClick, sectionStatus }: { onEditClick?: any; sectionStatus:any; }) => {
+   const items = [
+    { key: "resume", label: "Resume" },
+    { key: "profileTitle", label: "Profile Title" },
+    { key: "keySkills", label: "Key Skills" },
+    { key: "employment", label: "Employment" },
+    { key: "education", label: "Education" },
+    { key: "itSkills", label: "IT Skills" },
+    { key: "certification", label: "Certifications" },
+    { key: "personalDetails", label: "Personal Details" },
   ];
 
   return (
@@ -20,23 +19,21 @@ const QuickLinks = ({ onEditClick }: { onEditClick?: any }) => {
       </div>
       <div className="card-body">
         <ul className="list-unstyled mb-0">
-          {items.map((link, index) => (
+          {items.map((item, index) => (
             <li
               key={index}
               className="d-flex justify-content-between align-items-center mb-2"
             >
               <span
                 style={{ cursor: "pointer" }}
-                onClick={link === "Resume" ? onEditClick : undefined}
+                onClick={sectionStatus[item.key] && onEditClick(item.key)}
               >
-                {link}
+                 {item.label}
               </span>
 
-              {(index < 5 || index === 8) && (
-                <a href="#" className="small fw-medium">
-                  + Add
-                </a>
-              )}
+             <a href="#" className="small fw-medium">
+                {sectionStatus[item.key] ? "+ Edit" : "+ Add"}
+              </a>
             </li>
           ))}
         </ul>

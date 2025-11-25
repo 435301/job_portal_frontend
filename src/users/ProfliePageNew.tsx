@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Navbar.jsx';
 import Footer from './components/Footer.js';
 import ProfileCard from './components/ProfileCard.tsx';
@@ -14,7 +14,7 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, deleteResume, fetchEmployeeProfile, updateCertificate, updateEmployment, updateMobileNumber, updateProfileEducation, updateProfileTitle, uploadPhoto, uploadResume } from '../redux/slices/employeeProfileSlice.tsx';
+import { addCertificate, addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, deleteResume, fetchEmployeeProfile, updateCertificate, updateEmployment, updateMobileNumber, updateProfileEducation, updateProfileTitle, uploadPhoto, uploadResume } from '../redux/slices/employeeProfileSlice.tsx';
 import { getAllSkills } from '../redux/slices/skillSlice.tsx';
 import { getAllEmploymentType } from '../redux/slices/employementTypeSlice.tsx';
 import { getAllNoticePeriods } from '../redux/slices/noticePeriodSlice.tsx';
@@ -55,10 +55,20 @@ function ProfilePageNew() {
     }
   }, [dispatch]);
 
-  const handleEditClick = () => {
-    console.log("Quick link edit clicked");
+  const sectionStatus = {
+    resume: data?.resumes?.length > 0,
+    profileTitle: !!data?.profileTitle,
+    keySkills: data?.keySkills?.length > 0,
+    employment: data?.employmentDetails?.length > 0,
+    education: data?.educationDetails?.length > 0,
+    itSkills: data?.keySkills?.length > 0, // same as key skills
+    certification: data?.certificationDetails?.length > 0,
+    personalDetails: !!data?.personalDetails
   };
 
+  const handleEditClick = (section: string) => {
+   
+  };
   const handleSaveProfileTitle = (newTitle: string) => {
     dispatch(updateProfileTitle(newTitle))
   }
@@ -83,7 +93,7 @@ function ProfilePageNew() {
     dispatch(uploadResume(file));
   };
 
-   const handleDeleteResume = (id: number) => {
+  const handleDeleteResume = (id: number) => {
     dispatch(deleteResume(id));
   };
 
@@ -131,12 +141,12 @@ function ProfilePageNew() {
     dispatch(deleteProfileEducation(id))
   };
 
-    const handleMobile = (mobile: any)=>{
+  const handleMobile = (mobile: any) => {
     dispatch(updateMobileNumber(mobile));
   }
-  
-  const handleProfilePhoto = (photo: any)=>{
-   dispatch(uploadPhoto(photo))
+
+  const handleProfilePhoto = (photo: any) => {
+    dispatch(uploadPhoto(photo))
   }
 
   return (
@@ -144,12 +154,12 @@ function ProfilePageNew() {
       <Header />
       <div className="container-fluid bg-breadcrumb py-5"></div>
       <div className="container py-4">
-        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto}/>
+        <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto} />
       </div>
       <div className="container py-4">
         <div className="row g-4">
           <div className="col-lg-9">
-            <ResumeSection resumes={data?.resumes} onUpload={handleUpload} onDelete={handleDeleteResume}/>
+            <ResumeSection resumes={data?.resumes} onUpload={handleUpload} onDelete={handleDeleteResume} />
             <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
             <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
             <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} />
@@ -159,7 +169,7 @@ function ProfilePageNew() {
             <PersonalDetailsSection personalDetails={data?.personalDetails} />
           </div>
           <div className="col-lg-3">
-            <QuickLinks onEditClick={handleEditClick} />
+            <QuickLinks onEditClick={handleEditClick} sectionStatus={sectionStatus} />
           </div>
         </div>
       </div>
