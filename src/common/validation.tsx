@@ -49,6 +49,26 @@ export interface FormErrors {
   issuedBy?: string;
 }
 
+export interface EmploymentForm {
+  isCurrentEmployment: boolean;
+  employmentTypeId: number;
+  totalExpYears: number;
+  totalExpMonths: number;
+  currentCompanyName: string;
+  currentJobTitle: string;
+  joiningYear: number;
+  joiningMonth: number;
+  currencyId: number;
+  currentSalary: number;
+  skillsUsed: string;
+  noticePeriodId: number;
+}
+
+export interface FormErrorsEmployment {
+  [key: string]: string;
+}
+
+
 //  LOGIN FORM VALIDATION
 export const validateLoginForm = (formData: { email?: string; password?: string }): FormErrors => {
   const errors: FormErrors = {};
@@ -503,5 +523,48 @@ export const validateCertificateForm = (formData: { certificateName?: string; is
   if (!formData.issuedBy) {
     errors.issuedBy = "Issued By is required";
   }
+  return errors;
+};
+
+export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (formData.isCurrentEmployment === undefined || formData.isCurrentEmployment === null) {
+    errors.isCurrentEmployment = "Please select current employment status";
+  }
+  if (!formData.employmentTypeId) {
+    errors.employmentTypeId = "Employment type is required";
+  }
+  if ( formData.totalExpYears <= 0 && formData.totalExpYears === null ) {
+    errors.totalExpYears = "Total experience years must be a valid number";
+  }
+  if ( formData.totalExpMonths < 0 || formData.totalExpMonths > 11) {
+    errors.totalExpMonths = "Total experience months must be between 0 and 11";
+  }
+  if (!formData.currentCompanyName || !formData.currentCompanyName.trim()) {
+    errors.currentCompanyName = "Company name is required";
+  }
+  if (!formData.currentJobTitle || !formData.currentJobTitle.trim()) {
+    errors.currentJobTitle = "Job title is required";
+  }
+  if (!formData.joiningYear ) {
+    errors.joiningYear = "Enter a valid joining year";
+  }
+  if (!formData.joiningMonth || formData.joiningMonth < 1 || formData.joiningMonth > 12) {
+    errors.joiningMonth = "Joining month must be between 1 and 12";
+  }
+  if (!formData.currencyId) {
+    errors.currencyId = "Currency type is required";
+  }
+  if (formData.currentSalary === undefined || formData.currentSalary < 0) {
+    errors.currentSalary = "Salary must be a valid positive number";
+  }
+  if (!formData.skillsUsed || !formData.skillsUsed.trim()) {
+    errors.skillsUsed = "Skills used is required";
+  }
+  if (!formData.noticePeriodId) {
+    errors.noticePeriodId = "Notice period is required";
+  }
+
+
   return errors;
 };

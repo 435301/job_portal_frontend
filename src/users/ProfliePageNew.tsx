@@ -14,22 +14,31 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { addCertificate, addKeySkills, deleteCertificate, fetchEmployeeProfile, updateCertificate, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
+import { addCertificate, addEmployment, addKeySkills, deleteCertificate, deleteEmployment, fetchEmployeeProfile, updateCertificate, updateEmployment, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
 import { getAllSkills } from '../redux/slices/skillSlice.tsx';
+import { getAllEmploymentType } from '../redux/slices/employementTypeSlice.tsx';
+import { getAllNoticePeriods } from '../redux/slices/noticePeriodSlice.tsx';
+import { getAllCurrencyType } from '../redux/slices/currencyTypeSlice.tsx';
 
 
 function ProfilePageNew() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, data, error } = useAppSelector((state: RootState) => state.employeeProfile);
   const { skillList } = useAppSelector((state: RootState) => state.skill);
+  const { EmploymentTypeList } = useAppSelector((state: RootState) => state.employmentType);
+  const { NoticePeriodList } = useAppSelector((state: RootState) => state.noticePeriod);
+   const { CurrencyTypeList } = useAppSelector(  (state: RootState) => state.currencyType );
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
 
   useEffect(() => {
     if (employeeId) {
       dispatch(fetchEmployeeProfile(employeeId));
       dispatch(getAllSkills());
+      dispatch(getAllEmploymentType());
+      dispatch(getAllNoticePeriods());
+      dispatch(getAllCurrencyType());
     }
-  }, []);
+  }, [dispatch]);
 
   const handleEditClick = () => {
     console.log("Quick link edit clicked");
@@ -55,6 +64,39 @@ function ProfilePageNew() {
     dispatch(deleteCertificate(id))
   };
 
+const handleAddEmployment = async (formData: any) => {
+  try {
+    const payload = {
+      ...formData,
+      isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
+    };
+    const res = await dispatch(addEmployment(payload));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  const handleUpdateEmployment = async (id: number, formData: any) => {
+     try {
+    const payload = {
+      ...formData,
+      isCurrentEmployment: formData.isCurrentEmployment ? 1 : 0,
+    };
+    const res = await  dispatch(updateEmployment({ id, payload: payload }));
+  } catch (error) {
+    console.log(error);
+  }
+  };
+
+const handleDeleteEmployment = async (id: number) => {
+  try {
+    await dispatch(deleteEmployment(id));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
   return (
     <div className="ProfilePage">
       <Header />
@@ -68,7 +110,7 @@ function ProfilePageNew() {
             <ResumeSection resumes={data?.resumes} />
             <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
             <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
-            <EmploymentSection employmentDetails={data?.employmentDetails} />
+            <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} />
             <EducationSection educationDetails={data?.educationDetails} />
             <ITSkillsSection itSkills={data?.keySkills} />
             <CertificationsSection certificationDetails={data?.certificationDetails} onAdd={handleAddCertificate} onUpdate={handleUpdateCertificate} onDelete={handleDeleteCertificate} />

@@ -10,6 +10,7 @@ interface EmployeeProfileState {
   error: string | null;
   list: string[];
   certificateList: any[];
+  employmentList: any[];
 }
 
 const initialState: EmployeeProfileState = {
@@ -18,6 +19,7 @@ const initialState: EmployeeProfileState = {
   error: null,
   list: [],
   certificateList: [],
+  employmentList: [],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -174,12 +176,12 @@ export const updateCertificate = createAsyncThunk(
   "employees/editCertificate",
   async (
     { id, payload }: { id: number; payload: { certificateName: string; issuedBy: string }, },
-    { rejectWithValue , dispatch}
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const res = await axios.put(`${BASE_URL_JOB}/employees/editCertificate/${id}`, payload, getAuthAdminHeaders(false));
       toast.success(res.data.message);
-       if (employeeId) {
+      if (employeeId) {
         await dispatch(fetchEmployeeProfile(employeeId));
       }
       return res.data.data;
@@ -195,7 +197,7 @@ export const deleteCertificate = createAsyncThunk(
     try {
       const res = await axios.delete(`${BASE_URL_JOB}/employees/deleteCertificate/${id}`, getAuthAdminHeaders());
       toast.success(res.data.message);
-        if (employeeId) {
+      if (employeeId) {
         await dispatch(fetchEmployeeProfile(employeeId));
       }
       return id;
@@ -205,6 +207,51 @@ export const deleteCertificate = createAsyncThunk(
   }
 );
 
+//employement 
+export const addEmployment = createAsyncThunk(
+  "employees/addEmployment",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`${BASE_URL_JOB}/employees/addEmployment`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const updateEmployment = createAsyncThunk(
+  "employees/editEmployment",
+  async (
+    { id, payload }: { id: number; payload: any },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.put(`${BASE_URL_JOB}/employees/editEmployment/${id}`, payload, getAuthAdminHeaders(false));
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const deleteEmployment = createAsyncThunk(
+  "deleteEmployment/delete",
+  async (id: number, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.delete(`${BASE_URL_JOB}/employees/deleteEmployment/${id}`, getAuthAdminHeaders());
+      toast.success(res.data.message);
+      if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return id;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
   initialState,
@@ -365,7 +412,37 @@ const employeeProfileSlice = createSlice({
       .addCase(deleteCertificate.fulfilled, (state, action: any) => {
         state.loading = false;
         state.certificateList = state.certificateList.filter((item) => item.id !== action.payload);
+      });
+    builder
+      // ADD Employment
+      .addCase(addEmployment.pending, (state) => {
+        state.loading = true;
       })
+      .addCase(addEmployment.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addEmployment.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(updateEmployment.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEmployment.fulfilled, (state, action: any) => {
+        state.loading = false;
+        const updated = action.payload.data;
+        state.employmentList = state.employmentList.map((item) =>
+          item.id === updated.id ? updated : item
+        );
+      })
+      .addCase(updateEmployment.rejected, (state, action: any) => {
+        state.error = action.payload;
+      })
+    builder
+      .addCase(deleteEmployment.fulfilled, ((state, action: any) => {
+        state.employmentList = state.employmentList.filter((item) => item.id! = action.payload);
+      }))
   },
 });
 
