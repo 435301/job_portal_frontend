@@ -102,7 +102,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
 
             <div className="d-flex align-items-center">
               <div className="progress flex-grow-1" style={{ height: "8px", maxWidth: "250px" }}>
-                <div className="progress-bar bg-danger" 
+                <div className="progress-bar progress-bar" 
                 style={{
                   width: `${Number(profileCompletion) || 0}%`,
                   transition: "width 0.5s ease"

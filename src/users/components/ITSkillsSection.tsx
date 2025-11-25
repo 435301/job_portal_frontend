@@ -184,7 +184,7 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
           <Modal.Header closeButton>
             <Modal.Title className="fw-bold">
               <i className="bi bi-laptop me-2 "></i>  {editMode ? "Edit IT Skill" : "Add IT Skill"}
-              <span className="text-success fw-semibold fs-6">Add 10%</span>
+              {/* <span className="text-success fw-semibold fs-6">Add 10%</span> */}
             </Modal.Title>
           </Modal.Header>
 

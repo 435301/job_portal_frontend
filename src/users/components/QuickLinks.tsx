@@ -16,7 +16,7 @@ const QuickLinks = ({ onEditClick, sectionStatus }: { onEditClick?: any; section
   return (
     <div className="card quick-links rounded-4">
       <div className="card-header bg-opacity-10 fw-semibold text-dark border-0 py-3">
-        Quick Links
+       Explore Sections
       </div>
       <div className="card-body">
         <ul className="list-unstyled mb-0">

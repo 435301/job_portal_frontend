@@ -202,7 +202,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
           <Modal.Header closeButton>
             <Modal.Title>
               <span className="fw-semibold">Education</span>{" "}
-              <span className="text-success fs-6">Add 10%</span>
+              {/* <span className="text-success fs-6">Add 10%</span> */}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

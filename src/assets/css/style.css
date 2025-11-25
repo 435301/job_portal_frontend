@@ -2175,7 +2175,7 @@ li {
 
 /* new */
 .profile-card {
-    background: transparent linear-gradient(180deg, #FDEBE4 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(180deg, #20477c4f 0%, #cfc1c12b 100%) 0% 0% no-repeat padding-box;
     border-radius: 10px;
 }
 
@@ -2231,7 +2231,7 @@ li {
 }
 
 .icon-box i {
-    color: #e95439;
+    color: #20477c;
 }
 
 .upload-box {
@@ -2266,7 +2266,7 @@ li {
 
 .quick-links .card-header {
     font-weight: 700;
-    background-color: #e3f3ff;
+    background-color: #c9d2de;
     border-bottom: 1px solid #dbeafe;
     font-size: 22px;
     color: 267AAB;
@@ -2940,4 +2940,8 @@ li {
 
 .profile-photo-wrapper:hover .edit-icon {
   opacity: 1;
+}
+
+.progress-bar{
+    background-color: #20477c;
 }
