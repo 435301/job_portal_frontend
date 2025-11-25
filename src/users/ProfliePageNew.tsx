@@ -14,7 +14,7 @@ import QuickLinks from './components/QuickLinks.tsx';
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks.tsx';
-import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, fetchEmployeeProfile, updateCertificate, updateEmployment, updateProfileEducation, updateProfileTitle } from '../redux/slices/employeeProfileSlice.tsx';
+import { addCertificate,  addEmployment, addKeySkills, addProfileEducation, deleteCertificate, deleteEmployment, deleteProfileEducation, deleteResume, fetchEmployeeProfile, updateCertificate, updateEmployment, updateProfileEducation, updateProfileTitle, uploadResume } from '../redux/slices/employeeProfileSlice.tsx';
 import { getAllSkills } from '../redux/slices/skillSlice.tsx';
 import { getAllEmploymentType } from '../redux/slices/employementTypeSlice.tsx';
 import { getAllNoticePeriods } from '../redux/slices/noticePeriodSlice.tsx';
@@ -79,6 +79,13 @@ function ProfilePageNew() {
     dispatch(deleteCertificate(id))
   };
 
+  const handleUpload = (file: any) => {
+    dispatch(uploadResume(file));
+  };
+
+   const handleDeleteResume = (id: number) => {
+    dispatch(deleteResume(id));
+  };
 
 
   const handleAddEmployment = async (formData: any) => {
@@ -136,7 +143,7 @@ function ProfilePageNew() {
       <div className="container py-4">
         <div className="row g-4">
           <div className="col-lg-9">
-            <ResumeSection resumes={data?.resumes} />
+            <ResumeSection resumes={data?.resumes} onUpload={handleUpload} onDelete={handleDeleteResume}/>
             <ProfileTitleSection profileTitle={data?.profileTitle} onSave={handleSaveProfileTitle} />
             <KeySkillsSection keySkills={data?.keySkills} skillList={skillList} onSave={handleSaveKeySkills} />
             <EmploymentSection employmentDetails={data?.employmentDetails} EmploymentTypeList={EmploymentTypeList} NoticePeriodList={NoticePeriodList} CurrencyTypeList={CurrencyTypeList} onAdd={handleAddEmployment} onUpdate={handleUpdateEmployment} onDelete={handleDeleteEmployment} />

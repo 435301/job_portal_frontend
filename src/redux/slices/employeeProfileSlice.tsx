@@ -12,6 +12,7 @@ interface EmployeeProfileState {
   certificateList: any[];
   employmentList: any[];
   educationList: any[];
+  resumes: any[],
 }
 
 const initialState: EmployeeProfileState = {
@@ -21,7 +22,8 @@ const initialState: EmployeeProfileState = {
   list: [],
   certificateList: [],
   employmentList: [],
-  educationList:[],
+  educationList: [],
+  resumes: [],
 };
 
 const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -312,6 +314,40 @@ export const deleteProfileEducation = createAsyncThunk(
     }
   }
 );
+
+export const uploadResume = createAsyncThunk(
+  "resume/uploadResume",
+  async (file: File, { rejectWithValue,dispatch }) => {
+    try {
+      const formData = new FormData();
+      formData.append("resume", file);
+      const response = await axios.post(`${BASE_URL_JOB}/employees/uploadResume`, formData, getAuthAdminHeaders(true));
+      toast.success(response.data.message);
+       if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Upload failed");
+    }
+  }
+);
+
+export const deleteResume = createAsyncThunk(
+  "resume/deleteResume",
+  async (id: number, { rejectWithValue,  dispatch}) => {
+    try {
+      const response = await axios.delete(`${BASE_URL_JOB}/employees/deleteResume/${id}`, getAuthAdminHeaders());
+      toast.success(response.data.message);
+       if (employeeId) {
+        await dispatch(fetchEmployeeProfile(employeeId));
+      }
+      return { id, ...response.data };
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Delete failed");
+    }
+  }
+);
 const employeeProfileSlice = createSlice({
   name: "employeeProfile",
   initialState,
@@ -503,7 +539,7 @@ const employeeProfileSlice = createSlice({
       .addCase(deleteEmployment.fulfilled, ((state, action: any) => {
         state.employmentList = state.employmentList.filter((item) => item.id! = action.payload);
       }))
-        builder
+    builder
       // ADD Employment
       .addCase(addProfileEducation.pending, (state) => {
         state.loading = true;
@@ -532,7 +568,28 @@ const employeeProfileSlice = createSlice({
     builder
       .addCase(deleteProfileEducation.fulfilled, ((state, action: any) => {
         state.educationList = state.educationList.filter((item) => item.id! = action.payload);
-      }))
+      }));
+    //resumes
+    builder.
+      addCase(uploadResume.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(uploadResume.fulfilled, (state, action) => {
+        state.loading = false;
+        state.resumes = action.payload.data;
+      })
+      .addCase(uploadResume.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder.
+      addCase(deleteResume.fulfilled, (state, action) => {
+        state.loading = false;
+        state.resumes = state.resumes.filter(
+          (item: any) => item.id !== action.payload.id
+        );
+      });
   },
 });
 
