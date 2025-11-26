@@ -23,7 +23,7 @@ export const EmployeeRoute = ({ children }) => {
   if (!token || isTokenExpired(token)) {
     localStorage.removeItem("employeeToken");
     localStorage.removeItem("employee");
-    return <Navigate to="/employee/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
@@ -36,7 +36,7 @@ export const EmployerRoute = ({ children }) => {
   if (!token || isTokenExpired(token)) {
     localStorage.removeItem("employerToken");
     localStorage.removeItem("employer");
-    return <Navigate to="/employer/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;

@@ -1,18 +1,23 @@
-const getAuthAdminHeaders = (isFormData = false) => {
-const token = localStorage.getItem("adminToken") ||localStorage.getItem("employeeToken");
+const getAuthHeaders = (isFormData = false) => {
+  const adminToken = localStorage.getItem("adminToken");
+  const employeeToken = localStorage.getItem("employeeToken");
+
+  const token = adminToken?.trim() || employeeToken?.trim();
 
   if (!token) return {};
+
   return {
     headers: {
-      Authorization: `Bearer ${token.trim()}`,
-      ...(isFormData
-        ? { "Content-Type": "multipart/form-data" }
-        : { "Content-Type": "application/json" }),
+      Authorization: `Bearer ${token}`,
+      "Content-Type": isFormData
+        ? "multipart/form-data"
+        : "application/json",
     },
   };
 };
 
-export default getAuthAdminHeaders;
+export default getAuthHeaders;
+
 
 // const getAuthAdminHeaders = (isFormData = false) => {
 //   let token = localStorage.getItem("adminToken");
