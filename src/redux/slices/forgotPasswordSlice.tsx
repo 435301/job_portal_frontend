@@ -27,8 +27,10 @@ export const forgotPassword = createAsyncThunk(
       const res = await axios.put(`${BASE_URL_JOB}/admin/forgotPassword`, {
         email,
       });
+      toast.success(res.data.message);
       return res.data;
     } catch (err: any) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err.response?.data?.message || "Something went wrong");
     }
   }
@@ -44,8 +46,10 @@ export const verifyOtp = createAsyncThunk(
   ) => {
     try {
       const res = await axios.post(`${BASE_URL_JOB}/admin/verifyOtp`, data);
+      toast.success(res.data.message);
       return res.data;
     } catch (err: any) {
+       toast.error(err.response.data.message);
       return rejectWithValue(err.response?.data?.message || "Invalid OTP");
     }
   }
@@ -61,9 +65,100 @@ export const resetPassword = createAsyncThunk(
   ) => {
     try {
       const res = await axios.put(`${BASE_URL_JOB}/admin/resetPassword`, data);
+      toast.success(res.data.message);
       return res.data;
     } catch (err: any) {
+       toast.error(err.response.data.message);
       return rejectWithValue(err.response?.data?.message || "Unable to reset password");
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "admin/changePassword",
+  async (
+    data: { oldPassword: string; newPassword: string; confirmPassword: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.patch(`${BASE_URL_JOB}/admin/changePassword`, data);
+      toast.success(res.data.message);
+      return res.data;
+    } catch (err: any) {
+       toast.error(err.response.data.message);
+      return rejectWithValue(err.response?.data?.message || "Unable to change password");
+    }
+  }
+);
+
+//Forgot Password
+export const forgotPasswordEmployee = createAsyncThunk(
+  "employees/forgotPassword",
+  async ({ email }: { email: string }, { rejectWithValue }) => {
+    try {
+      const res = await axios.patch(`${BASE_URL_JOB}/employees/forgotPassword`, {
+        email,
+      });
+      toast.success(res.data.message);
+      return res.data;
+    } catch (err: any) {
+       toast.error(err.response.data.message);
+      return rejectWithValue(err.response?.data?.message || "Something went wrong");
+    }
+  }
+);
+
+//  Verify OTP
+
+export const verifyOtpEmployee = createAsyncThunk(
+  "employees/verifyOtp",
+  async (
+    data: { email: string; otp: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.post(`${BASE_URL_JOB}/employees/verifyOtp`, data);
+      toast.success(res.data.message);
+      return res.data;
+    } catch (err: any) {
+       toast.error(err.response.data.message);
+      return rejectWithValue(err.response?.data?.message || "Invalid OTP");
+    }
+  }
+);
+
+//  Reset Password
+
+export const resetPasswordEmployee = createAsyncThunk(
+  "employees/resetPassword",
+  async (
+    data: { email: string; newPassword: string; confirmPassword: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.patch(`${BASE_URL_JOB}/employees/resetPassword`, data);
+      toast.success(res.data.message);
+      return res.data;
+    } catch (err: any) {
+       toast.error(err.response.data.message);
+      return rejectWithValue(err.response?.data?.message || "Unable to reset password");
+    }
+  }
+);
+
+export const changePasswordEmployee = createAsyncThunk(
+  "employees/changePassword",
+  async (
+    data: { oldPassword: string; newPassword: string; confirmPassword: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.patch(`${BASE_URL_JOB}/employees/changePassword`, data);
+      toast.success(res.data.message);
+      return res.data;
+    } catch (err: any) {
+       toast.error(err.response.data.message);
+      return rejectWithValue(err.response?.data?.message || "Unable to change password");
     }
   }
 );
@@ -89,7 +184,6 @@ const forgotPasswordSlice = createSlice({
         state.loading = false;
         state.status = action.payload.status;
         state.message = action.payload.message;
-        toast.success(action.payload.message)
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.loading = false;
@@ -105,7 +199,6 @@ const forgotPasswordSlice = createSlice({
         state.loading = false;
         state.otpVerified = true;
         state.message = action.payload.message;
-          toast.success(action.payload.message)
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.loading = false;
@@ -120,9 +213,52 @@ const forgotPasswordSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.loading = false;
         state.message = action.payload.message;
-          toast.success(action.payload.message)
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+      builder
+      .addCase(forgotPasswordEmployee.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(forgotPasswordEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = action.payload.status;
+        state.message = action.payload.message;
+      })
+      .addCase(forgotPasswordEmployee.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      // ---------------------- Verify OTP ----------------------
+      .addCase(verifyOtpEmployee.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOtpEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.otpVerified = true;
+        state.message = action.payload.message;
+      })
+      .addCase(verifyOtpEmployee.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      // ---------------------- Reset Password ----------------------
+      .addCase(resetPasswordEmployee.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(resetPasswordEmployee.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

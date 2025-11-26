@@ -8,7 +8,9 @@ const mobileRegex = /^[0-9]{10}$/;
 export interface FormErrors {
   email?: string;
   password?: string;
-  status?: string; // should be string message, not number
+  status?: string; 
+  newPassword?:string;
+  otp?:any;
   educationName?: string;
   skillName?: string;
   institutionName?: string;

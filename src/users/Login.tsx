@@ -13,6 +13,8 @@ import { employeeLogin } from "../redux/slices/loginSlice.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { validateLoginForm, FormErrors } from "../common/validation.tsx";
 import { AppDispatch, RootState } from "../redux/store.tsx";
+import { forgotPasswordEmployee, resetPasswordEmployee, verifyOtpEmployee } from "../redux/slices/forgotPasswordSlice.tsx";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Login = () => {
   const [forgotError, setForgotError] = useState("");
   const [forgotSuccess, setForgotSuccess] = useState("");
   const [forgotData, setForgotData] = useState({
-    emailOrMobile: "",
+    email: "",
     otp: "",
     newPassword: "",
     confirmPassword: "",
@@ -74,55 +76,54 @@ const Login = () => {
     setForgotData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSendOtp = (e: FormEvent) => {
-    e.preventDefault();
-    setForgotError("");
-    setForgotSuccess("");
-
-    if (!forgotData.emailOrMobile) {
-      setForgotError("Please enter Email or Mobile");
+  const handleForgot = async () => {
+    if (!forgotData.email) {
+      setErrors({ email: "Email is required" })
       return;
     }
-    // TODO: Replace with actual API call to send OTP
-    setForgotSuccess("OTP sent to " + forgotData.emailOrMobile);
-    setForgotStep(2);
+    const res = await dispatch(forgotPasswordEmployee({ email: forgotData.email }));
+    if (forgotPasswordEmployee.fulfilled.match(res)) {
+      console.log(res.payload.status);
+      console.log(res.payload.message);
+      setForgotStep(2);
+    }
   };
 
-  const handleVerifyOtp = (e: ChangeEvent) => {
-    e.preventDefault();
-    setForgotError("");
-    setForgotSuccess("");
 
+  const handleVerifyOtp = async () => {
     if (!forgotData.otp) {
-      setForgotError("Enter OTP");
+      setErrors({ otp: "OTP is required" });
       return;
     }
-    // TODO: Replace with actual API call to verify OTP
-    setForgotSuccess("OTP Verified!");
-    setForgotStep(3);
+    const res = await dispatch(
+      verifyOtpEmployee({ email: forgotData.email, otp: Number(forgotData.otp) })
+    );
+    if (verifyOtpEmployee.fulfilled.match(res)) {
+      setForgotStep(3);
+    }
   };
 
-  const handleResetPassword = (e: ChangeEvent) => {
-    e.preventDefault();
-    setForgotError("");
-    setForgotSuccess("");
-
+  const handleResetPassword = async () => {
     if (!forgotData.newPassword || !forgotData.confirmPassword) {
-      setForgotError("Enter all password fields");
+      setErrors({ newPassword: "new password is required" });
       return;
     }
     if (forgotData.newPassword !== forgotData.confirmPassword) {
-      setForgotError("Passwords do not match!");
+      setErrors({ confirmPassword: "Passwords do not match" });
       return;
     }
-    // TODO: Replace with actual API call to reset password
-    setForgotSuccess("Password reset successful!");
-    setTimeout(() => {
+    const res = await dispatch(
+      resetPasswordEmployee({
+        email: forgotData.email,
+        newPassword: forgotData.newPassword,
+        confirmPassword: forgotData.confirmPassword,
+      })
+    );
+    if (resetPasswordEmployee.fulfilled.match(res)) {
       setShowForgot(false);
       setForgotStep(1);
-      setForgotData({ emailOrMobile: "", otp: "", newPassword: "", confirmPassword: "" });
-      setForgotSuccess("");
-    }, 2000);
+      setForgotData({ email: "", otp: "", newPassword: "", confirmPassword: "" });
+    }
   };
 
 
@@ -281,13 +282,13 @@ const Login = () => {
                               <h5 className="mb-3">Reset Password</h5>
 
                               <Form.Group className="mb-3">
-                                <Form.Label>Enter Email / Mobile</Form.Label>
+                                <Form.Label>Enter Email</Form.Label>
                                 <Form.Control
                                   type="text"
-                                  placeholder="Enter registered email or mobile"
+                                  placeholder="Enter registered email"
                                   name="email"
-                                  value={formData.email}
-                                  onChange={handleChange}
+                                  value={forgotData.email}
+                                  onChange={handleForgotChange}
                                   isInvalid={!!errors.email}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -299,10 +300,17 @@ const Login = () => {
                                 <span
                                   className="text-primary small"
                                   style={{ cursor: "pointer" }}
-                                  onClick={() => setForgotStep(2)}
+                                  onClick={handleForgot}
                                 >
                                   Send OTP
                                 </span>
+                              </div>
+                              <div
+                                className="small text-muted"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setShowForgot(false)}
+                              >
+                                ← Back to Login
                               </div>
                             </Form>
                           )}
@@ -310,27 +318,33 @@ const Login = () => {
                           {/* STEP 2 - OTP */}
                           {forgotStep === 2 && (
                             <Form className="mt-4">
+                              <h5 className="mb-3">Verify OTP</h5>
                               <Form.Group className="mb-3">
                                 <Form.Label>Enter OTP</Form.Label>
-                                <Form.Control type="text" placeholder="Enter OTP sent to email" />
+                                <Form.Control
+                                  type="text"
+                                  name="otp"
+                                  placeholder="Enter OTP"
+                                  value={forgotData.otp}
+                                  onChange={handleForgotChange}
+                                />
                               </Form.Group>
 
                               <div className="d-flex justify-content-between mb-3">
                                 <span
                                   className="small text-muted"
                                   style={{ cursor: "pointer" }}
-                                  onClick={() => setForgotStep(1)}
+                                  onClick={handleVerifyOtp}
                                 >
-                                  Back
+                                  ← Back
                                 </span>
 
-                                <span
-                                  className="text-primary small"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => setForgotStep(3)}
+                                <Button
+                                  variant="primary"
+                                  onClick={handleVerifyOtp}
                                 >
                                   Verify OTP
-                                </span>
+                                </Button>
                               </div>
                             </Form>
                           )}
@@ -338,18 +352,16 @@ const Login = () => {
                           {/* STEP 3 - New Password */}
                           {forgotStep === 3 && (
                             <Form className="mt-4">
-
                               {/* New Password */}
                               <Form.Group className="mb-3 position-relative">
                                 <Form.Label>New Password</Form.Label>
                                 <div className="password-field-wrapper">
                                   <Form.Control
                                     type={showPassword ? "text" : "password"}
+                                    name="newPassword"
                                     placeholder="Enter new password"
-                                  />
-                                  <i
-                                    className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
-                                    onClick={() => setShowPassword(!showPassword)}
+                                    value={forgotData.newPassword}
+                                    onChange={handleForgotChange}
                                   />
                                 </div>
                               </Form.Group>
@@ -360,11 +372,10 @@ const Login = () => {
                                 <div className="password-field-wrapper">
                                   <Form.Control
                                     type={showPassword ? "text" : "password"}
+                                    name="confirmPassword"
                                     placeholder="Confirm new password"
-                                  />
-                                  <i
-                                    className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
-                                    onClick={() => setShowPassword(!showPassword)}
+                                    value={forgotData.confirmPassword}
+                                    onChange={handleForgotChange}
                                   />
                                 </div>
                               </Form.Group>
@@ -373,12 +384,12 @@ const Login = () => {
                                 <span
                                   className="small text-muted"
                                   style={{ cursor: "pointer" }}
-                                  onClick={() => setForgotStep(2)}
+                                  onClick={handleResetPassword}
                                 >
-                                  Back
+                                  ← Back
                                 </span>
 
-                                <Button variant="primary">Reset Password</Button>
+                                <Button variant="primary" onClick={handleResetPassword}>Reset Password</Button>
                               </div>
                             </Form>
                           )}
