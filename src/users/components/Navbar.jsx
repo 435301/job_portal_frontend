@@ -30,7 +30,7 @@ const Navbar = () => {
           </NavDropdown>
 
           <NavDropdown title="For Employers" className="nav-item">
-             <NavDropdown.Item href="#">Features</NavDropdown.Item>
+            <NavDropdown.Item href="#">Features</NavDropdown.Item>
             <NavDropdown.Item href="#">Pricing</NavDropdown.Item>
             <NavDropdown.Item href="#">Blog</NavDropdown.Item>
             <NavDropdown.Item href="#">Testimonial</NavDropdown.Item>
@@ -50,7 +50,9 @@ const Navbar = () => {
             <NavDropdown.Item href="#">Dashboard</NavDropdown.Item>
             <NavDropdown.Item href="#">Settings</NavDropdown.Item>
             <NavDropdown.Divider />
+            <NavDropdown.Item href="/change-password">Change Password</NavDropdown.Item>
             <NavDropdown.Item href="/login">Logout</NavDropdown.Item>
+
           </NavDropdown>
 
         </Nav>

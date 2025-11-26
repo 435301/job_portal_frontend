@@ -10,6 +10,7 @@ export interface FormErrors {
   password?: string;
   status?: string; 
   newPassword?:string;
+  oldPassword?:string;
   otp?:any;
   educationName?: string;
   skillName?: string;
@@ -625,3 +626,13 @@ export const validateMobileNumber = (formData: MobileForm): FormErrorsEmployment
   return errors;
 };
 
+  export const validateChangePassword = (formData:{ oldPassword?: string; newPassword?: string; confirmPassword: string; } ) => {
+    const errors: FormErrors= {};
+    if (!formData.oldPassword) errors.oldPassword = "Enter old password";
+    if (!formData.newPassword) errors.newPassword = "Enter new password";
+    if (!formData.confirmPassword) errors.confirmPassword = "Please confirm password";
+    if (formData.newPassword !== formData.confirmPassword)
+      errors.confirmPassword = "Passwords do not match";
+
+    return errors;
+  };

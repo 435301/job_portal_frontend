@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import BASE_URL_JOB from "../../config/config";
 import { toast } from "react-toastify";
+import getAuthAdminHeaders from "../../utils/auth";
 
 interface ForgotPasswordState {
   loading: boolean;
@@ -81,7 +82,7 @@ export const changePassword = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await axios.patch(`${BASE_URL_JOB}/admin/changePassword`, data);
+      const res = await axios.put(`${BASE_URL_JOB}/admin/changePassword`, data, getAuthAdminHeaders(false));
       toast.success(res.data.message);
       return res.data;
     } catch (err: any) {
@@ -153,7 +154,7 @@ export const changePasswordEmployee = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await axios.patch(`${BASE_URL_JOB}/employees/changePassword`, data);
+      const res = await axios.patch(`${BASE_URL_JOB}/employees/changePassword`, data, getAuthAdminHeaders(false));
       toast.success(res.data.message);
       return res.data;
     } catch (err: any) {

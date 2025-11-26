@@ -82,6 +82,8 @@ import { AdminRoute } from './utils/roleRoute.js';
 import CurrencyTypeManage from './admin/pages/CurrencyTypeManage.tsx';
 import CreateCurrencyType from './admin/pages/CreateCurrencyType.tsx';
 import ProfilePageNew from './users/ProfliePageNew.tsx';
+import ChangePassword from './admin/pages/ChangePassword.tsx';
+import ChangePasswordEmployee from './users/ChangePassword.tsx';
 
 
 
@@ -113,6 +115,8 @@ const App = () => {
         <Route path="/success-page" element={<SuccessPage />} />
         <Route path="/company-profile" element={<CompanyProfileDesign />} />
         <Route path="/looking-jobs" element={<LokkingJobs />} />
+        <Route path="/change-password" element={<ChangePasswordEmployee />} />
+      
 
         {/* ===== Admin Routes ===== */}
 
@@ -163,6 +167,7 @@ const App = () => {
         <Route path="/admin/create-work-permit" element={<AdminRoute><CreateWorkPermit /></AdminRoute>} />
         <Route path="/admin/create-currency-type" element={<AdminRoute><CreateCurrencyType /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/change-password" element={<AdminRoute><ChangePassword /></AdminRoute>} />
 
       </Routes>
       <ToastContainer position="top-right"

@@ -60,6 +60,36 @@ const Sidebar = ({
         { id: "privacy", text: "Privacy", path: "/settings/privacy" },
       ],
     },
+     {
+      id: "candidates",
+      text: "Candidates",
+      icon: "bi bi-people",
+      path: "/admin/candidates",
+    },
+     {
+      id: "companies",
+      text: "Companies",
+      icon: "bi bi-buildings",
+      path: "/admin/companies",
+    },
+     {
+      id: "jobs",
+      text: "Jobs",
+      icon: "bi bi-briefcase",
+      path: "/admin/jobs",
+    },
+     {
+      id: "reports",
+      text: "Reports",
+      icon: "bi bi-bar-chart",
+      path: "/admin/reports",
+    },
+      {
+      id: "ChangePassword",
+      text: "Change Password",
+      icon: "bi bi-key",
+      path: "/admin/change-password",
+    },
   ];
 
   // ✅ Recursive menu rendering
