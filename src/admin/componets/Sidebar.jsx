@@ -51,6 +51,7 @@ const Sidebar = ({
         { id: "designation", text: "Designation", path: "/admin/manage-designation" },
         { id: "role", text: "Role", path: "/admin/manage-roles" },
         { id: "industryType", text: "Industry Type", path: "/admin/manage-industry-type" },
+        { id: "companyType", text: "Company Type", path: "/admin/manage-company-type" },
       ],
     },
     {

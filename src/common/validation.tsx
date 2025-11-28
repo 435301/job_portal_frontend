@@ -55,6 +55,7 @@ export interface FormErrors {
   designation?: string;
   role?: string;
   industryType?:string;
+  companyType?:string;
 }
 
 export interface EmploymentForm {
@@ -671,6 +672,17 @@ export const validateIndustryTypeForm = (formData: { industryType?: string; stat
   const errors: FormErrors = {};
   if (!formData.industryType) {
     errors.industryType = "Industry is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}
+
+export const validateCompanyTypeForm = (formData: { companyType?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.companyType) {
+    errors.companyType = "Company Type is required";
   }
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
