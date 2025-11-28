@@ -24,6 +24,7 @@ import { getAllSpecializations } from '../redux/slices/specializationSlice.tsx';
 import { getAllCourseTypes } from '../redux/slices/courseTypeSlice.tsx';
 import { getAllGradingSystem } from '../redux/slices/gradingSystemSlice.tsx';
 import { getAllEducations } from '../redux/slices/educationSlice.tsx';
+import "../assets/css/login.css";
 
 
 function ProfilePageNew() {
@@ -159,7 +160,7 @@ function ProfilePageNew() {
       <div className="container py-4">
         <ProfileCard personalDetails={data?.personalDetails} onMobile={handleMobile} onPhoto={handleProfilePhoto} profileCompletion={data?.profileCompletion} />
       </div>
-      <div className="container py-4">
+      {/* <div className="container py-4">
         <div className="row g-4">
           <div className="col-lg-9">
             <ResumeSection resumes={data?.resumes} onUpload={handleUpload} onDelete={handleDeleteResume} />
@@ -175,7 +176,250 @@ function ProfilePageNew() {
             <QuickLinks onEditClick={handleEditClick} sectionStatus={sectionStatus} />
           </div>
         </div>
+      </div> */}
+      <div className="container py-4">
+        <div className="row">
+          <div className="col-lg-9">
+            <div className="accordion" id="profileAccordion">
+              {/* Resume */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#resumeSection"
+                  >
+                    Resume
+                  </button>
+                </h2>
+                <div
+                  id="resumeSection"
+                  className="accordion-collapse collapse show"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <ResumeSection
+                      resumes={data?.resumes}
+                      onUpload={handleUpload}
+                      onDelete={handleDeleteResume}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Profile Title */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#profileTitleSection"
+                  >
+                    Profile Title
+                  </button>
+                </h2>
+                <div
+                  id="profileTitleSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <ProfileTitleSection
+                      profileTitle={data?.profileTitle}
+                      onSave={handleSaveProfileTitle}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Skills */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#keySkillsSection"
+                  >
+                    Key Skills
+                  </button>
+                </h2>
+                <div
+                  id="keySkillsSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <KeySkillsSection
+                      keySkills={data?.keySkills}
+                      skillList={skillList}
+                      onSave={handleSaveKeySkills}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Employment */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#employmentSection"
+                  >
+                    Employment
+                  </button>
+                </h2>
+                <div
+                  id="employmentSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <EmploymentSection
+                      employmentDetails={data?.employmentDetails}
+                      EmploymentTypeList={EmploymentTypeList}
+                      NoticePeriodList={NoticePeriodList}
+                      CurrencyTypeList={CurrencyTypeList}
+                      onAdd={handleAddEmployment}
+                      onUpdate={handleUpdateEmployment}
+                      onDelete={handleDeleteEmployment}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Education */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#educationSection"
+                  >
+                    Education
+                  </button>
+                </h2>
+                <div
+                  id="educationSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <EducationSection
+                      educationDetails={data?.educationDetails}
+                      educationList={educationList}
+                      courseList={courseList}
+                      specializationList={specializationList}
+                      courseTypeList={courseTypeList}
+                      GradingSystemList={GradingSystemList}
+                      onAdd={handleAddEducation}
+                      onUpdate={handleUpdateEducation}
+                      onDelete={handleDeleteEducation}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Certifications */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#certificationsSection"
+                  >
+                    Certifications
+                  </button>
+                </h2>
+                <div
+                  id="certificationsSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <CertificationsSection
+                      certificationDetails={data?.certificationDetails}
+                      onAdd={handleAddCertificate}
+                      onUpdate={handleUpdateCertificate}
+                      onDelete={handleDeleteCertificate}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* IT Skills */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#itSkillsSection"
+                  >
+                    IT Skills
+                  </button>
+                </h2>
+                <div
+                  id="itSkillsSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <ITSkillsSection
+                      itSkills={data?.keySkills}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Personal Details */}
+              <div className="accordion-item">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#personalDetailsSection"
+                  >
+                    Personal Details
+                  </button>
+                </h2>
+                <div
+                  id="personalDetailsSection"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#profileAccordion"
+                >
+                  <div className="accordion-body">
+                    <PersonalDetailsSection
+                      personalDetails={data?.personalDetails}
+                      activeSection={activeSection}
+                    />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="col-lg-3">
+            <QuickLinks onEditClick={handleEditClick} sectionStatus={sectionStatus} />
+          </div>
+        </div>
       </div>
+
+
       <a href="#" className="btn btn-primary btn-lg-square back-to-top">
         <i className="fa fa-arrow-up"></i>
       </a>

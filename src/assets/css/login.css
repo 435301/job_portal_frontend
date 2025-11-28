@@ -196,6 +196,8 @@ body {
 
 .password-field-wrapper {
   position: relative;
+   display: flex;
+  align-items: center;
 }
 
 .password-eye-icon {
@@ -216,3 +218,34 @@ body {
 .password-field-wrapper .form-control {
   padding-right: 40px !important;
 }
+.accordion-button {
+  font-weight: 600;
+  padding: 14px 18px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #c9d2de !important;  
+  color: #000 !important;
+  box-shadow: none !important;
+}
+
+/* Remove blue focus border */
+.accordion-button:focus {
+  box-shadow: none !important;
+  border-color: #c9d2de !important;
+}
+
+.accordion-item {
+  border-radius: 10px !important;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid #e8e8e8;
+}
+
+.accordion-body {
+  background: #fdfdfd;
+  border-top: 1px solid #eee;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+}
+

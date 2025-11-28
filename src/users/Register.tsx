@@ -27,6 +27,8 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [activeTab, setActiveTab] = useState("candidate");
+
   console.log('captchaText', captchaText, captchaSvg);
   useEffect(() => {
     // new WOW.WOW({ live: false }).init();
@@ -40,21 +42,26 @@ const Register = () => {
   }, [dispatch]);
 
 
-  const [activeTab, setActiveTab] = useState("candidate");
-
-  // Form Data
-  const [formData, setFormData] = useState({
+  const [candidateForm, setCandidateForm] = useState({
     firstName: "",
     lastName: "",
-    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
     captcha: "",
-    city: "",
-    selfOrOther: 1,
-    ipAddress: "",
   });
+
+  const [employerForm, setEmployerForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    captcha: "",
+  });
+
+  const formData = activeTab === "candidate" ? candidateForm : employerForm;
+  const setFormData = activeTab === "candidate" ? setCandidateForm : setEmployerForm;
 
 
   // Validation Errors
@@ -62,27 +69,35 @@ const Register = () => {
 
   // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    if (activeTab === "candidate") {
+      setCandidateForm({ ...candidateForm, [name]: value });
+    } else {
+      setEmployerForm({ ...employerForm, [name]: value });
+    }
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
+
   const handleFetchCaptcha = () => dispatch(fetchCaptcha());
 
   // Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formErrors = validateRegisterForm(formData);
+    const selectedForm = activeTab === "candidate" ? candidateForm : employerForm;
+    const formErrors = validateRegisterForm(selectedForm);
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
       try {
-        // const ip = await getUserIpAddress();
+        const ip = await getUserIpAddress();
         // Update selfOrOther based on activeTab
         const payload = {
-          ...formData,
+          ...selectedForm,
           captcha: captchaText.trim(),
           selfOrOther: activeTab === "candidate" ? 1 : 2,
-          ipAddress: "127.02.99.11",
+          ipAddress: ip,
+          city:"Los Angeles"
         };
         const resultAction = await dispatch(registerEmployee(payload));
         if (registerEmployee.fulfilled.match(resultAction)) {
@@ -153,66 +168,40 @@ const Register = () => {
                           <Row className="g-3">
 
                             {/* First Name */}
-                            {activeTab === "candidate" && (
-                              <Form.Group className="col-lg-6">
-                                <Form.Label>
-                                  First Name <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  name="firstName"
-                                  placeholder="Enter the first name"
-                                  value={formData.firstName}
-                                  onChange={handleChange}
-                                  isInvalid={!!errors.firstName}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.firstName}
-                                </Form.Control.Feedback>
-                              </Form.Group>
-                            )}
-
+                            <Form.Group className="col-lg-6">
+                              <Form.Label>
+                                First Name <span className="text-danger">*</span>
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="firstName"
+                                placeholder="Enter the first name"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                isInvalid={!!errors.firstName}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {errors.firstName}
+                              </Form.Control.Feedback>
+                            </Form.Group>
 
                             {/* Last Name */}
-                            {activeTab === "candidate" && (
-                              <Form.Group className="col-lg-6">
-                                <Form.Label>
-                                  Last Name <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  name="lastName"
-                                  placeholder="Enter the last name"
-                                  value={formData.lastName}
-                                  onChange={handleChange}
-                                  isInvalid={!!errors.lastName}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.lastName}
-                                </Form.Control.Feedback>
-                              </Form.Group>
-                            )}
-
-
-                            {activeTab === "employer" && (
-                              <Form.Group className="col-lg-12">
-                                <Form.Label>
-                                  Full Name <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  name="fullName"
-                                  placeholder="Enter the full name"
-                                  value={formData.fullName}
-                                  onChange={handleChange}
-                                  isInvalid={!!errors.fullName}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.fullName}
-                                </Form.Control.Feedback>
-                              </Form.Group>
-                            )}
-
+                            <Form.Group className="col-lg-6">
+                              <Form.Label>
+                                Last Name <span className="text-danger">*</span>
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="lastName"
+                                placeholder="Enter the last name"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                isInvalid={!!errors.lastName}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {errors.lastName}
+                              </Form.Control.Feedback>
+                            </Form.Group>
 
                             {/* Email */}
                             <Form.Group className="col-lg-12">
@@ -246,16 +235,14 @@ const Register = () => {
                                   value={formData.password}
                                   onChange={handleChange}
                                   isInvalid={!!errors.password}
-                                  style={{ paddingRight: "40px" }}   // space for icon
                                 />
-
                                 <i
                                   className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
                                   onClick={() => setShowPassword(!showPassword)}
                                 />
                               </div>
 
-                              <Form.Control.Feedback type="invalid">
+                              <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
                                 {errors.password}
                               </Form.Control.Feedback>
                             </Form.Group>
@@ -275,7 +262,6 @@ const Register = () => {
                                   value={formData.confirmPassword}
                                   onChange={handleChange}
                                   isInvalid={!!errors.confirmPassword}
-                                  style={{ paddingRight: "40px" }}
                                 />
 
                                 <i
@@ -284,13 +270,13 @@ const Register = () => {
                                 />
                               </div>
 
-                              <Form.Control.Feedback type="invalid">
+                              <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
                                 {errors.confirmPassword}
                               </Form.Control.Feedback>
                             </Form.Group>
 
                             {/* CAPTCHA Row */}
-                            {/* <Form.Group className="col-lg-12">
+                            <Form.Group className="col-lg-12">
                               <div className="d-flex align-items-center gap-3">
                                 <div>
                                   Enter CAPTCHA <span className="text-danger">*</span>
@@ -300,7 +286,7 @@ const Register = () => {
                                   style={{ letterSpacing: "3px", fontSize: "18px" }}
                                   dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
                                 >
-                                 
+
                                 </div>
                                 <Button variant="outline-secondary rounded" className="py-2" onClick={handleFetchCaptcha}>
                                   ↻
@@ -318,7 +304,7 @@ const Register = () => {
                               <Form.Control.Feedback type="invalid">
                                 {errors.captcha}
                               </Form.Control.Feedback>
-                            </Form.Group> */}
+                            </Form.Group>
 
                             {/* Button */}
                             <div className="text-center mt-4">

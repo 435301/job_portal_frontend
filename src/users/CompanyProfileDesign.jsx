@@ -116,8 +116,7 @@ function ProfilePage() {
                 <div className="container mb-4">
                     <div className="card rounded-4">
                         <div className="border-bottom p-3 section-title d-flex justify-content-between align-items-center mb-3">
-                            <h6 className="fw-bold mb-0"> <i className="bi bi-person-lines-fill me-2"></i>Account Details</h6>
-
+                            <h6 className="fw-bold mb-0"> <i className="bi bi-person-lines-fill me-2"></i>Profile Details</h6>
                             <img
                                 src={editIcon}
                                 alt="Edit"
@@ -176,15 +175,10 @@ function ProfilePage() {
                         </div>
 
                         <div className="row g-3 mb-3 px-3 small-text">
-                            <div className="col-md-3"><strong className="email">KYC Status</strong><div className="text-success fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Name</strong><div className="fs-6">- </div></div>
-                            <div className="col-md-3"><strong className="email">Address Label</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Address</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Country</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">State</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">City</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Pincode</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">GSTIN</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6">- </div></div>
+                            <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">-</div></div>
                         </div>
                     </div>
                 </div>
