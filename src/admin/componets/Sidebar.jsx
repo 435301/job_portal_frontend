@@ -50,6 +50,7 @@ const Sidebar = ({
         { id: "currencyType", text: "Currency Type", path: "/admin/manage-currency-type" },
         { id: "designation", text: "Designation", path: "/admin/manage-designation" },
         { id: "role", text: "Role", path: "/admin/manage-roles" },
+        { id: "industryType", text: "Industry Type", path: "/admin/manage-industry-type" },
       ],
     },
     {
