@@ -46,6 +46,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -152,40 +153,66 @@ const Register = () => {
                           <Row className="g-3">
 
                             {/* First Name */}
-                            <Form.Group className="col-lg-6">
-                              <Form.Label>
-                                First Name <span className="text-danger">*</span>
-                              </Form.Label>
-                              <Form.Control
-                                type="text"
-                                name="firstName"
-                                placeholder="Enter the first name"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                isInvalid={!!errors.firstName}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors.firstName}
-                              </Form.Control.Feedback>
-                            </Form.Group>
+                            {activeTab === "candidate" && (
+                              <Form.Group className="col-lg-6">
+                                <Form.Label>
+                                  First Name <span className="text-danger">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="firstName"
+                                  placeholder="Enter the first name"
+                                  value={formData.firstName}
+                                  onChange={handleChange}
+                                  isInvalid={!!errors.firstName}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.firstName}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                            )}
+
 
                             {/* Last Name */}
-                            <Form.Group className="col-lg-6">
-                              <Form.Label>
-                                Last Name <span className="text-danger">*</span>
-                              </Form.Label>
-                              <Form.Control
-                                type="text"
-                                name="lastName"
-                                placeholder="Enter the last name"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                isInvalid={!!errors.lastName}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors.lastName}
-                              </Form.Control.Feedback>
-                            </Form.Group>
+                            {activeTab === "candidate" && (
+                              <Form.Group className="col-lg-6">
+                                <Form.Label>
+                                  Last Name <span className="text-danger">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="lastName"
+                                  placeholder="Enter the last name"
+                                  value={formData.lastName}
+                                  onChange={handleChange}
+                                  isInvalid={!!errors.lastName}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.lastName}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                            )}
+
+
+                            {activeTab === "employer" && (
+                              <Form.Group className="col-lg-12">
+                                <Form.Label>
+                                  Full Name <span className="text-danger">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="fullName"
+                                  placeholder="Enter the full name"
+                                  value={formData.fullName}
+                                  onChange={handleChange}
+                                  isInvalid={!!errors.fullName}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.fullName}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                            )}
+
 
                             {/* Email */}
                             <Form.Group className="col-lg-12">
@@ -240,7 +267,7 @@ const Register = () => {
                                 Confirm Password <span className="text-danger">*</span>
                               </Form.Label>
 
-                              <div  className="password-field-wrapper">
+                              <div className="password-field-wrapper">
                                 <Form.Control
                                   type={showConfirmPassword ? "text" : "password"}
                                   name="confirmPassword"
@@ -263,12 +290,8 @@ const Register = () => {
                             </Form.Group>
 
                             {/* CAPTCHA Row */}
-                            <Form.Group className="col-lg-12">
-
-
-                              {/* CAPTCHA Box */}
+                            {/* <Form.Group className="col-lg-12">
                               <div className="d-flex align-items-center gap-3">
-                                {/* Shown Captcha Text */}
                                 <div>
                                   Enter CAPTCHA <span className="text-danger">*</span>
                                 </div>
@@ -277,16 +300,12 @@ const Register = () => {
                                   style={{ letterSpacing: "3px", fontSize: "18px" }}
                                   dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
                                 >
-                                  {/* {cat || "Loading..."} */}
+                                 
                                 </div>
-
-                                {/* Refresh Captcha Button */}
                                 <Button variant="outline-secondary rounded" className="py-2" onClick={handleFetchCaptcha}>
                                   ↻
                                 </Button>
                               </div>
-
-                              {/* Captcha Input */}
                               <Form.Control
                                 type="text"
                                 name="captcha"
@@ -299,7 +318,7 @@ const Register = () => {
                               <Form.Control.Feedback type="invalid">
                                 {errors.captcha}
                               </Form.Control.Feedback>
-                            </Form.Group>
+                            </Form.Group> */}
 
                             {/* Button */}
                             <div className="text-center mt-4">

@@ -24,6 +24,7 @@ export interface FormErrors {
   courseType?: string;
   firstName?: string;
   lastName?: string;
+  fullName?:string;
   confirmPassword?: string;
   captcha?: string;
   captchaText?: string;
@@ -51,6 +52,7 @@ export interface FormErrors {
   certificateName?: string;
   issuedBy?: string;
   mobile?: any;
+  designation?: string;
 }
 
 export interface EmploymentForm {
@@ -266,7 +268,7 @@ export const validateCourseTypeForm = (formData: { courseType?: string; status?:
   return errors;
 };
 
-export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?: string; }): FormErrors => {
+export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, fullName?: string; email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?: string; }): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.firstName || !formData.firstName.trim()) {
@@ -274,6 +276,9 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   }
   if (!formData.lastName || !formData.lastName.trim()) {
     errors.lastName = "Last name is required";
+  }
+   if (!formData.fullName || !formData.fullName.trim()) {
+    errors.lastName = "Full name is required";
   }
   if (!formData.email || (!formData.email.trim())) {
     errors.email = "Email is required";
@@ -636,3 +641,14 @@ export const validateMobileNumber = (formData: MobileForm): FormErrorsEmployment
 
     return errors;
   };
+
+  export const validateDesignationForm = (formData:{designation?:string; status:string | number; ipAddress?:string;})=>{
+    const errors: FormErrors = {};
+    if(!formData.designation){
+      errors.designation = "Designation is required";
+    }
+    if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+  }
