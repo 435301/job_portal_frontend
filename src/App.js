@@ -86,6 +86,8 @@ import ChangePassword from './admin/pages/ChangePassword.tsx';
 import ChangePasswordEmployee from './users/ChangePassword.tsx';
 import DesignationManage from './admin/pages/DesignationManage.tsx';
 import CreateDesignation from './admin/pages/CreateDesignation.tsx';
+import CreateRole from './admin/pages/CreateRole.tsx';
+import RoleManage from './admin/pages/RoleManage.tsx';
 
 
 
@@ -147,6 +149,7 @@ const App = () => {
         <Route path="/admin/manage-work-permit" element={<AdminRoute><WorkPermitManage /></AdminRoute>} />
         <Route path="/admin/manage-currency-type" element={<AdminRoute><CurrencyTypeManage /></AdminRoute>} />
         <Route path="/admin/manage-designation" element={<AdminRoute><DesignationManage /></AdminRoute>} />
+        <Route path="/admin/manage-roles" element={<AdminRoute><RoleManage /></AdminRoute>} />
         <Route path="/admin/create-education" element={<AdminRoute><CreateEducation /></AdminRoute>} />
         <Route path="/admin/create-skill" element={<AdminRoute><CreateSkill /></AdminRoute>} />
         <Route path="/admin/create-institution" element={<AdminRoute><CreateInstitution /></AdminRoute>} />
@@ -170,6 +173,7 @@ const App = () => {
         <Route path="/admin/create-work-permit" element={<AdminRoute><CreateWorkPermit /></AdminRoute>} />
         <Route path="/admin/create-currency-type" element={<AdminRoute><CreateCurrencyType /></AdminRoute>} />
         <Route path="/admin/create-designation" element={<AdminRoute><CreateDesignation /></AdminRoute>} />
+        <Route path="/admin/create-role" element={<AdminRoute><CreateRole /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/change-password" element={<AdminRoute><ChangePassword /></AdminRoute>} />
 

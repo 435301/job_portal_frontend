@@ -49,6 +49,7 @@ const Sidebar = ({
         { id: "workPermit", text: "Work Permit", path: "/admin/manage-work-permit" },
         { id: "currencyType", text: "Currency Type", path: "/admin/manage-currency-type" },
         { id: "designation", text: "Designation", path: "/admin/manage-designation" },
+        { id: "role", text: "Role", path: "/admin/manage-roles" },
       ],
     },
     {

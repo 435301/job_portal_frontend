@@ -8,10 +8,10 @@ const mobileRegex = /^[0-9]{10}$/;
 export interface FormErrors {
   email?: string;
   password?: string;
-  status?: string; 
-  newPassword?:string;
-  oldPassword?:string;
-  otp?:any;
+  status?: string;
+  newPassword?: string;
+  oldPassword?: string;
+  otp?: any;
   educationName?: string;
   skillName?: string;
   institutionName?: string;
@@ -24,7 +24,7 @@ export interface FormErrors {
   courseType?: string;
   firstName?: string;
   lastName?: string;
-  fullName?:string;
+  fullName?: string;
   confirmPassword?: string;
   captcha?: string;
   captchaText?: string;
@@ -53,6 +53,7 @@ export interface FormErrors {
   issuedBy?: string;
   mobile?: any;
   designation?: string;
+  role?: string;
 }
 
 export interface EmploymentForm {
@@ -277,7 +278,7 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   if (!formData.lastName || !formData.lastName.trim()) {
     errors.lastName = "Last name is required";
   }
-   if (!formData.fullName || !formData.fullName.trim()) {
+  if (!formData.fullName || !formData.fullName.trim()) {
     errors.lastName = "Full name is required";
   }
   if (!formData.email || (!formData.email.trim())) {
@@ -631,24 +632,35 @@ export const validateMobileNumber = (formData: MobileForm): FormErrorsEmployment
   return errors;
 };
 
-  export const validateChangePassword = (formData:{ oldPassword?: string; newPassword?: string; confirmPassword: string; } ) => {
-    const errors: FormErrors= {};
-    if (!formData.oldPassword) errors.oldPassword = "Enter old password";
-    if (!formData.newPassword) errors.newPassword = "Enter new password";
-    if (!formData.confirmPassword) errors.confirmPassword = "Please confirm password";
-    if (formData.newPassword !== formData.confirmPassword)
-      errors.confirmPassword = "Passwords do not match";
+export const validateChangePassword = (formData: { oldPassword?: string; newPassword?: string; confirmPassword: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.oldPassword) errors.oldPassword = "Enter old password";
+  if (!formData.newPassword) errors.newPassword = "Enter new password";
+  if (!formData.confirmPassword) errors.confirmPassword = "Please confirm password";
+  if (formData.newPassword !== formData.confirmPassword)
+    errors.confirmPassword = "Passwords do not match";
 
-    return errors;
-  };
+  return errors;
+};
 
-  export const validateDesignationForm = (formData:{designation?:string; status:string | number; ipAddress?:string;})=>{
-    const errors: FormErrors = {};
-    if(!formData.designation){
-      errors.designation = "Designation is required";
-    }
-    if (formData.status === undefined || formData.status === null || formData.status === "") {
+export const validateDesignationForm = (formData: { designation?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.designation) {
+    errors.designation = "Designation is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
   }
   return errors;
+}
+
+export const validateRoleForm = (formData: { role?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.role) {
+    errors.role = "Role is required";
   }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}
