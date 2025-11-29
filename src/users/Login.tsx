@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validateLoginForm, FormErrors } from "../common/validation.tsx";
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { forgotPasswordEmployee, resetPasswordEmployee, verifyOtpEmployee } from "../redux/slices/forgotPasswordSlice.tsx";
+import { forgotPasswordHandler, resetPasswordHandler, verifyOtpHandler } from "./components/forgotPassword.tsx";
 
 
 const Login = () => {
@@ -99,10 +100,9 @@ const Login = () => {
       setErrors({ email: "Email is required" })
       return;
     }
-    const res = await dispatch(forgotPasswordEmployee({ email: forgotData.email }));
-    if (forgotPasswordEmployee.fulfilled.match(res)) {
-      console.log(res.payload.status);
-      console.log(res.payload.message);
+    const role = activeTab === "candidate" ? "employee" : "employer";
+    const res = await forgotPasswordHandler(dispatch, role, forgotData.email);
+    if (res.payload?.status === true) {
       setForgotStep(2);
     }
   };
@@ -113,10 +113,9 @@ const Login = () => {
       setErrors({ otp: "OTP is required" });
       return;
     }
-    const res = await dispatch(
-      verifyOtpEmployee({ email: forgotData.email, otp: Number(forgotData.otp) })
-    );
-    if (verifyOtpEmployee.fulfilled.match(res)) {
+    const role = activeTab === "candidate" ? "employee" : "employer";
+    const res = await verifyOtpHandler(dispatch, role, forgotData.email, Number(forgotData.otp));
+    if (res.payload?.status === true) {
       setForgotStep(3);
     }
   };
@@ -130,17 +129,17 @@ const Login = () => {
       setErrors({ confirmPassword: "Passwords do not match" });
       return;
     }
-    const res = await dispatch(
-      resetPasswordEmployee({
-        email: forgotData.email,
-        newPassword: forgotData.newPassword,
-        confirmPassword: forgotData.confirmPassword,
-      })
-    );
-    if (resetPasswordEmployee.fulfilled.match(res)) {
+    const role = activeTab === "candidate" ? "employee" : "employer";
+    const res = await resetPasswordHandler(dispatch, role, forgotData.email, forgotData.newPassword, forgotData.confirmPassword);
+    if (res.payload?.status === true) {
       setShowForgot(false);
       setForgotStep(1);
-      setForgotData({ email: "", otp: "", newPassword: "", confirmPassword: "" });
+      setForgotData({
+        email: "",
+        otp: "",
+        newPassword: "",
+        confirmPassword: ""
+      });
     }
   };
 
