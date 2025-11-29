@@ -378,6 +378,19 @@ const forgotPasswordSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       });
+builder
+      .addCase(changePasswordEmployer.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changePasswordEmployer.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(changePasswordEmployer.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

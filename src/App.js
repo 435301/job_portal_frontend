@@ -92,6 +92,7 @@ import CreateIndustryType from './admin/pages/CreateIndustryType.tsx';
 import IndustryTypeManage from './admin/pages/IndustryTypeManage.tsx';
 import CreateCompanyType from './admin/pages/CreateCompanyType.tsx';
 import CompanyTypeManage from './admin/pages/CompanyTypeManage.tsx';
+import ChangePasswordEmployer from './users/ChangePasswordEmployer.tsx';
 
 
 
@@ -124,6 +125,7 @@ const App = () => {
         <Route path="/company-profile" element={<CompanyProfileDesign />} />
         <Route path="/looking-jobs" element={<LokkingJobs />} />
         <Route path="/change-password" element={<ChangePasswordEmployee />} />
+        <Route path="/employer/change-password" element={<ChangePasswordEmployer />} />
       
 
         {/* ===== Admin Routes ===== */}
