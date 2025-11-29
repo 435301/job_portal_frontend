@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,18 +19,22 @@ const ChangePasswordEmployee = () => {
     const [errors, setErrors] = useState<FormErrors>({});
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
-    };
+    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value, }));
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+    },
+        []
+    );
 
-    const resetForm = () => {
+    const resetForm = useCallback(() => {
         setFormData({
             oldPassword: "",
             newPassword: "",
             confirmPassword: "",
         });
-    }
+    }, []
+    )
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -38,7 +42,7 @@ const ChangePasswordEmployee = () => {
         setErrors(validation);
         if (Object.keys(validation).length !== 0) return;
         try {
-            const response =await dispatch(changePasswordEmployee(formData));;
+            const response = await dispatch(changePasswordEmployee(formData));;
             if (changePasswordEmployee.fulfilled.match(response)) {
                 navigate("/login");
             }
