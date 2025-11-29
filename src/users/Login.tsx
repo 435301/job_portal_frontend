@@ -9,7 +9,7 @@ import Footer from "./components/Footer.js";
 import candidateImage from "../assets/img/login-1.png";
 import employerImage from "../assets/img/reg-2.png";
 import { useNavigate } from "react-router-dom";
-import { employeeLogin } from "../redux/slices/loginSlice.tsx";
+import { employeeLogin, employerLogin } from "../redux/slices/loginSlice.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { validateLoginForm, FormErrors } from "../common/validation.tsx";
 import { AppDispatch, RootState } from "../redux/store.tsx";
@@ -19,18 +19,24 @@ import { forgotPasswordEmployee, resetPasswordEmployee, verifyOtpEmployee } from
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    // new WOW.WOW({ live: false }).init();
-  }, []);
 
   const { loading, error, employeeToken } = useSelector((state: RootState) => state.employeeLogin);
 
   // Tabs
   const [activeTab, setActiveTab] = useState("candidate");
-  const [formData, setFormData] = useState({
+  const [candidateForm, setCandidateForm] = useState({
     email: "",
     password: "",
   });
+
+  const [employerForm, setEmployerForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const formData = activeTab === "candidate" ? candidateForm : employerForm;
+  const setFormData = activeTab === "candidate" ? setCandidateForm : setEmployerForm;
+
   const [showForgot, setShowForgot] = useState(false);
   const [forgotStep, setForgotStep] = useState(1); // 1=email/mobile, 2=otp, 3=new password
   const [forgotError, setForgotError] = useState("");
@@ -46,11 +52,15 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   // Handle input change
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (activeTab === "candidate") {
+      setCandidateForm({ ...candidateForm, [name]: value });
+    } else {
+      setEmployerForm({ ...employerForm, [name]: value });
+    }
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
 
   // Handle submit
   const handleSubmit = async (e: FormEvent) => {
@@ -61,9 +71,17 @@ const Login = () => {
       return;
     }
     try {
-      const response = await dispatch(employeeLogin(formData));;
-      if (employeeLogin.fulfilled.match(response)) {
-        navigate("/profile");
+      if (activeTab === "candidate") {
+        const response = await dispatch(employeeLogin(formData));;
+        if (employeeLogin.fulfilled.match(response)) {
+          navigate("/profile");
+        }
+      }
+      if (activeTab === "employer") {
+        const response = await dispatch(employerLogin(formData));;
+        if (employerLogin.fulfilled.match(response)) {
+          navigate("/company-profile");
+        }
       }
     } catch (error) {
       console.log(error)

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FormErrors, validateRegisterForm } from "../common/validation.tsx";
 import { useAppSelector } from "../redux/hooks.tsx"
-import { clearRegisterState, registerEmployee } from "../redux/slices/registerSlice.tsx";
+import { clearRegisterState, registerEmployee, registerEmployer } from "../redux/slices/registerSlice.tsx";
 import { fetchCaptcha } from "../redux/slices/captchaSlice.tsx";
 import { AppDispatch } from "../redux/store.tsx";
 import { getUserIpAddress } from "../common/ipAddress.tsx";
@@ -97,13 +97,23 @@ const Register = () => {
           captcha: captchaText.trim(),
           selfOrOther: activeTab === "candidate" ? 1 : 2,
           ipAddress: ip,
-          city:"Los Angeles"
+          city: "Los Angeles"
         };
-        const resultAction = await dispatch(registerEmployee(payload));
-        if (registerEmployee.fulfilled.match(resultAction)) {
-          navigate("/verify-email", {
-            state: { email: formData.email }
-          });
+        if (activeTab === "candidate") {
+          const resultAction = await dispatch(registerEmployee(payload));
+          if (registerEmployee.fulfilled.match(resultAction)) {
+            navigate("/verify-email", {
+              state: { email: formData.email }
+            });
+          }
+        }
+        if (activeTab === "employer") {
+          const resultActionEmployer = await dispatch(registerEmployer(payload));
+          if (registerEmployer.fulfilled.match(resultActionEmployer)) {
+            navigate("/verify-email", {
+              state: { email: formData.email }
+            });
+          }
         }
 
       } catch (err) {

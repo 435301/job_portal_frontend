@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import BASE_URL_JOB from "../../config/config";
+import { toast } from "react-toastify";
 
 // Types
 export interface EmployeeData {
@@ -75,6 +76,7 @@ export const registerEmployee = createAsyncThunk<
             `${BASE_URL_JOB}/employees/register`,
             payload
         );
+        toast.success(response.data.message);
         return response.data;
     } catch (error: any) {
         return rejectWithValue(error.response?.data?.message || "Registration failed");
@@ -95,6 +97,24 @@ export const verifyEmail = createAsyncThunk<
     }
 });
 
+export const registerEmployer = createAsyncThunk<
+    RegisterResponse,
+    RegisterPayload,
+    { rejectValue: string }
+>("employer/registerEmployee", async (payload, { rejectWithValue }) => {
+    try {
+        const response = await axios.post<RegisterResponse>(
+            `${BASE_URL_JOB}/employer/register`,
+            payload
+        );
+        toast.success(response.data.message);
+        return response.data;
+    } catch (error: any) {
+        return rejectWithValue(error.response?.data?.message || "Registration failed");
+    }
+});
+
+
 
 const registerSlice = createSlice({
     name: "register",
@@ -110,13 +130,13 @@ const registerSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(registerEmployee.pending, (state) => {
+            .addCase(registerEmployer.pending, (state) => {
                 state.loading = true;
                 state.error = undefined;
                 state.message = undefined;
             })
             .addCase(
-                registerEmployee.fulfilled,
+                registerEmployer.fulfilled,
                 (state, action: PayloadAction<RegisterResponse>) => {
                     state.loading = false;
                     state.employee = action.payload.data;
@@ -124,26 +144,9 @@ const registerSlice = createSlice({
                     state.message = action.payload.message;
                 }
             )
-            .addCase(registerEmployee.rejected, (state, action) => {
+            .addCase(registerEmployer.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || "Something went wrong";
-            });
-        // Email Verification
-        builder
-            .addCase(verifyEmail.pending, (state) => {
-                state.loading = true;
-                state.error = undefined;
-                state.message = undefined;
-            })
-            .addCase(verifyEmail.fulfilled, (state, action: PayloadAction<VerifyEmailResponse>) => {
-                state.loading = false;
-                state.emailVerified = true;
-                state.message = action.payload.message;
-            })
-            .addCase(verifyEmail.rejected, (state, action) => {
-                state.loading = false;
-                state.emailVerified = false;
-                state.error = action.payload || "Email verification failed";
             });
     },
 });

@@ -25,6 +25,7 @@ export interface LoginPayload {
 export interface LoginState {
   loading: boolean;
   employeeToken: string | null;
+  employerToken:string | null;
   data: LoginData | null;
   message: string;
   error: string;
@@ -33,15 +34,16 @@ export interface LoginState {
 const initialState: LoginState = {
   loading: false,
   employeeToken: null,
+  employerToken: null,
   data: null,
   message: "",
   error: "",
 };
 
 export const employeeLogin = createAsyncThunk<
-  LoginResponse,    
+  LoginResponse,
   LoginPayload, { rejectValue: any }
-   >(
+>(
   "employee/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
@@ -49,11 +51,33 @@ export const employeeLogin = createAsyncThunk<
         email,
         password,
       });
-            //  Save token and admin details to localStorage
+      //  Save token and admin details to localStorage
       localStorage.setItem("employeeToken", response.data.token);
       localStorage.setItem("employee", JSON.stringify(response.data.data));
       return response.data;
-      
+
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Server error");
+    }
+  }
+);
+
+export const employerLogin = createAsyncThunk<
+  LoginResponse,
+  LoginPayload, { rejectValue: any }
+>(
+  "employer/login",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${BASE_URL_JOB}/employer/login`, {
+        email,
+        password,
+      });
+      //  Save token and employer details to localStorage
+      localStorage.setItem("employerToken", response.data.token);
+      localStorage.setItem("employer", JSON.stringify(response.data.data));
+      return response.data;
+
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Server error");
     }
@@ -86,11 +110,29 @@ const loginSlice = createSlice({
 
         // save token
         localStorage.setItem("token", action.payload.token);
-        toast.success( state.message)
+        toast.success(state.message)
       })
       .addCase(employeeLogin.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message ;
+        state.error = action.payload?.message;
+        toast.error(state.error);
+      });
+    builder
+      .addCase(employerLogin.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+        state.message = "";
+      })
+      .addCase(employerLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+        state.employerToken = action.payload.token;
+        state.data = action.payload.data;
+        toast.success(state.message)
+      })
+      .addCase(employerLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message;
         toast.error(state.error);
       });
   },
