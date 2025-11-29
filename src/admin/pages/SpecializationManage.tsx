@@ -204,7 +204,7 @@ function SpecializationManage() {
                                         />
                                     </InputGroup>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={2}>
                                     <Form.Select className="form-control" value={statusFilter}
                                         onChange={handleStatusChange}>
                                         <option value="">Select Status</option>
@@ -214,7 +214,7 @@ function SpecializationManage() {
 
                                     </Form.Select>
                                 </Col>
-                                <Col md={3} className="d-flex gap-2">
+                                <Col md={1} className="d-flex gap-2">
 
                                     <Button variant="outline-secondary" onClick={handleReset}>
                                         <i className="bi bi-arrow-clockwise"></i>

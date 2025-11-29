@@ -140,7 +140,7 @@ const App = () => {
         <Route path="/admin/manage-specializations" element={<AdminRoute><SpecializationManage /></AdminRoute>} />
         <Route path="/admin/manage-course-types" element={<AdminRoute><CourseTypeManage /></AdminRoute>} />
         <Route path="/admin/manage-school-boards" element={<AdminRoute><SchoolBoardManage /></AdminRoute>} />
-        <Route path="/admin/manage-school-medium" element={<AdminRoute><SchoolMediumManage /></AdminRoute>} />
+        <Route path="/admin/manage-instruction-medium" element={<AdminRoute><SchoolMediumManage /></AdminRoute>} />
         <Route path="/admin/manage-marital-status" element={<AdminRoute><MaritalStatusManage /></AdminRoute>} />
         <Route path="/admin/manage-gender" element={<AdminRoute><GenderManage /></AdminRoute>} />
         <Route path="/admin/manage-country" element={<AdminRoute><CountryManage /></AdminRoute>} />
@@ -166,7 +166,7 @@ const App = () => {
         <Route path="/admin/create-specialization" element={<AdminRoute><CreateSpecialization /></AdminRoute>} />
         <Route path="/admin/create-course-type" element={<AdminRoute><CreateCourseType /></AdminRoute>} />
         <Route path="/admin/create-school-board" element={<AdminRoute><CreateSchoolBoard /></AdminRoute>} />
-        <Route path="/admin/create-school-medium" element={<AdminRoute><CreateSchoolMedium /></AdminRoute>} />
+        <Route path="/admin/create-instruction-medium" element={<AdminRoute><CreateSchoolMedium /></AdminRoute>} />
         <Route path="/admin/create-marital-status" element={<AdminRoute><CreateMaritalStatus /></AdminRoute>} />
         <Route path="/admin/create-gender" element={<AdminRoute><CreateGender /></AdminRoute>} />
         <Route path="/admin/create-country" element={<AdminRoute><CreateCountry /></AdminRoute>} />

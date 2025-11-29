@@ -28,7 +28,7 @@ const SchoolMediumViewModal: React.FC<SchoolMediumViewModalProps> = ({ show, onH
     >
       <Modal.Header closeButton className="bg-light text-white">
         <Modal.Title>
-          <i className="bi bi-eye me-2"></i>View School Medium
+          <i className="bi bi-eye me-2"></i>View Instruction Medium
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="px-4 py-3">

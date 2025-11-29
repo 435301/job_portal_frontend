@@ -60,7 +60,7 @@ function CreateSchoolMedium() {
         try {
             const resultAction = await dispatch(createSchoolMedium(finalData));
             if (createSchoolMedium.fulfilled.match(resultAction)) {
-                navigate("/admin/manage-school-medium");
+                navigate("/admin/manage-instruction-medium");
             }
         } catch (error) {
             console.log(error)
@@ -99,16 +99,16 @@ function CreateSchoolMedium() {
                                 <Col>
                                     <h4 className="fw-bold mb-1 d-flex align-items-center text-dark">
                                         <i className="bi bi-mortarboard-fill me-2 text-primary fs-4"></i>
-                                        Create School Medium
+                                        Create Instruction Medium
                                     </h4>
                                 </Col>
                                 <Col xs="auto">
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/manage-school-medium")}
+                                        onClick={() => navigate("/admin/manage-instruction-medium")}
                                     >
-                                        <i className="bi bi-arrow-left me-2"></i>Manage School Medium
+                                        <i className="bi bi-arrow-left me-2"></i>Manage Instruction Medium
                                     </Button>
                                 </Col>
                             </Row>
@@ -163,7 +163,7 @@ function CreateSchoolMedium() {
                                     <Button
                                         variant="secondary"
                                         className="me-2 rounded-pill px-4"
-                                        onClick={() => navigate("/admin/manage-school-medium")}
+                                        onClick={() => navigate("/admin/manage-instruction-medium")}
                                     >
                                         Cancel
                                     </Button>

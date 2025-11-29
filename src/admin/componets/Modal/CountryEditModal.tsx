@@ -50,7 +50,7 @@ const CountryEditModal: React.FC<CountryEditModalProps> = ({ show, onHide, item,
                         <Form.Label>Country Name<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
-                            name="countryName "
+                            name="countryName"
                             value={formData.countryName}
                             onChange={handleChange}
                         />

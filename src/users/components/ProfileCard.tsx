@@ -92,8 +92,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
           <div>
             <h5 className="mb-1 fw-semibold text-dark availability-1">
               {personalDetails?.firstName} {personalDetails?.lastName}
-              <img src={editIcon} alt="Edit Icon" className="ms-4" style={{ cursor: "pointer" }}
-                onClick={handleShow} />
+              {/* <img src={editIcon} alt="Edit Icon" className="ms-4" style={{ cursor: "pointer" }}
+                onClick={handleShow} /> */}
             </h5>
 
             <p className="mb-2">

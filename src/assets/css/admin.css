@@ -24,7 +24,7 @@ body {
 }
 
 .sidebar.expanded {
-  width: 240px;
+  width: 285px;
 }
 
 .sidebar.collapsed {
@@ -71,9 +71,9 @@ body {
 
 .table .badge {
   display: inline-block;
-  padding: 8px 14px;
+  padding: 6px 14px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1;
   color: #fff;
   text-align: center;

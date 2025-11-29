@@ -566,7 +566,7 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (formData.totalExpMonths < 0 || formData.totalExpMonths > 11) {
     errors.totalExpMonths = "Total experience months must be between 0 and 11";
   }
-  if (!formData.currentCompanyName || !formData.currentCompanyName.trim()) {
+  if ( !formData.currentCompanyName?.trim()) {
     errors.currentCompanyName = "Company name is required";
   }
   if (!formData.currentJobTitle || !formData.currentJobTitle.trim()) {

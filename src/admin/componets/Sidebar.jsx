@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
+import Logo from "../../assets/img/logo.png";
+ 
 const Sidebar = ({
   isSidebarOpen,
   isMobileSidebarOpen,
@@ -11,9 +12,16 @@ const Sidebar = ({
   closeMobileSidebar,
   toggleSubMenu,
 }) => {
-  const location = useLocation(); // ✅ Detect current path
-
-  // ✅ Menu items (Master Data only has Education & Institutions)
+  const location = useLocation();
+ 
+  // ✅ Detect if any child route is active
+  const isChildActive = (children) => {
+    return children?.some((child) => {
+      if (child.children) return isChildActive(child.children);
+      return child.path === location.pathname;
+    });
+  };
+ 
   const menuItems = [
     {
       id: "dashboard",
@@ -28,30 +36,98 @@ const Sidebar = ({
       children: [
         { id: "education", text: "Education", path: "/admin/manage-education" },
         { id: "course", text: "Course", path: "/admin/manage-courses" },
-        { id: "specialization", text: "Specialization", path: "/admin/manage-specializations" },
-        { id: "institutions", text: "Institutions", path: "/admin/manage-institutions" },
+        {
+          id: "specialization",
+          text: "Specialization",
+          path: "/admin/manage-specializations",
+        },
+        {
+          id: "institutions",
+          text: "Institutions",
+          path: "/admin/manage-institutions",
+        },
         { id: "skill", text: "Skill", path: "/admin/manage-skills" },
         { id: "jobTitle", text: "Job Title", path: "/admin/manage-job-titles" },
-        { id: "noticePeriods", text: "Notice Period", path: "/admin/manage-notice-periods" },
-        { id: "experience", text: "Experience", path: "/admin/manage-experience" },
-        { id: "courseType", text: "Course Type", path: "/admin/manage-course-types" },
-        { id: "schoolBoard", text: "School Board", path: "/admin/manage-school-boards" },
-        { id: "schoolMedium", text: "School Medium", path: "/admin/manage-school-medium" },
-        { id: "maritalStatus", text: "Marital Status", path: "/admin/manage-marital-status" },
+        {
+          id: "noticePeriods",
+          text: "Notice Period",
+          path: "/admin/manage-notice-periods",
+        },
+        {
+          id: "experience",
+          text: "Experience",
+          path: "/admin/manage-experience",
+        },
+        {
+          id: "courseType",
+          text: "Course Type",
+          path: "/admin/manage-course-types",
+        },
+        {
+          id: "schoolBoard",
+          text: "School Board",
+          path: "/admin/manage-school-boards",
+        },
+        {
+          id: "schoolMedium",
+          text: "Instruction  Medium",
+          path: "/admin/manage-instruction-medium",
+        },
+        {
+          id: "maritalStatus",
+          text: "Marital Status",
+          path: "/admin/manage-marital-status",
+        },
         { id: "gender", text: "Gender", path: "/admin/manage-gender" },
         { id: "country", text: "Country", path: "/admin/manage-country" },
         { id: "state", text: "State", path: "/admin/manage-states" },
         { id: "city", text: "City", path: "/admin/manage-cities" },
-        { id: "employmentType", text: "Employment Type", path: "/admin/manage-employment-type" },
-        { id: "availability", text: "Availability", path: "/admin/manage-availability" },
-        { id: "gradingSystem", text: "Grading System", path: "/admin/manage-grading-system" },
-        { id: "profilePercentage", text: "Profile Percentage", path: "/admin/manage-profile-percentage" },
-        { id: "workPermit", text: "Work Permit", path: "/admin/manage-work-permit" },
-        { id: "currencyType", text: "Currency Type", path: "/admin/manage-currency-type" },
-        { id: "designation", text: "Designation", path: "/admin/manage-designation" },
+        {
+          id: "employmentType",
+          text: "Employment Type",
+          path: "/admin/manage-employment-type",
+        },
+        {
+          id: "availability",
+          text: "Availability",
+          path: "/admin/manage-availability",
+        },
+        {
+          id: "gradingSystem",
+          text: "Grading System",
+          path: "/admin/manage-grading-system",
+        },
+        {
+          id: "profilePercentage",
+          text: "Profile Percentage",
+          path: "/admin/manage-profile-percentage",
+        },
+        {
+          id: "workPermit",
+          text: "Work Permit",
+          path: "/admin/manage-work-permit",
+        },
+        {
+          id: "currencyType",
+          text: "Currency Type",
+          path: "/admin/manage-currency-type",
+        },
+        {
+          id: "designation",
+          text: "Designation",
+          path: "/admin/manage-designation",
+        },
         { id: "role", text: "Role", path: "/admin/manage-roles" },
-        { id: "industryType", text: "Industry Type", path: "/admin/manage-industry-type" },
-        { id: "companyType", text: "Company Type", path: "/admin/manage-company-type" },
+        {
+          id: "industryType",
+          text: "Industry Type",
+          path: "/admin/manage-industry-type",
+        },
+        {
+          id: "companyType",
+          text: "Company Type",
+          path: "/admin/manage-company-type",
+        },
       ],
     },
     {
@@ -64,45 +140,50 @@ const Sidebar = ({
         { id: "privacy", text: "Privacy", path: "/settings/privacy" },
       ],
     },
-     {
+    {
       id: "candidates",
       text: "Candidates",
       icon: "bi bi-people",
       path: "/admin/candidates",
     },
-     {
+    {
       id: "companies",
       text: "Companies",
       icon: "bi bi-buildings",
       path: "/admin/companies",
     },
-     {
+    {
       id: "jobs",
       text: "Jobs",
       icon: "bi bi-briefcase",
       path: "/admin/jobs",
     },
-     {
+    {
       id: "reports",
       text: "Reports",
       icon: "bi bi-bar-chart",
       path: "/admin/reports",
     },
-      {
+    {
       id: "ChangePassword",
       text: "Change Password",
       icon: "bi bi-key",
       path: "/admin/change-password",
     },
   ];
-
-  // ✅ Recursive menu rendering
+ 
+  // -----------------------------------------
+  //  RENDER MENU (with full active + open logic)
+  // -----------------------------------------
   const renderMenu = (items, level = 0) =>
     items.map((item) => {
       const hasChildren = !!item.children;
       const showText = isSidebarOpen || isMobileSidebarOpen;
-      const isActive = item.path && location.pathname === item.path;
-
+ 
+      const isActive =
+        (item.path && location.pathname === item.path) ||
+        (item.children && isChildActive(item.children));
+ 
       return (
         <React.Fragment key={item.id}>
           <li
@@ -123,7 +204,9 @@ const Sidebar = ({
                 {showText && (
                   <i
                     className={`bi ${
-                      openMenus[item.id] ? "bi-chevron-up" : "bi-chevron-down"
+                      openMenus[item.id] || isActive
+                        ? "bi-chevron-up"
+                        : "bi-chevron-down"
                     }`}
                   ></i>
                 )}
@@ -141,14 +224,14 @@ const Sidebar = ({
               </Link>
             )}
           </li>
-
-          {hasChildren && openMenus[item.id] && showText && (
+ 
+          {(openMenus[item.id] || isActive) && hasChildren && showText && (
             <ul className="submenu">{renderMenu(item.children, level + 1)}</ul>
           )}
         </React.Fragment>
       );
     });
-
+ 
   return (
     <>
       <aside
@@ -157,20 +240,25 @@ const Sidebar = ({
         }`}
       >
         <div className="sidebar-header">
-          {(isSidebarOpen || isMobileSidebarOpen) && <h4>Admin Panel</h4>}
+          {(isSidebarOpen || isMobileSidebarOpen) && (
+            <img src={Logo} alt="Logo" className="sidebar-logo" />
+          )}
+ 
           <button className="toggle-btn" onClick={toggleSidebar}>
             <i className="bi bi-list"></i>
           </button>
         </div>
-
+ 
         <ul className="menu-list mt-4">{renderMenu(menuItems)}</ul>
       </aside>
-
+ 
       {isMobileSidebarOpen && (
         <div className="overlay" onClick={closeMobileSidebar}></div>
       )}
     </>
   );
 };
-
+ 
 export default Sidebar;
+ 
+ 

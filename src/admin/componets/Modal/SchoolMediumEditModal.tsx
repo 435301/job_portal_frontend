@@ -41,14 +41,14 @@ const SchoolMediumEditModal: React.FC<SchoolMediumEditModalProps> = ({ show, onH
         <Modal show={show} onHide={onHide} centered size={"md" as any} backdrop="static">
             <Modal.Header closeButton className="bg-light text-white">
                 <Modal.Title>
-                    <i className="bi bi-pencil-square me-2"></i>Edit School Medium
+                    <i className="bi bi-pencil-square me-2"></i>Edit Instruction Medium
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="px-4 py-3">
                 <Form>
                 
                     <Form.Group className="mb-3">
-                        <Form.Label>School Medium <span className="text-danger"> *</span></Form.Label>
+                        <Form.Label> Medium Name<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="schoolMedium"
