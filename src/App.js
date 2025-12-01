@@ -25,7 +25,7 @@ import BasicJobDetails from './users/BasicJobDetails';
 import CompanyDetailsReg from './users/CompanyDetailsReg';
 import CompanyDetailsHiring from './users/CompanyDetailsHiring';
 import SuccessPage from './users/SuccessPage';
-import CompanyProfileDesign from './users/CompanyProfileDesign';
+import CompanyProfileDesign from './users/CompanyProfileDesign.tsx';
 import LokkingJobs from './users/LokkingJobs';
 
 import CompanyEmailVerifiedSuccess from './users/CompanyEmailVerifiedSuccess';

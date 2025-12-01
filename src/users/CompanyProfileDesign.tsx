@@ -1,25 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Navbar";
 import Footer from "./components/Footer";
-
 import avatarImage from "../assets/img/profile-1.png";
 import editIcon from "../assets/img/edit-63.svg";
-
-// Bootstrap components
-import {
-    Modal,
-    Button,
-    Form,
-    Row,
-    Col,
-    Badge
-} from "react-bootstrap";
+import { Modal, Button, Form,} from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store.tsx";
+import { useAppSelector } from "../redux/hooks.tsx";
+import { fetchEmployerProfile } from "../redux/slices/employerProfileSlice.tsx";
 
 function ProfilePage() {
+    const dispatch = useDispatch<AppDispatch>();
+  const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;
+  const { loading, data, error } = useAppSelector((state: RootState) => state.employerProfile);
+console.log('data',data)
     const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState("");
 
-    const handleEdit = (sectionName) => {
+     useEffect(() => {
+        if (employerId) {
+          dispatch(fetchEmployerProfile(employerId));
+        }
+      }, [ employerId]);
+
+    const handleEdit = (sectionName: any) => {
         setActiveSection(sectionName);
         setShowModal(true);
     };
@@ -46,7 +50,7 @@ function ProfilePage() {
                         </div>
                         <div>
                             <h5 className="mb-1 fw-semibold text-dark availability-1">
-                                Richlabz IT Solutions
+                              {data?.companyName}
                                 <img
                                     src={editIcon}
                                     alt="Edit"
@@ -56,7 +60,7 @@ function ProfilePage() {
                                 />
                             </h5>
                             <p className="mb-2">
-                                Profile last updated: <strong className="email">10 July, 2024</strong>
+                                Profile last updated: <strong className="email">{data?.updatedAt}</strong>
                             </p>
 
                             {/* Progress */}
@@ -81,7 +85,7 @@ function ProfilePage() {
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Location</div>
-                                    <div className="text-muted small">Bengaluru, INDIA</div>
+                                    <div className="text-muted small">{data?.city} {data?.country} </div>
                                 </div>
                             </div>
 
@@ -91,7 +95,7 @@ function ProfilePage() {
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Mobile Number</div>
-                                    <div className="text-muted small">9880087932</div>
+                                    <div className="text-muted small">{data?.mobile || "-"}</div>
                                 </div>
                             </div>
 
@@ -101,7 +105,7 @@ function ProfilePage() {
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Email</div>
-                                    <div className="text-muted small">akeebshaik@gmail.com</div>
+                                    <div className="text-muted small">{data?.email || "-"}</div>
                                 </div>
                             </div>
                         </div>
@@ -127,12 +131,12 @@ function ProfilePage() {
                         </div>
 
                         <div className="row g-3 px-3 small-text mb-3">
-                            <div className="col-md-3"><strong className="email">Email</strong><div className="fs-6"> yethamsu@gmail.com </div></div>
-                            <div className="col-md-3"><strong className="email">Email for Communication</strong><div className="fs-6"> - </div></div>
-                            <div className="col-md-3"><strong className="email">Role</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Reporting Manager</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Mobile Number</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Location</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Email</strong><div className="fs-6"> {data?.email || "-"} </div></div>
+                            <div className="col-md-3"><strong className="email">Email for Communication</strong><div className="fs-6"> {data.alternativeEmail || "-"} </div></div>
+                            <div className="col-md-3"><strong className="email">Role</strong><div className="fs-6">{data?.role || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Reporting Manager</strong><div className="fs-6">{data?.reportingManager || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Mobile Number</strong><div className="fs-6">{data.mobile || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Location</strong><div className="fs-6">{data?.city || "-"}</div></div>
                         </div>
                     </div>
                 </div>
@@ -152,10 +156,10 @@ function ProfilePage() {
                         </div>
 
                         <div className="row g-3 px-3 mb-3 small-text">
-                            <div className="col-md-3"><strong className="email">Company Type</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Industry Type</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Contact Person</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Designation</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Company Type</strong><div className="fs-6">{data?.companyType || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Industry Type</strong><div className="fs-6">{data?.industryType || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Contact Person</strong><div className="fs-6">{data?.contactPerson || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Designation</strong><div className="fs-6">{data?.designation || "-"}</div></div>
                             <div className="col-md-3"><strong className="email">Size of Organization</strong><div className="fs-6">-</div></div>
                         </div>
                     </div>
@@ -176,7 +180,7 @@ function ProfilePage() {
                         </div>
 
                         <div className="row g-3 mb-3 px-3 small-text">
-                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6">- </div></div>
+                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> </div></div>
                             <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">-</div></div>
                             <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">-</div></div>
                             <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">-</div></div>
@@ -363,38 +367,38 @@ function ProfilePage() {
                             </div>
                         </Form>
                     )}
-{/* PROFILE EDIT */}
-{activeSection === "profile" && (
-    <Form>
-        <div className="row">
+                    {/* PROFILE EDIT */}
+                    {activeSection === "profile" && (
+                        <Form>
+                            <div className="row">
 
-            {/* Email */}
-            <div className="col-md-6">
-                <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" defaultValue="akeebshaik@gmail.com" />
-                </Form.Group>
-            </div>
+                                {/* Email */}
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" defaultValue="akeebshaik@gmail.com" />
+                                    </Form.Group>
+                                </div>
 
-            {/* Mobile Number */}
-            <div className="col-md-6">
-                <Form.Group className="mb-3">
-                    <Form.Label>Mobile Number</Form.Label>
-                    <Form.Control type="text" defaultValue="9880087932" />
-                </Form.Group>
-            </div>
+                                {/* Mobile Number */}
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Mobile Number</Form.Label>
+                                        <Form.Control type="text" defaultValue="9880087932" />
+                                    </Form.Group>
+                                </div>
 
-            {/* Location */}
-            <div className="col-md-12">
-                <Form.Group className="mb-3">
-                    <Form.Label>Location</Form.Label>
-                    <Form.Control type="text" defaultValue="Bengaluru, INDIA" />
-                </Form.Group>
-            </div>
+                                {/* Location */}
+                                <div className="col-md-12">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Location</Form.Label>
+                                        <Form.Control type="text" defaultValue="Bengaluru, INDIA" />
+                                    </Form.Group>
+                                </div>
 
-        </div>
-    </Form>
-)}
+                            </div>
+                        </Form>
+                    )}
 
                 </Modal.Body>
 
