@@ -156,6 +156,7 @@ function ProfilePage() {
                             <div className="col-md-3"><strong className="email">Industry Type</strong><div className="fs-6">-</div></div>
                             <div className="col-md-3"><strong className="email">Contact Person</strong><div className="fs-6">-</div></div>
                             <div className="col-md-3"><strong className="email">Designation</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Size of Organization</strong><div className="fs-6">-</div></div>
                         </div>
                     </div>
                 </div>

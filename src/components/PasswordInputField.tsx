@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/login.css";
+import { useToggle } from "../customHooks/useToggle.tsx";
 
 interface PasswordInputProps {
     label?: string;
@@ -18,7 +19,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     error,
     onChange,
 }) => {
-    const [show, setShow] = useState(false);
+     const [show, toggleShow] = useToggle(false);
 
     return (
         <div className="mb-4 w-full">
@@ -37,7 +38,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
                 />
                 <i
                     className={`bi ${show ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
-                    onClick={() => setShow(!show)}
+                    onClick={()=>toggleShow}
                 />
             </div>
             {error && <div className="invalid-feedback">{error}</div>}
