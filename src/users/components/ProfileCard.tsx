@@ -98,7 +98,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
             </h5>
 
             <p className="mb-2">
-              Profile last updated: <strong> {personalDetails?.lastLogin && new Date(personalDetails?.lastLogin).toLocaleString("en-US")}</strong>
+              Profile last updated: <strong> {personalDetails?.lastLogin && new Date(personalDetails?.lastLogin).toLocaleString("en-US") || "-"}</strong>
             </p>
 
             <div className="d-flex align-items-center">

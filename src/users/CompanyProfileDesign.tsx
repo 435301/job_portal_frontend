@@ -3,25 +3,37 @@ import Header from "./components/Navbar";
 import Footer from "./components/Footer";
 import avatarImage from "../assets/img/profile-1.png";
 import editIcon from "../assets/img/edit-63.svg";
-import { Modal, Button, Form,} from "react-bootstrap";
+import { Modal, Button, Form, } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useAppSelector } from "../redux/hooks.tsx";
 import { fetchEmployerProfile } from "../redux/slices/employerProfileSlice.tsx";
+import BASE_URL_JOB from "../config/config.jsx";
+import profile from "../assets/img/profile.jpg";
+
 
 function ProfilePage() {
     const dispatch = useDispatch<AppDispatch>();
-  const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;
-  const { loading, data, error } = useAppSelector((state: RootState) => state.employerProfile);
-console.log('data',data)
+    const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;
+    const { loading, data, error } = useAppSelector((state: RootState) => state.employerProfile);
+    const companyDetails = data?.companyDetails;
+    const kycDetails = data?.kycDetails;
+        console.log('kycDetails', kycDetails)
     const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState("");
+    const [profilePhoto, setProfilePhoto] = useState<any>();
 
-     useEffect(() => {
+    useEffect(() => {
         if (employerId) {
-          dispatch(fetchEmployerProfile(employerId));
+            dispatch(fetchEmployerProfile(employerId));
         }
-      }, [ employerId]);
+    }, [employerId]);
+
+    useEffect(() => {
+        if (companyDetails?.companyLogo) {
+            setProfilePhoto(companyDetails?.companyLogo);
+        }
+    }, [companyDetails]);
 
     const handleEdit = (sectionName: any) => {
         setActiveSection(sectionName);
@@ -43,14 +55,18 @@ console.log('data',data)
                     <div className="col-md-5 border-end d-flex align-items-center mb-4 mb-md-0">
                         <div>
                             <img
-                                src={avatarImage}
+                                src={
+                                    profilePhoto
+                                        ? `${BASE_URL_JOB}${profilePhoto}`
+                                        : profile
+                                }
                                 alt="Profile"
-                                className="rounded-circle me-3 profile-img"
+                                className="rounded-circle profile-img me-3"
                             />
                         </div>
                         <div>
                             <h5 className="mb-1 fw-semibold text-dark availability-1">
-                              {data?.companyName}
+                                {companyDetails?.companyName || "Company Name"}
                                 <img
                                     src={editIcon}
                                     alt="Edit"
@@ -60,7 +76,7 @@ console.log('data',data)
                                 />
                             </h5>
                             <p className="mb-2">
-                                Profile last updated: <strong className="email">{data?.updatedAt}</strong>
+                                Profile last updated: <strong className="email">{companyDetails?.updatedAt && new Date (companyDetails?.updatedAt).toLocaleString("en-US")}</strong>
                             </p>
 
                             {/* Progress */}
@@ -71,7 +87,7 @@ console.log('data',data)
                                 >
                                     <div className="progress-bar bg-danger" style={{ width: "30%" }}></div>
                                 </div>
-                                <small className="text-muted ms-2">30%</small>
+                                <small className="text-muted ms-2">{companyDetails?.profileCompletion || 0 }%</small>
                             </div>
                         </div>
                     </div>
@@ -85,7 +101,7 @@ console.log('data',data)
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Location</div>
-                                    <div className="text-muted small">{data?.city} {data?.country} </div>
+                                    <div className="text-muted small">{companyDetails?.city?.cityName} {companyDetails?.country?.countryName} </div>
                                 </div>
                             </div>
 
@@ -95,7 +111,7 @@ console.log('data',data)
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Mobile Number</div>
-                                    <div className="text-muted small">{data?.mobile || "-"}</div>
+                                    <div className="text-muted small">{companyDetails?.mobile || "-"}</div>
                                 </div>
                             </div>
 
@@ -105,7 +121,7 @@ console.log('data',data)
                                 </div>
                                 <div>
                                     <div className="fw-semibold text-dark availability">Email</div>
-                                    <div className="text-muted small">{data?.email || "-"}</div>
+                                    <div className="text-muted small">{companyDetails?.email || "-"}</div>
                                 </div>
                             </div>
                         </div>
@@ -131,12 +147,12 @@ console.log('data',data)
                         </div>
 
                         <div className="row g-3 px-3 small-text mb-3">
-                            <div className="col-md-3"><strong className="email">Email</strong><div className="fs-6"> {data?.email || "-"} </div></div>
-                            <div className="col-md-3"><strong className="email">Email for Communication</strong><div className="fs-6"> {data.alternativeEmail || "-"} </div></div>
-                            <div className="col-md-3"><strong className="email">Role</strong><div className="fs-6">{data?.role || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Reporting Manager</strong><div className="fs-6">{data?.reportingManager || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Mobile Number</strong><div className="fs-6">{data.mobile || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Location</strong><div className="fs-6">{data?.city || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Email</strong><div className="fs-6"> {companyDetails?.email || "-"} </div></div>
+                            <div className="col-md-3"><strong className="email">Email for Communication</strong><div className="fs-6"> {companyDetails?.alternativeEmail || "-"} </div></div>
+                            <div className="col-md-3"><strong className="email">Role</strong><div className="fs-6">{companyDetails?.role?.role || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Reporting Manager</strong><div className="fs-6">{companyDetails?.reportingManager || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Mobile Number</strong><div className="fs-6">{companyDetails?.mobile || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Location</strong><div className="fs-6">{companyDetails?.city?.cityName || "-"}</div></div>
                         </div>
                     </div>
                 </div>
@@ -156,11 +172,11 @@ console.log('data',data)
                         </div>
 
                         <div className="row g-3 px-3 mb-3 small-text">
-                            <div className="col-md-3"><strong className="email">Company Type</strong><div className="fs-6">{data?.companyType || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Industry Type</strong><div className="fs-6">{data?.industryType || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Contact Person</strong><div className="fs-6">{data?.contactPerson || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Designation</strong><div className="fs-6">{data?.designation || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Size of Organization</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">Company Type</strong><div className="fs-6">{companyDetails?.companyType?.companyType || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Industry Type</strong><div className="fs-6">{companyDetails?.industryType?.industryType || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Contact Person</strong><div className="fs-6">{companyDetails?.contactPerson || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Designation</strong><div className="fs-6">{companyDetails?.designation?.designation || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Size of Organization</strong><div className="fs-6">{companyDetails?.sizeOfOrganization?.title || "-"}</div></div>
                         </div>
                     </div>
                 </div>
@@ -180,10 +196,10 @@ console.log('data',data)
                         </div>
 
                         <div className="row g-3 mb-3 px-3 small-text">
-                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> </div></div>
-                            <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">-</div></div>
-                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">-</div></div>
+                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> {kycDetails[0]?.ein || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">{kycDetails[0]?.companyEmailDomain || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">{kycDetails[0]?.address || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">{kycDetails[0]?.govtId || "-"}</div></div>
                         </div>
                     </div>
                 </div>

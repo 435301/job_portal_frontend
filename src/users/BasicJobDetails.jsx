@@ -196,12 +196,12 @@ const JobDetails = () => {
                         {/* ✅ TAB 2 — Candidate Requirement */}
                         {activeTab === "candidate" && (
                             <div className="animate__animated animate__fadeIn row req">
-                                <h5 className="fw-semibold mb-3">Candidate Requirements</h5>
+                                <h5 className="fw-semibold mb-3">Candidate Requirement</h5>
 
                                 {/* Employment Type */}
                                 <div className="mb-3 col-lg-8">
                                     <label className="form-label fw-semibold">Total Experience of Candidate</label>
-                                    <div className="d-flex flex-wrap gap-2">
+                                    {/* <div className="d-flex flex-wrap gap-2">
                                         <button className="btn btn-outline-primary btn-sm rounded-pill">
                                             <i className="bi bi-briefcase"></i> Full time
                                         </button>
@@ -211,7 +211,7 @@ const JobDetails = () => {
                                         <button className="btn btn-outline-primary btn-sm rounded-pill">
                                             <i className="bi bi-lightning"></i> Experienced
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* Experience */}
@@ -263,21 +263,6 @@ const JobDetails = () => {
                                     </div>
                                 </div>
 
-                                {/* English Required */}
-                                <div className="mb-3">
-                                    <label className="form-label fw-semibold">English Required</label>
-                                    <div className="d-flex flex-wrap gap-2">
-                                        <button className="btn btn-outline-secondary btn-sm rounded-pill">
-                                            Does not speak English
-                                        </button>
-                                        <button className="btn btn-outline-secondary btn-sm rounded-pill">
-                                            Speaks Good English
-                                        </button>
-                                        <button className="btn btn-outline-secondary btn-sm rounded-pill">
-                                            Speaks Fluent English
-                                        </button>
-                                    </div>
-                                </div>
 
                                 {/* Candidate Location */}
                                 <div className="mb-3">

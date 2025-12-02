@@ -53,7 +53,7 @@ const employerProfileSlice = createSlice({
             })
             .addCase(fetchEmployerProfile.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload.data.companyDetails;
+                state.data = action.payload.data;
             })
             .addCase(fetchEmployerProfile.rejected, (state, action: any) => {
                 state.loading = false;
