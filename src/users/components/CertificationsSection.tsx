@@ -95,7 +95,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
             style={{ cursor: "pointer" }}
             onClick={handleShow}
           >
-            <i className="bi bi-plus-circle me-1"></i> Add details
+            <i className="bi bi-plus-circle me-1"></i> Add Certifications
           </span>
         </div>
 
@@ -109,26 +109,34 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
             </tr>
           </thead>
           <tbody>
-            {certificationDetails?.map((certificate: any) => (
-              <tr key={certificate?.id}>
-                <td>{certificate?.certificateName}</td>
-                <td>{certificate?.issuedBy}</td>
-                <td>
-                  <i
-                    className="bi bi-pencil edit-icon ms-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleEdit(certificate)}
-                  ></i>
-                </td>
-                <td>
-                  <i
-                    className="bi bi-trash edit-icon ms-2 text-danger"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleDeleteClick(certificate.id)}
-                  ></i>
+            {certificationDetails && certificationDetails.length > 0 ? (
+              certificationDetails?.map((certificate: any) => (
+                <tr key={certificate?.id}>
+                  <td>{certificate?.certificateName}</td>
+                  <td>{certificate?.issuedBy}</td>
+                  <td>
+                    <i
+                      className="bi bi-pencil edit-icon ms-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleEdit(certificate)}
+                    ></i>
+                  </td>
+                  <td>
+                    <i
+                      className="bi bi-trash edit-icon ms-2 text-danger"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDeleteClick(certificate.id)}
+                    ></i>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-muted text-center py-3">
+                  No certifications found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

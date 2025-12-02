@@ -9,11 +9,11 @@ interface ProfileTitleProps {
   activeSection: any;
 }
 
-const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave ,activeSection}) => {
+const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave, activeSection }) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(profileTitle?.[0]?.title || "");
 
-   useEffect(() => {
+  useEffect(() => {
     if (activeSection === "profileTitle") {
       setTitle(profileTitle?.[0]?.title || "");
       setShowModal(true);
@@ -51,7 +51,9 @@ const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave
 
       {/* ===== Profile Text ===== */}
       <p className="mb-0 text-muted p-3">
-        {profileTitle?.[0]?.title}
+        {profileTitle?.[0]?.title?.trim()
+          ? profileTitle[0].title
+          : "No profile title found."}
       </p>
 
       {/* ===== Modal ===== */}

@@ -202,7 +202,7 @@ const Login = () => {
                           </Nav>
 
                           {/* Login Form */}
-                          <Form className="mt-4 pt-3 px-3" onSubmit={handleSubmit}>
+                          <Form className=" pt-3 px-3" onSubmit={handleSubmit}>
 
                             {/* Email */}
                             <Form.Group className="mb-3">

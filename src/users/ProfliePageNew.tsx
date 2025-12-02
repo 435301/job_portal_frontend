@@ -203,6 +203,7 @@ function ProfilePageNew() {
                       resumes={data?.resumes}
                       onUpload={handleUpload}
                       onDelete={handleDeleteResume}
+                      loading={loading}
                     />
                   </div>
                 </div>

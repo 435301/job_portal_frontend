@@ -10,6 +10,8 @@ import { getAllCities } from "../../redux/slices/citiesSlice.tsx";
 import { getAllAvailability } from "../../redux/slices/availabilitySlice.tsx";
 import { getAllExperiences } from "../../redux/slices/experienceSlice.tsx";
 import { getAllWorkPermit } from "../../redux/slices/WorkPermitSlice.tsx";
+import { getAllGender } from "../../redux/slices/genderSlice.tsx";
+import DatePicker from "../../components/DatePicker.tsx";
 
 interface ProfileCardProps {
   personalDetails: any;
@@ -20,6 +22,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
   console.log('personalDetails', personalDetails)
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
+   const [dob, setDob] = useState<Date | null>(null);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -28,7 +31,8 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
   const { AvailabilityList } = useSelector((state: RootState) => state.availability);
   const { experienceList } = useSelector((state: RootState) => state.experience);
   const { WorkPermitList } = useSelector((state: RootState) => state.workPermit);
-  console.log('experienceList', experienceList)
+  const { genderList } = useSelector((state: RootState) => state.gender);
+  console.log('genderList', genderList)
 
   useEffect(() => {
     dispatch(getAllMaritalStatus());
@@ -36,6 +40,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
     dispatch(getAllAvailability());
     dispatch(getAllExperiences());
     dispatch(getAllWorkPermit());
+    dispatch(getAllGender());
   }, [dispatch]);
 
   useEffect(() => {
@@ -162,8 +167,15 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
         </div>
         <div className="col-md-3">
           <strong>Address:</strong>
-          <div>{personalDetails?.permanentAddress} - {personalDetails?.pincode}</div>
+          <div style={{ wordBreak: "break-word", lineHeight: "1.5" }}>
+            {personalDetails?.permanentAddress && (
+              <span>{personalDetails.permanentAddress}</span>
+            )}
+            {personalDetails?.permanentAddress && personalDetails?.pincode && <br />}
+            {personalDetails?.pincode && <span>{personalDetails.pincode}</span>}
+          </div>
         </div>
+
         <div className="col-md-3">
           <strong>Nationality:</strong>
           <div>{personalDetails?.nationality}</div>
@@ -194,7 +206,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Full Name<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="text" name="firstName" value={form.firstName} onChange={handleChange} placeholder="Enter your full name" />
+                <Form.Control type="text" name="firstName" value={`${form.firstName} ${form.lastName}`} onChange={handleChange} placeholder="Enter your full name" />
               </Col>
             </Row>
 
@@ -202,8 +214,18 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
             <div className="mb-4">
               <Form.Label className="fw-bold">Gender<span className="text-danger"> *</span></Form.Label>
               <div className="d-flex gap-3">
-                <Form.Check inline label="Male" name="genderId" type="radio" value="1" checked={form.genderId == 1} onChange={handleChange} />
-                <Form.Check inline label="Female" name="genderId" type="radio" value="2" checked={form.genderId == 2} onChange={handleChange} />
+                {genderList?.map((gender: { id: number; gender: string }) => (
+                  <Form.Check
+                    key={gender.id}
+                    inline
+                    label={gender.gender}
+                    name="genderId"
+                    type="radio"
+                    value={gender.id}
+                    checked={form.genderId === gender.id}
+                    onChange={handleChange}
+                  />
+                ))}
               </div>
             </div>
 
@@ -232,7 +254,12 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Label className="fw-bold">Date of Birth<span className="text-danger"> *</span></Form.Label>
-                <Form.Control type="date" name="dob" value={form.dob} onChange={handleChange} />
+                <DatePicker
+                  value={dob}
+                  onChange={setDob}
+                  placeholder="Select your date of birth"
+                  maxDate={new Date()} // can't pick future dates
+                />
               </Col>
               <Col md={6}>
                 <Form.Label className="fw-bold">Locality<span className="text-danger"> *</span></Form.Label>

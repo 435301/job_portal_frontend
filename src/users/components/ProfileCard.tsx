@@ -6,6 +6,7 @@ import { Modal, Button, Form, Badge, Row, Col } from "react-bootstrap";
 import { FormErrorsEmployment, validateMobileNumber } from "../../common/validation.tsx";
 import BASE_URL_JOB from "../../config/config.jsx";
 import "../../assets/css/style.css";
+import profile from "../../assets/img/profile.jpg";
 
 interface ProfileCardProps {
   personalDetails: any;
@@ -71,7 +72,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               src={
                 profilePhoto
                   ? `${BASE_URL_JOB}${profilePhoto}`
-                  : "/default-profile.png"
+                  : profile
               }
               alt="Profile"
               className="rounded-circle profile-img me-3"
@@ -97,18 +98,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
             </h5>
 
             <p className="mb-2">
-              Profile last updated: <strong> {personalDetails?.lastLogin && new Date(personalDetails?.lastLogin).toLocaleString("en-IN")}</strong>
+              Profile last updated: <strong> {personalDetails?.lastLogin && new Date(personalDetails?.lastLogin).toLocaleString("en-US")}</strong>
             </p>
 
             <div className="d-flex align-items-center">
               <div className="progress flex-grow-1" style={{ height: "8px", maxWidth: "250px" }}>
-                <div className="progress-bar progress-bar" 
-                style={{
-                  width: `${Number(profileCompletion) || 0}%`,
-                  transition: "width 0.5s ease"
-                }}></div>
+                <div className="progress-bar progress-bar"
+                  style={{
+                    width: `${Number(profileCompletion) || 0}%`,
+                    transition: "width 0.5s ease"
+                  }}></div>
               </div>
-              <small className="text-muted ms-2">{profileCompletion} %</small>
+              <small className="text-muted ms-2">{profileCompletion || 0} % </small>
             </div>
           </div>
         </div>
@@ -124,7 +125,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Location</div>
-                <div className="text-muted small">{personalDetails?.city?.cityName}, {personalDetails?.country?.countryName}</div>
+                <div className="text-muted small"> {personalDetails?.city?.cityName && personalDetails?.country?.countryName
+                  ? `${personalDetails.city.cityName}, ${personalDetails.country.countryName}`
+                  : "-"} </div>
               </div>
             </div>
 
@@ -145,7 +148,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
                     onClick={openPopup}
                   />
                 </div>
-                <div className="text-muted small">{personalDetails?.mobile}</div>
+                <div className="text-muted small">{personalDetails?.mobile || "-"}</div>
               </div>
             </div>
 
@@ -156,7 +159,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Experience</div>
-                <div className="text-muted small">{personalDetails?.experience?.experienceName}</div>
+                <div className="text-muted small">{personalDetails?.experience?.experienceName || "-" }</div>
               </div>
             </div>
 
@@ -167,7 +170,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Email</div>
-                <div className="text-muted small">{personalDetails?.email}</div>
+                <div className="text-muted small">{personalDetails?.email || "-"}</div>
               </div>
             </div>
 
@@ -178,7 +181,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Availability</div>
-                <div className="text-muted small">{personalDetails?.availability?.availability}</div>
+                <div className="text-muted small">{personalDetails?.availability?.availability || "-"}</div>
               </div>
             </div>
 

@@ -7,6 +7,7 @@ import { FormErrors, validateITSkillsForm } from "../../common/validation.tsx";
 import { addITSkill, updateITSkill } from "../../redux/slices/employeeProfileSlice.tsx";
 import { getAllSkills } from "../../redux/slices/skillSlice.tsx";
 import { RootState } from "../../redux/store.tsx";
+import SearchableSelect from "../../components/SearchableSelect.tsx";
 
 interface ITSkillsProps {
   itSkills: any;
@@ -40,6 +41,11 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
   const [editRowId, setEditRowId] = useState<number | null>(null);
 
   const [errors, setErrors] = useState<FormErrors>({});
+
+    const skillOptions = skillList.map((item: any) => ({
+    value: item.id,
+    label: item.skillName,
+  }));
 
   useEffect(() => {
     // if(employeeId){
@@ -157,23 +163,33 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
             </tr>
           </thead>
           <tbody>
-            {itSkills?.map((row: any) => (
-              <tr key={row.id}>
-                <td>{row.skill?.skillName || ""}</td>
-                <td>{row.version || "-"}</td>
-                <td>{row.lastUsedYear || "-"}</td>
-                <td>
-                  {row.expYears} years {row.expMonths} months
-                </td>
-                <td>
-                  <i
-                    className="bi bi-pencil edit-icon ms-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleEdit(row)}
-                  ></i>
-                </td>
-              </tr>
-            ))}
+            {itSkills && itSkills.length > 0 ? (
+              itSkills?.map((row: any) => (
+                <tr key={row.id}>
+                  <td>{row.skill?.skillName || ""}</td>
+                  <td>{row.version || "-"}</td>
+                  <td>{row.lastUsedYear || "-"}</td>
+                  <td>
+                    {row.expYears} years {row.expMonths} months
+                  </td>
+                  <td>
+                    <i
+                      className="bi bi-pencil edit-icon ms-2"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleEdit(row)}
+                    ></i>
+                  </td>
+                </tr>
+              ))
+            )
+              : (
+                <tr>
+                  <td colSpan={4} className="text-muted text-center py-3">
+                    No IT skills found.
+                  </td>
+                </tr>
+              )}
+
           </tbody>
         </table>
       </div>
@@ -200,19 +216,14 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
               <Form.Label className="fw-semibold">
                 Skill / software name <span className="text-danger">*</span>
               </Form.Label>
-
-              <Form.Select
-                name="skillId"
-                value={formData.skillId || ""}
-                onChange={handleChange}
-              >
-                <option value="">Select skill</option>
-                {skillList.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.skillName}
-                  </option>
-                ))}
-              </Form.Select>
+                <SearchableSelect
+                  name="skillId"
+                  options={skillOptions}
+                  value={formData.skillId}
+                  onChange={handleChange}
+                  placeholder="Select skills"
+                  error={errors.skillId}
+                />
               {errors.skillId && (
                 <div className="text-danger small mt-1">{errors.skillId}</div>
               )}
@@ -241,7 +252,7 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
                   <Form.Label className="fw-semibold">Last used<span className="text-danger">*</span></Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="2025"
+                    placeholder="Last used"
                     value={formData.lastUsedYear}
                     name="lastUsedYear"
                     onChange={handleChange}

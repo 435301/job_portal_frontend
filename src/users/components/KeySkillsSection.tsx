@@ -11,16 +11,23 @@ interface KeySkillsProps {
   keySkills: any;
   skillList: any;
   onSave: (sikllIds: number[]) => void;
-   activeSection: any;
+  activeSection: any;
 }
-const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave , activeSection}) => {
+const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave, activeSection }) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setTempSkills([...skills]);
+    setTempSelectedSkillIds([...selectedSkillIds]);
+    setShow(true);
+  };
+
 
   const [skills, setSkills] = useState<string[]>([]);
+  const [tempSkills, setTempSkills] = useState<string[]>([]);
+  const [tempSelectedSkillIds, setTempSelectedSkillIds] = useState<number[]>([]);
   const [selectedSkillIds, setSelectedSkillIds] = useState<number[]>([]);
   const [searchText, setSearchText] = useState("");
   const [filteredSkills, setFilteredSkills] = useState<any[]>([]);
@@ -66,24 +73,26 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
   };
 
   const handleSelectSkill = (item: any) => {
-    if (!selectedSkillIds.includes(item.id)) {
-      setSelectedSkillIds([...selectedSkillIds, item.id]);
-      setSkills([...skills, item.skillName]);
+    if (!tempSelectedSkillIds.includes(item.id)) {
+      setTempSelectedSkillIds([...tempSelectedSkillIds, item.id]);
+      setTempSkills([...tempSkills, item.skillName]);
     }
     setSearchText("");
     setFilteredSkills([]);
   };
 
   const handleSuggestedSkillClick = (item: any) => {
-    if (!selectedSkillIds.includes(item.id)) {
-      setSelectedSkillIds([...selectedSkillIds, item.id]);
-      setSkills([...skills, item?.skillName]);
+    if (!tempSelectedSkillIds.includes(item.id)) {
+      setTempSelectedSkillIds([...tempSelectedSkillIds, item.id]);
+      setTempSkills([...tempSkills, item.skillName]);
     }
   };
 
 
   const handleSave = () => {
-    onSave(selectedSkillIds);
+    setSkills([...tempSkills]);
+    setSelectedSkillIds([...tempSelectedSkillIds]);
+    onSave(tempSelectedSkillIds);
     setShow(false);
   };
 
@@ -96,9 +105,16 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
     dispatch(removeKeySkill(id));
     setSkills((prev) => prev.filter((_, i) => keySkillRowIds[i] !== id));
     setSelectedSkillIds((prev) => prev.filter((_, i) => keySkillRowIds[i] !== id));
-    setKeySkillRowIds((prev) => prev.filter(itemId => itemId  !== id));
+    setKeySkillRowIds((prev) => prev.filter(itemId => itemId !== id));
   };
 
+  const handleRemoveTemp = (skillName: string) => {
+    const index = tempSkills.indexOf(skillName);
+    if (index !== -1) {
+      setTempSkills(tempSkills.filter((s) => s !== skillName));
+      setTempSelectedSkillIds(tempSelectedSkillIds.filter((_, i) => i !== index));
+    }
+  };
 
   return (
     <>
@@ -119,26 +135,31 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
 
         {/* ===== Skills List (MAIN SECTION) WITH REMOVE ICON ===== */}
         <div className="d-flex flex-wrap gap-2 px-3 mb-3">
-          {skills.map((skill, index) => (
-            <span key={index} className="badge-skill position-relative">
-              <i className={`bi ${skillIcons[skill]} me-2`}></i>
-              {skill}
 
-              {/* REMOVE BUTTON (VISIBLE OUTSIDE MODAL ALSO) */}
-              <button
-                className="remove-btn ms-2"
-                onClick={() => handleRemove(keySkillRowIds[index])}
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                }}
-              >
-                ×
-              </button>
-            </span>
-          ))}
+          {skills && skills.length > 0 ? (
+            skills.map((skill, index) => (
+              <span key={index} className="badge-skill position-relative">
+                <i className={`bi ${skillIcons[skill]} me-2`}></i>
+                {skill}
+
+                <button
+                  className="remove-btn ms-2"
+                  onClick={() => handleRemove(keySkillRowIds[index])}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  ×
+                </button>
+              </span>
+            ))
+          ) : (
+            <p className="text-muted">No skills found.</p>
+          )}
+
         </div>
       </div>
 
@@ -159,21 +180,10 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
 
           {/* ===== Skills Inside Modal ALSO with Remove ===== */}
           <div className="mb-3 d-flex flex-wrap gap-2">
-            {skills.map((skill, index) => (
-              <span key={index} className="badge-skill position-relative">
+            {tempSkills.map((skill, index) => (
+              <span key={index} className="badge-skill">
                 {skill}
-                <button
-                  className="remove-btn ms-2"
-                  onClick={() => handleRemove(keySkillRowIds[index])}
-                  style={{
-                    border: "none",
-                    background: "transparent",
-                    fontSize: "16px",
-                    cursor: "pointer",
-                  }}
-                >
-                  ×
-                </button>
+                <button onClick={() => handleRemoveTemp(skill)}>×</button>
               </span>
             ))}
           </div>

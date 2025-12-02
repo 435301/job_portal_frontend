@@ -305,8 +305,8 @@ const Register = () => {
                               <Form.Control
                                 type="text"
                                 name="captcha"
-                                placeholder="Enter the text shown above"
-                                className="mt-3"
+                                placeholder="Enter the text shown"
+                                className="mt-3 form-control-sm w-auto"
                                 value={formData.captcha}       // Bind value
                                 onChange={handleChange}        // Handle changes
                                 isInvalid={!!errors.captcha}

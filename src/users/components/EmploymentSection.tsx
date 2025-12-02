@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../redux/hooks.tsx";
 import { FormErrorsEmployment, validateEmploymentForm, } from "../../common/validation.tsx";
 import "../../assets/css/style.css";
 import DeleteConfirmationModal from "../../admin/componets/Modal/DeleteModal.tsx";
+import SearchableSelect from "../../components/SearchableSelect.tsx";
 
 interface EmploymentProps {
   employmentDetails: any;
@@ -64,6 +65,11 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
     noticePeriodId: 0,
     jobProfile: "",
   });
+
+  const options = NoticePeriodList.map((item: any) => ({
+    value: item.id,
+    label: item.noticePeriodName,
+  }));
 
   useEffect(() => {
     if (activeSection === "employment") {
@@ -189,67 +195,59 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       <div className="p-0 border rounded-4 mb-4 bg-white ">
         <div className="d-flex p-3 justify-content-between align-items-center border-bottom pb-2 mb-3">
           <h6 className="fw-semibold mb-0">
-            <i className="bi bi-person-lines-fill me-2 "></i> Employment
+            <i className="bi bi-person-lines-fill me-2 "></i> Employment Details
           </h6>
           <span
             className="add-link text-primary"
             style={{ cursor: "pointer" }}
             onClick={handleShow}
           >
-            <i className="bi bi-plus-circle me-1"></i> Add details
+            <i className="bi bi-plus-circle me-1"></i> Add Employment
           </span>
         </div>
 
         {/* Employment List */}
 
         <div className="px-3 mb-4">
-          <ul className="timeline-list list-unstyled mb-0">
+          {employmentDetails && employmentDetails.length > 0 ? (
+            <ul className="timeline-list list-unstyled mb-0">
+              {employmentDetails.map((item: any, index: number) => (
+                <li
+                  className={`timeline-item ${index !== employmentDetails.length - 1 ? "mb-4" : ""}`}
+                  key={item.id}
+                >
+                  <h6 className={`${index !== 0 ? "fw-semibold mb-1" : ""}`}>
+                    {item.currentJobTitle}
+                  </h6>
 
-            {employmentDetails?.map((item: any, index: number) => (
-              <li
-                className={`timeline-item ${index !== employmentDetails.length - 1 ? "mb-4" : ""}`}
-                key={item.id}
-              >
-                <h6 className={`${index !== 0 ? "fw-semibold mb-1" : ""}`}>
-                  {item.currentJobTitle}
-                </h6>
+                  <a className="company">
+                    {item.currentCompanyName}
+                  </a>
 
-                <a href="#" className="company">
-                  {item.currentCompanyName}
-                </a>
+                  <span className="meta">
+                    <i className="bi bi-dot mx-1"></i>
+                    {item.joiningYear}-{item.endingYear}
+                  </span>
 
-                <span className="meta">
-                  <i className="bi bi-dot mx-1"></i>
-                  {item.joiningYear}-{item.endingYear}
-                </span>
+                  <p>{item.jobProfile}</p>
 
-                <span> <p>{item.jobProfile}</p></span>
-                <i
-                  className="bi bi-pencil edit-icon ms-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleEdit(item)}
-                ></i>
+                  <i
+                    className="bi bi-pencil edit-icon ms-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleEdit(item)}
+                  ></i>
 
-                <i
-                  className="bi bi-trash edit-icon ms-2 text-danger"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleDeleteClick(item.id)}
-                ></i>
-              </li>
-            ))}
-
-            {/* ===== Add Employment Row ===== */}
-            <li className="timeline-item">
-              <a
-                className="company fw-semibold text-decoration-none"
-                style={{ cursor: "pointer" }}
-                onClick={handleShow}
-              >
-                + Add Employment
-              </a>
-            </li>
-
-          </ul>
+                  <i
+                    className="bi bi-trash edit-icon ms-2 text-danger"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleDeleteClick(item.id)}
+                  ></i>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted text-center">No employment details found.</p>
+          )}
         </div>
 
       </div>
@@ -267,7 +265,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
             {/* ===== Modal Header ===== */}
             <div className="modal-header">
               <h5 className="modal-title" id="employmentModalLabel">
-                <i className="bi bi-briefcase-fill me-2"></i> Employment
+                <i className="bi bi-briefcase-fill me-2"></i> Employment Details
               </h5>
               <button
                 type="button"
@@ -349,13 +347,13 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
               {/* Company and Title */}
               <div className="row mb-3 g-3">
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <label className="form-section-label">Current company name<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Type your company name" className={`form-control  ${errors.currentCompanyName ? "is-invalid" : ""}`} name="currentCompanyName" value={formData.currentCompanyName} onChange={handleChange} />
                   {errors.currentCompanyName && <div className="invalid-feedback">{errors.currentCompanyName}</div>}
 
                 </div>
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <label className="form-section-label">Current job title<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Type your designation" name="currentJobTitle" value={formData.currentJobTitle} onChange={handleChange} className={`form-control  ${errors.currentJobTitle ? "is-invalid" : ""}`} />
                   {errors.currentJobTitle && <div className="invalid-feedback">{errors.currentJobTitle}</div>}
@@ -393,48 +391,50 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                   </div>
                 </div>
               </div>
+
               {/* Ending Date */}
-              <div className="row mb-3">
-                <div className="col-md-12">
-                  <label className="form-section-label">Ending date<span className="text-danger"> *</span></label>
-                  <div className="d-flex gap-2">
-                    <Form.Select name="endingYear" value={formData.endingYear} onChange={handleChange} className={`form-control  ${errors.endingYear ? "is-invalid" : ""}`}>
-                      <option value="">Years</option>
-                      {[...Array(30)].map((_, i) => {
-                        const year = new Date().getFullYear() - i;
-                        return <option key={year} value={year}>{year}</option>;
-                      })}
-                    </Form.Select>
-                    {errors.endingYear && <div className="invalid-feedback">{errors.endingYear}</div>}
+              {!formData.isCurrentEmployment && (
+                <div className="row mb-3">
+                  <div className="col-md-12">
+                    <label className="form-section-label">Ending date<span className="text-danger"> *</span></label>
+                    <div className="d-flex gap-2">
+                      <Form.Select name="endingYear" value={formData.endingYear} onChange={handleChange} className={`form-control  ${errors.endingYear ? "is-invalid" : ""}`}>
+                        <option value="">Years</option>
+                        {[...Array(30)].map((_, i) => {
+                          const year = new Date().getFullYear() - i;
+                          return <option key={year} value={year}>{year}</option>;
+                        })}
+                      </Form.Select>
+                      {errors.endingYear && <div className="invalid-feedback">{errors.endingYear}</div>}
+                      <Form.Select name="endingMonth" value={formData.endingMonth} onChange={handleChange} className={`form-control  ${errors.endingMonth ? "is-invalid" : ""}`} >
+                        <option value="">Months</option>
+                        {[
+                          "January", "February", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November", "December"
+                        ].map((m, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {m}
+                          </option>
+                        ))}
 
-                    <Form.Select name="endingMonth" value={formData.endingMonth} onChange={handleChange} className={`form-control  ${errors.endingMonth ? "is-invalid" : ""}`} >
-                      <option value="">Months</option>
-                      {[
-                        "January", "February", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"
-                      ].map((m, i) => (
-                        <option key={i + 1} value={i + 1}>
-                          {m}
-                        </option>
-                      ))}
+                      </Form.Select>
+                      {errors.endingMonth && <div className="invalid-feedback">{errors.endingMonth}</div>}
 
-                    </Form.Select>
-                    {errors.endingMonth && <div className="invalid-feedback">{errors.endingMonth}</div>}
-
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Current Salary */}
               <div className="row mb-3">
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <label className="form-section-label fw-semibold mb-2">
                     Current Salary<span className="text-danger"> *</span>
                   </label>
                   <div className="input-group">
                     <Dropdown>
                       <Dropdown.Toggle variant="outline-dark">
-                        {CurrencyTypeList.find((c: any) => c.id === formData.currencyId)?.currencyType || "Select"}
+                        {CurrencyTypeList.find((c: any) => c.id === formData.currencyId)?.currencyType || "USD"}
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
@@ -453,41 +453,34 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                     {errors.currentSalary && <div className="invalid-feedback">{errors.currentSalary}</div>}
                   </div>
                 </div>
-              </div>
-
-              {/* Skills Used */}
-              <div className="row mb-3">
-                <div className="col-md-12">
+                  <div className="col-md-6">
                   <label className="form-section-label">Skills used<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Add Skills" name="skillsUsed" value={formData.skillsUsed} onChange={handleChange} className={`form-control  ${errors.skillsUsed ? "is-invalid" : ""}`} />
                   {errors.skillsUsed && <div className="invalid-feedback">{errors.skillsUsed}</div>}
                 </div>
               </div>
 
-              {/* Job Profile */}
+              {/* Skills Used */}
               <div className="row mb-3">
-                <div className="col-md-12">
+              
+                <div className="col-md-6">
                   <label className="form-section-label">Job Profile</label>
                   <Form.Control as="textarea" rows={3} placeholder="Type here" name="jobProfile" value={formData.jobProfile} onChange={handleChange} />
                 </div>
-              </div>
-
-              {/* Notice Period */}
-              <div className="row mb-3">
-                <div className="col-md-12">
+                  <div className="col-md-6">
                   <label className="form-section-label">Notice period<span className="text-danger"> *</span></label>
-                  <Form.Select name="noticePeriodId" value={formData.noticePeriodId} onChange={handleChange} className={`form-control  ${errors.noticePeriodId ? "is-invalid" : ""}`}>
-                    <option>Select notice period</option>
-                    {NoticePeriodList.map((item: any) => (
-                      <option key={item?.id} value={item.id}>
-                        {item.noticePeriodName}
-                      </option>
-                    ))}
-
-                  </Form.Select>
+                  <SearchableSelect
+                    name="noticePeriodId"
+                    options={options}
+                    value={formData.noticePeriodId}
+                    onChange={handleChange}
+                    placeholder="Select notice period"
+                    error={errors.noticePeriodId}
+                  />
                   {errors.noticePeriodId && <div className="invalid-feedback">{errors.noticePeriodId}</div>}
                 </div>
               </div>
+              
               <div className="modal-footer">
                 <Button variant="link" className="text-muted text-decoration-none" onClick={handleClose}>
                   Cancel

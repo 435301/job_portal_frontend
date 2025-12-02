@@ -9,9 +9,10 @@ interface ResumeProps {
   resumes: any;
   onUpload: (file: any) => void;
   onDelete: (id: number) => void;
+  loading: any
 }
 
-const ResumeSection: React.FC<ResumeProps> = ({ resumes, onUpload, onDelete }) => {
+const ResumeSection: React.FC<ResumeProps> = ({ resumes, onUpload, onDelete, loading }) => {
   console.log('resumes', resumes)
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,37 +30,37 @@ const ResumeSection: React.FC<ResumeProps> = ({ resumes, onUpload, onDelete }) =
     onDelete(id)
   }
 
-const handleDownload = async (filePath: string) => {
-  try {
-    const fileUrl = `${BASE_URL_JOB}${filePath}`;
-    const response = await fetch(fileUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("employeeToken")}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Failed to download file");
+  const handleDownload = async (filePath: string) => {
+    try {
+      const fileUrl = `${BASE_URL_JOB}${filePath}`;
+      const response = await fetch(fileUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("employeeToken")}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to download file");
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      // Extract file name
+      const fileName = filePath.split("/").pop() || "resume";
+      // Create link dynamically
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+      console.error("Download failed:", error);
     }
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    // Extract file name
-    const fileName = filePath.split("/").pop() || "resume";
-    // Create link dynamically
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
-
-    // Cleanup
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-
-  } catch (error) {
-    console.error("Download failed:", error);
-  }
-};
+  };
 
 
   return (
@@ -121,15 +122,23 @@ const handleDownload = async (filePath: string) => {
       />
 
       {/* Upload Box */}
-      <div
-        className="upload-box my-3 mx-3 text-center rounded-3 p-4 border border-dashed"
-        style={{ cursor: "pointer" }}
-        onClick={handleUploadButtonClick}
+      <div className="upload-box my-3 mx-3 text-center rounded-3 p-4 border border-dashed"
+        style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.6 : 1 }}
+        onClick={!loading ? handleUploadButtonClick : undefined}
       >
-        <i className="bi bi-cloud-arrow-up fs-4 mb-2 d-block text-primary"></i>
-        <small className="text-muted">
-          Formats: <strong>doc, pdf</strong> — up to 5MB
-        </small>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center flex-column">
+            <div className="spinner-border text-primary mb-2" role="status" style={{ width: "2rem", height: "2rem" }}></div>
+            <small className="text-muted">Uploading...</small>
+          </div>
+        ) : (
+          <>
+            <i className="bi bi-cloud-arrow-up fs-4 mb-2 d-block text-primary"></i>
+            <small className="text-muted">
+              Formats: <strong>doc, pdf</strong> — up to 5MB
+            </small>
+          </>
+        )}
       </div>
 
 

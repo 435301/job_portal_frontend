@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import editIcon from "../../assets/img/edit.svg";
 import { FormErrorsEmployment, validateProfileEducationForm } from "../../common/validation.tsx";
 import DeleteConfirmationModal from "../../admin/componets/Modal/DeleteModal.tsx";
+import SearchableSelect from "../../components/SearchableSelect.tsx";
 
 interface EducationProps {
   educationDetails: any;
@@ -37,6 +38,25 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
     gradingSystemId: 0,
     marks: "",
   });
+
+  const educationOptions = educationList.map((item: any) => ({
+    value: item.id,
+    label: item.educationName,
+  }));
+  const courseOptions = courseList.map((item: any) => ({
+    value: item.id,
+    label: item.courseName,
+  }));
+
+  const specializationOptions = specializationList.map((item: any) => ({
+    value: item.id,
+    label: item.specializationName,
+  }));
+
+  const gradingSystemOptions = GradingSystemList.map((item: any) => ({
+    value: item.id,
+    label: item.gradingType,
+  }));
 
   useEffect(() => {
     if (activeSection === "education") {
@@ -143,40 +163,41 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
           style={{ cursor: "pointer" }}
           onClick={handleShow}
         >
-          <i className="bi bi-plus-circle me-1"></i> Add details
+          <i className="bi bi-plus-circle me-1"></i> Add Education
         </span>
       </div>
 
       {/* ======= Education List ======= */}
       <div className="px-3">
-        <ul className="timeline-list list-unstyled">
-          {educationDetails?.map((item: any, index: number) => (
-            <li
-              className={`timeline-item ${index !== educationDetails.length - 1 ? "mb-3" : ""}`}
-              key={item.id}
-            >
-              <h6>{item?.education?.educationName}</h6>
-              <a href="#" className="company">
-                {item?.university}
-              </a>
-              <br />
-              <span className="meta text-muted">
-                <i className="bi bi-dot mx-1"></i>{item?.courseStartYear} – {item?.courseEndYear}
-              </span>
-              <i
-                className="bi bi-pencil edit-icon ms-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleEdit(item)}
-              ></i>
+        {educationDetails && educationDetails.length > 0 ? (
+          <ul className="timeline-list list-unstyled">
+            {educationDetails?.map((item: any, index: number) => (
+              <li
+                className={`timeline-item ${index !== educationDetails.length - 1 ? "mb-3" : ""}`}
+                key={item.id}
+              >
+                <h6>{item?.education?.educationName}</h6>
+                <a href="#" className="company">
+                  {item?.university}
+                </a>
+                <br />
+                <span className="meta text-muted">
+                  <i className="bi bi-dot mx-1"></i>{item?.courseStartYear} – {item?.courseEndYear}
+                </span>
+                <i
+                  className="bi bi-pencil edit-icon ms-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleEdit(item)}
+                ></i>
 
-              <i
-                className="bi bi-trash edit-icon ms-2 text-danger"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleDeleteClick(item.id)}
-              ></i>
-            </li>
-          ))}
-          <li className="timeline-item">
+                <i
+                  className="bi bi-trash edit-icon ms-2 text-danger"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDeleteClick(item.id)}
+                ></i>
+              </li>
+            ))}
+            {/* <li className="timeline-item">
             <a
               className="company fw-semibold text-decoration-none"
               style={{ cursor: "pointer" }}
@@ -184,9 +205,12 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
             >
               + Add Education
             </a>
-          </li>
+          </li> */}
 
-        </ul>
+          </ul>
+        ) : (
+          <p className="text-muted text-center">No education details found.</p>
+        )}
       </div>
 
       {showDeleteModal &&
@@ -211,60 +235,69 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
             </p>
 
             <Form>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">
-                  Education <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Select name="educationId" value={formData.educationId} onChange={handleChange} className={` ${errors.educationId ? "is-invalid" : ""}`} >
-                  <option value="">Select education</option>
-                  {educationList.map((education: any) => (
-                    <option key={education.id} value={education.id}>
-                      {education.educationName}
-                    </option>
-                  ))}
-                </Form.Select>
-                {errors.educationId && <div className="invalid-feedback">{errors.educationId}</div>}
-              </Form.Group>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">
+                      Education <span className="text-danger">*</span>
+                    </Form.Label>
+                    <SearchableSelect
+                      name="educationId"
+                      options={educationOptions}
+                      value={formData.educationId}
+                      onChange={handleChange}
+                      placeholder="Select education"
+                      error={errors.educationId}
+                    />
 
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold"   >
-                  University/Institute <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control type="text" placeholder="Select university/institute" value={formData.university} name="university" className={` ${errors.university ? "is-invalid" : ""}`}
-                  onChange={handleChange} />
-                {errors.university && <div className="invalid-feedback">{errors.university}</div>}
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">
-                  Course <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Select name="courseId" value={formData.courseId} onChange={handleChange} className={` ${errors.courseId ? "is-invalid" : ""}`}>
-                  <option value="">Select course</option>
-                  {courseList.map((course: any) => (
-                    <option key={course.id} value={course.id}>
-                      {course.courseName}
-                    </option>
-                  ))}
-                </Form.Select>
-                {errors.courseId && <div className="invalid-feedback">{errors.courseId}</div>}
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">
-                  Specialization <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Select name="specificationId" value={formData.specificationId} onChange={handleChange} className={` ${errors.specificationId ? "is-invalid" : ""}`}>
-                  <option value="">Select specialization</option>
-                  {specializationList.map((spec: any) => (
-                    <option key={spec.id} value={spec.id}>
-                      {spec.specializationName}
-                    </option>
-                  ))}
-                </Form.Select>
-                {errors.specificationId && <div className="invalid-feedback">{errors.specificationId}</div>}
-              </Form.Group>
-
+                    {errors.educationId && <div className="invalid-feedback">{errors.educationId}</div>}
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold"   >
+                      University/Institute <span className="text-danger">*</span>
+                    </Form.Label>
+                    <Form.Control type="text" placeholder="Select university/institute" value={formData.university} name="university" className={` ${errors.university ? "is-invalid" : ""}`}
+                      onChange={handleChange} />
+                    {errors.university && <div className="invalid-feedback">{errors.university}</div>}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">
+                      Course <span className="text-danger">*</span>
+                    </Form.Label>
+                    <SearchableSelect
+                      name="courseId"
+                      options={courseOptions}
+                      value={formData.courseId}
+                      onChange={handleChange}
+                      placeholder="Select course"
+                      error={errors.courseId}
+                    />
+                    {errors.courseId && <div className="invalid-feedback">{errors.courseId}</div>}
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">
+                      Specialization <span className="text-danger">*</span>
+                    </Form.Label>
+                    <SearchableSelect
+                      name="specificationId"
+                      options={specializationOptions}
+                      value={formData.specificationId}
+                      onChange={handleChange}
+                      placeholder="Select specialization"
+                      error={errors.specificationId}
+                    />
+                    {errors.specificationId && <div className="invalid-feedback">{errors.specificationId}</div>}
+                  </Form.Group>
+                </Col>
+              </Row>
               <Form.Group className="mb-3">
                 <Form.Label className="fw-semibold">
                   Course type <span className="text-danger">*</span>
@@ -319,33 +352,36 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
                   {errors.courseEndYear && <div className="invalid-feedback">{errors.courseEndYear}</div>}
                 </Col>
               </Row>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">Grading system<span className="text-danger"> *</span></Form.Label>
-                <Form.Select name="gradingSystemId" value={formData.gradingSystemId} onChange={handleChange} className={` ${errors.gradingSystemId ? "is-invalid" : ""}`}>
-                  <option value="">Select grading system</option>
-                  {GradingSystemList.map((grade) => (
-                    <option key={grade.id} value={[grade.id]}>
-                      {grade.gradingType}
-                    </option>
-                  ))}
-                </Form.Select>
-                {errors.gradingSystemId && <div className="invalid-feedback">{errors.gradingSystemId}</div>}
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold"   >
-                  Marks <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control type="text" placeholder="Enter marks" value={formData.marks} name="marks" className={` ${errors.marks ? "is-invalid" : ""}`}
-                  onChange={handleChange} />
-                {errors.marks && <div className="invalid-feedback">{errors.marks}</div>}
-              </Form.Group>
-
+              <Row className="mb-3">
+                <Col md={6} >
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">Grading system<span className="text-danger"> *</span></Form.Label>
+                    <SearchableSelect
+                      name="gradingSystemId"
+                      options={gradingSystemOptions}
+                      value={formData.gradingSystemId}
+                      onChange={handleChange}
+                      placeholder="Select grading System"
+                      error={errors.gradingSystemId}
+                    />
+                    {errors.gradingSystemId && <div className="invalid-feedback">{errors.gradingSystemId}</div>}
+                  </Form.Group>
+                </Col>
+                <Col md={6} >
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold"   >
+                      Marks <span className="text-danger">*</span>
+                    </Form.Label>
+                    <Form.Control type="text" placeholder="Enter marks" value={formData.marks} name="marks" className={` ${errors.marks ? "is-invalid" : ""}`}
+                      onChange={handleChange} />
+                    {errors.marks && <div className="invalid-feedback">{errors.marks}</div>}
+                  </Form.Group>
+                </Col>
+              </Row>
             </Form>
           </Modal.Body>
 
-          <Modal.Footer>
+          <Modal.Footer>  
             <Button variant="link" className="text-muted text-decoration-none" onClick={handleClose}>
               Cancel
             </Button>
