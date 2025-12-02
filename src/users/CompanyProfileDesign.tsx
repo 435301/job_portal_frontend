@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Navbar";
 import Footer from "./components/Footer";
 import avatarImage from "../assets/img/profile-1.png";
@@ -7,9 +7,10 @@ import { Modal, Button, Form, } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useAppSelector } from "../redux/hooks.tsx";
-import { fetchEmployerProfile } from "../redux/slices/employerProfileSlice.tsx";
+import { fetchEmployerProfile, uploadCompanyLogo } from "../redux/slices/employerProfileSlice.tsx";
 import BASE_URL_JOB from "../config/config.jsx";
 import profile from "../assets/img/profile.jpg";
+import "../assets/css/style.css";
 
 
 function ProfilePage() {
@@ -18,7 +19,8 @@ function ProfilePage() {
     const { loading, data, error } = useAppSelector((state: RootState) => state.employerProfile);
     const companyDetails = data?.companyDetails;
     const kycDetails = data?.kycDetails;
-        console.log('kycDetails', kycDetails)
+    const kyc = kycDetails?.[0];
+    console.log('kycDetails', kycDetails)
     const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState("");
     const [profilePhoto, setProfilePhoto] = useState<any>();
@@ -42,6 +44,20 @@ function ProfilePage() {
 
     const handleClose = () => setShowModal(false);
 
+    const handleProfilePhoto = (e: any,) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const previewUrl = URL.createObjectURL(file);
+        setProfilePhoto(previewUrl);
+        dispatch(uploadCompanyLogo(file))
+    };
+
+    const fileRef = useRef<HTMLInputElement>(null);
+
+    const triggerUpload = () => {
+        fileRef.current?.click();
+    };
+
     return (
         <div className="ProfilePage">
             <Header />
@@ -53,30 +69,39 @@ function ProfilePage() {
             <div className="container py-4">
                 <div className="profile-card row align-items-center rounded-4 p-4">
                     <div className="col-md-5 border-end d-flex align-items-center mb-4 mb-md-0">
-                        <div>
+                        <div className="profile-photo-wrapper position-relative " style={{ width: "120px" }}>
                             <img
-                                src={
-                                    profilePhoto
-                                        ? `${BASE_URL_JOB}${profilePhoto}`
-                                        : profile
-                                }
-                                alt="Profile"
+                                src={profilePhoto ? `${BASE_URL_JOB}${profilePhoto}` : profile}
+                                alt=""
                                 className="rounded-circle profile-img me-3"
                             />
+                            <img
+                                src={editIcon}
+                                alt="Edit Icon"
+                                className="edit-icon ms-4"
+                                onClick={triggerUpload}
+                            />
+                            {loading && (
+                                <div className="loading-overlay">
+                                    <div className="spinner-border text-primary" role="status" />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                ref={fileRef}
+                                accept="image/*"
+                                className="d-none"
+                                onChange={handleProfilePhoto}
+                            />
                         </div>
+
                         <div>
                             <h5 className="mb-1 fw-semibold text-dark availability-1">
                                 {companyDetails?.companyName || "Company Name"}
-                                <img
-                                    src={editIcon}
-                                    alt="Edit"
-                                    className="ms-4"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => handleEdit("profile")}
-                                />
+
                             </h5>
                             <p className="mb-2">
-                                Profile last updated: <strong className="email">{companyDetails?.updatedAt && new Date (companyDetails?.updatedAt).toLocaleString("en-US")}</strong>
+                                Profile last updated: <strong className="email">{companyDetails?.updatedAt && new Date(companyDetails?.updatedAt).toLocaleString("en-US")}</strong>
                             </p>
 
                             {/* Progress */}
@@ -87,7 +112,7 @@ function ProfilePage() {
                                 >
                                     <div className="progress-bar bg-danger" style={{ width: "30%" }}></div>
                                 </div>
-                                <small className="text-muted ms-2">{companyDetails?.profileCompletion || 0 }%</small>
+                                <small className="text-muted ms-2">{companyDetails?.profileCompletion || 0}%</small>
                             </div>
                         </div>
                     </div>
@@ -196,10 +221,11 @@ function ProfilePage() {
                         </div>
 
                         <div className="row g-3 mb-3 px-3 small-text">
-                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> {kycDetails[0]?.ein || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">{kycDetails[0]?.companyEmailDomain || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">{kycDetails[0]?.address || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">{kycDetails[0]?.govtId || "-"}</div></div>
+
+                            <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> {kyc?.ein || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">{kyc?.companyEmailDomain || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">{kyc?.address || "-"}</div></div>
+                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">{kyc?.govtId || "-"}</div></div>
                         </div>
                     </div>
                 </div>
