@@ -133,6 +133,11 @@ const Sidebar = ({
           text: "Organization Size",
           path: "/admin/manage-organization-size",
         },
+         {
+          id: "workLocationType",
+          text: "Work Location Type",
+          path: "/admin/manage-work-location-type",
+        },
       ],
     },
     {

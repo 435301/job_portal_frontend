@@ -33,6 +33,7 @@ import industryTypeReducer from "./slices/IndustryTypeSlice.tsx";
 import companyTypeReducer from "./slices/CompanyTypeSlice.tsx";
 import employerProfileReducer from "./slices/employerProfileSlice.tsx";
 import sizeOfOrganizationReducer from "./slices/organizationSizeSlice.tsx";
+import WorkLocationTypeReducer from "./slices/WorkLocationTypeSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -70,6 +71,7 @@ export const store = configureStore({
     companyType:companyTypeReducer,
     employerProfile: employerProfileReducer,
     organizationSize: sizeOfOrganizationReducer,
+    workLocationType: WorkLocationTypeReducer,
   },
 });
 

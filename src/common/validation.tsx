@@ -56,6 +56,7 @@ export interface FormErrors {
   role?: string;
   industryType?:string;
   companyType?:string;
+  workLocationType?:string;
 }
 
 export interface EmploymentForm {
@@ -691,6 +692,17 @@ export const validateOrganizationSizeForm = (formData: { title?: string; status:
   const errors: FormErrors = {};
   if (!formData.title) {
     errors.title = "Organization Size is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}
+
+export const validateWorkLocationTypeForm = (formData: { workLocationType?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.workLocationType) {
+    errors.workLocationType = "work Location Type is required";
   }
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
