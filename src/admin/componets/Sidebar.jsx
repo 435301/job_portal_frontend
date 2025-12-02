@@ -128,6 +128,11 @@ const Sidebar = ({
           text: "Company Type",
           path: "/admin/manage-company-type",
         },
+         {
+          id: "organizationSize",
+          text: "Organization Size",
+          path: "/admin/manage-organization-size",
+        },
       ],
     },
     {

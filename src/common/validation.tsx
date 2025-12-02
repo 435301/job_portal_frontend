@@ -686,3 +686,14 @@ export const validateCompanyTypeForm = (formData: { companyType?: string; status
   }
   return errors;
 }
+
+export const validateOrganizationSizeForm = (formData: { title?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.title) {
+    errors.title = "Organization Size is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}

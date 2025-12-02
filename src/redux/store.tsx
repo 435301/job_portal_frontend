@@ -32,6 +32,7 @@ import roleReducer from "./slices/RoleSlice.tsx";
 import industryTypeReducer from "./slices/IndustryTypeSlice.tsx";
 import companyTypeReducer from "./slices/CompanyTypeSlice.tsx";
 import employerProfileReducer from "./slices/employerProfileSlice.tsx";
+import sizeOfOrganizationReducer from "./slices/organizationSizeSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -68,6 +69,7 @@ export const store = configureStore({
     industryType: industryTypeReducer,
     companyType:companyTypeReducer,
     employerProfile: employerProfileReducer,
+    organizationSize: sizeOfOrganizationReducer,
   },
 });
 
