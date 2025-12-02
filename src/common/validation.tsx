@@ -54,9 +54,9 @@ export interface FormErrors {
   mobile?: any;
   designation?: string;
   role?: string;
-  industryType?:string;
-  companyType?:string;
-  workLocationType?:string;
+  industryType?: string;
+  companyType?: string;
+  workLocationType?: string;
 }
 
 export interface EmploymentForm {
@@ -94,6 +94,16 @@ export interface FormErrorsEmployment {
 
 export interface MobileForm {
   mobile: any,
+}
+
+export interface CompanyProfileForm {
+  email?: string;
+  alternativeEmail?: string;
+  roleId?: number;
+  reportingManager?: string;
+  mobile?: string;
+  cityId?: number;
+
 }
 
 //  LOGIN FORM VALIDATION
@@ -567,7 +577,7 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (formData.totalExpMonths < 0 || formData.totalExpMonths > 11) {
     errors.totalExpMonths = "Total experience months must be between 0 and 11";
   }
-  if ( !formData.currentCompanyName?.trim()) {
+  if (!formData.currentCompanyName?.trim()) {
     errors.currentCompanyName = "Company name is required";
   }
   if (!formData.currentJobTitle || !formData.currentJobTitle.trim()) {
@@ -707,5 +717,34 @@ export const validateWorkLocationTypeForm = (formData: { workLocationType?: stri
   if (formData.status === undefined || formData.status === null || formData.status === "") {
     errors.status = "Status is required";
   }
+  return errors;
+}
+
+export const validateCompanyProfileForm = (formData: CompanyProfileForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.email) {
+    errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    errors.email = "Enter a valid email address";
+  }
+
+  if (formData.alternativeEmail &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.alternativeEmail)) {
+    errors.alternativeEmail = "Enter a valid alternative email address";
+  }
+
+  if (!formData.roleId) {
+    errors.roleId = "Role is required";
+  }
+
+  if (!formData.mobile) {
+    errors.mobile = "Mobile number is required";
+  } else if (!/^[0-9]{10}$/.test(formData.mobile)) {
+    errors.mobile = "Enter a valid 10-digit mobile number";
+  }
+  if (!formData.cityId) {
+    errors.cityId = "City is required";
+  }
+
   return errors;
 }

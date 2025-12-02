@@ -21,6 +21,15 @@ const initialState: EmployerProfileState = {
     companyLogo: null,
 };
 
+export interface UpdateCompanyProfilePayload {
+    email?: string;
+    alternativeEmail?: string;
+    roleId?: number;
+    reportingManager?: string;
+    mobile?: string;
+    cityId?: number;
+}
+
 const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;
 
 export const fetchEmployerProfile = createAsyncThunk(
@@ -56,6 +65,24 @@ export const uploadCompanyLogo = createAsyncThunk(
     }
 );
 
+export const updateCompanyProfileDetails = createAsyncThunk(
+    "employer/updateProfile",
+    async ({ payload }: { payload: UpdateCompanyProfilePayload } ,{ rejectWithValue , dispatch}) => {
+        try {
+            const response = await axios.patch(`${BASE_URL_JOB}/employer/updateProfile`,payload , getAuthAdminHeaders(false),);
+            toast.success(response.data.message);
+             if (employerId) {
+                await dispatch(fetchEmployerProfile(employerId));
+            }
+            return response.data; 
+        } catch (err: any) {
+            toast.error(err.response?.data.message);
+            return rejectWithValue(err.response?.data || "Something went wrong");
+        }
+    }
+);
+
+
 const employerProfileSlice = createSlice({
     name: "employerProfile",
     initialState,
@@ -85,7 +112,25 @@ const employerProfileSlice = createSlice({
             .addCase(uploadCompanyLogo.fulfilled, (state, action) => {
                 state.loading = false;
                 state.companyLogo = action.payload.companyLogo;
+            });
+        builder
+            .addCase(updateCompanyProfileDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             })
+            .addCase(updateCompanyProfileDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                if (state.data) {
+                    state.data.companyDetails = {
+                        ...state.data.companyDetails,
+                        ...action.payload.data,
+                    };
+                }
+            })
+            .addCase(updateCompanyProfileDetails.rejected, (state, action: any) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
     }
 });
 

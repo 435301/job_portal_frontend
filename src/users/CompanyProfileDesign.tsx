@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import Header from "./components/Navbar";
 import Footer from "./components/Footer";
 import avatarImage from "../assets/img/profile-1.png";
@@ -7,11 +7,24 @@ import { Modal, Button, Form, } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useAppSelector } from "../redux/hooks.tsx";
-import { fetchEmployerProfile, uploadCompanyLogo } from "../redux/slices/employerProfileSlice.tsx";
+import { fetchEmployerProfile, updateCompanyProfileDetails, uploadCompanyLogo } from "../redux/slices/employerProfileSlice.tsx";
 import BASE_URL_JOB from "../config/config.jsx";
 import profile from "../assets/img/profile.jpg";
 import "../assets/css/style.css";
+import { getAllRole } from "../redux/slices/RoleSlice.tsx";
+import SearchableSelect from "../components/SearchableSelect.tsx";
+import { FormErrors, validateCompanyProfileForm } from "../common/validation.tsx";
+import EditCompanyProfileModal from "./components/EditCompanyProfileModal.tsx";
+import { getAllCities } from "../redux/slices/citiesSlice.tsx";
 
+export interface UpdateCompanyProfilePayload {
+    email?: string;
+    alternativeEmail?: string;
+    roleId?: number;
+    reportingManager?: string;
+    mobile?: string;
+    cityId?: number;
+}
 
 function ProfilePage() {
     const dispatch = useDispatch<AppDispatch>();
@@ -20,14 +33,37 @@ function ProfilePage() {
     const companyDetails = data?.companyDetails;
     const kycDetails = data?.kycDetails;
     const kyc = kycDetails?.[0];
-    console.log('kycDetails', kycDetails)
+    const { RoleList } = useAppSelector((state: RootState) => state.role);
+    const { CityList } = useAppSelector((state: RootState) => state.city);
     const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState("");
     const [profilePhoto, setProfilePhoto] = useState<any>();
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const [formData, setFormData] = useState({
+        email: "",
+        alternativeEmail: "",
+        roleId: 0,
+        reportingManager: "",
+        mobile: "",
+        cityId: 0,
+    });
+
+    const roleOptions = RoleList.map((item: any) => ({
+        value: item.id,
+        label: item.role,
+    }));
+
+    const cityOptions = CityList.map((item: any) => ({
+        value: item.id,
+        label: item.cityName,
+    }));
 
     useEffect(() => {
         if (employerId) {
             dispatch(fetchEmployerProfile(employerId));
+            dispatch(getAllRole());
+            dispatch(getAllCities());
         }
     }, [employerId]);
 
@@ -37,10 +73,40 @@ function ProfilePage() {
         }
     }, [companyDetails]);
 
-    const handleEdit = (sectionName: any) => {
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        setErrors((prev) => ({ ...prev, [name]: "" }))
+    };
+
+    const handleEdit = (sectionName: string) => {
         setActiveSection(sectionName);
+        if (sectionName === "account" && companyDetails) {
+            setFormData({
+                email: companyDetails.email || "",
+                alternativeEmail: companyDetails.alternativeEmail || "",
+                roleId: companyDetails.roleId || 0,
+                reportingManager: companyDetails.reportingManager || "",
+                mobile: companyDetails.mobile || "",
+                cityId: companyDetails.cityId || 0,
+            });
+        }
+
+        if (sectionName === "company" && companyDetails) {
+            setFormData({
+                ...formData, // or map company fields as needed
+            });
+        }
+
+        if (sectionName === "kyc" && kyc) {
+            setFormData({
+                ...formData, // map KYC fields
+            });
+        }
+
         setShowModal(true);
     };
+
 
     const handleClose = () => setShowModal(false);
 
@@ -56,6 +122,21 @@ function ProfilePage() {
 
     const triggerUpload = () => {
         fileRef.current?.click();
+    };
+    const handleSave = (e: FormEvent) => {
+        e.preventDefault();
+        const validationErrors = validateCompanyProfileForm(formData);
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) {
+            return;
+        }
+        {
+            activeSection === "account" && (
+                dispatch(updateCompanyProfileDetails({ payload: formData }))
+            )
+            setShowModal(false);
+        }
+
     };
 
     return (
@@ -106,13 +187,14 @@ function ProfilePage() {
 
                             {/* Progress */}
                             <div className="d-flex align-items-center">
-                                <div
-                                    className="progress flex-grow-1"
-                                    style={{ height: "8px", maxWidth: "250px" }}
-                                >
-                                    <div className="progress-bar bg-danger" style={{ width: "30%" }}></div>
+                                <div className="progress flex-grow-1" >
+                                    <div className="progress-bar progress-bar"
+                                        style={{
+                                            width: `${Number(data?.profileCompletion) || 0}%`,
+                                            transition: "width 0.5s ease"
+                                        }}></div>
                                 </div>
-                                <small className="text-muted ms-2">{companyDetails?.profileCompletion || 0}%</small>
+                                <small className="text-muted ms-2">{data?.profileCompletion || 0} % </small>
                             </div>
                         </div>
                     </div>
@@ -238,217 +320,17 @@ function ProfilePage() {
 
             <Footer />
 
-            {/* ========================= MODAL ========================= */}
-            <Modal show={showModal} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        {activeSection === "account" && "Edit Account Details"}
-                        {activeSection === "company" && "Edit Company Details"}
-                        {activeSection === "kyc" && "Edit KYC Details"}
-                        {activeSection === "profile" && "Edit Profile"}
-                    </Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    {/* Account Edit */}
-                    {activeSection === "account" && (
-                        <Form>
-                            <div className="row">
-
-                                {/* Email */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" defaultValue="yethamsu@gmail.com" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Email For Communication */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Email for Communication</Form.Label>
-                                        <Form.Control type="email" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Role */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Role</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Reporting Manager */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Reporting Manager</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Mobile Number */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Mobile Number</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Location */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Location</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                            </div>
-                        </Form>
-                    )}
-
-
-                    {/* Company Edit */}
-                    {activeSection === "company" && (
-                        <Form>
-
-                            {/* Company Type */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Company Type</Form.Label>
-                                <Form.Control type="text" defaultValue="" />
-                            </Form.Group>
-
-                            {/* Industry Type */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Industry Type</Form.Label>
-                                <Form.Control type="text" defaultValue="" />
-                            </Form.Group>
-
-                            {/* Contact Person */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Contact Person</Form.Label>
-                                <Form.Control type="text" defaultValue="" />
-                            </Form.Group>
-
-                            {/* Designation */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Designation</Form.Label>
-                                <Form.Control type="text" defaultValue="" />
-                            </Form.Group>
-                        </Form>
-                    )}
-
-                    {/* KYC Edit */}
-                    {activeSection === "kyc" && (
-                        <Form>
-                            <div className="row">
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>KYC Status</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Name</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Address Label</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Address</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Country</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>State</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>City</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Pincode</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>GSTIN</Form.Label>
-                                        <Form.Control type="text" defaultValue="" />
-                                    </Form.Group>
-                                </div>
-
-                            </div>
-                        </Form>
-                    )}
-                    {/* PROFILE EDIT */}
-                    {activeSection === "profile" && (
-                        <Form>
-                            <div className="row">
-
-                                {/* Email */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" defaultValue="akeebshaik@gmail.com" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Mobile Number */}
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Mobile Number</Form.Label>
-                                        <Form.Control type="text" defaultValue="9880087932" />
-                                    </Form.Group>
-                                </div>
-
-                                {/* Location */}
-                                <div className="col-md-12">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Location</Form.Label>
-                                        <Form.Control type="text" defaultValue="Bengaluru, INDIA" />
-                                    </Form.Group>
-                                </div>
-
-                            </div>
-                        </Form>
-                    )}
-
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    <Button variant="primary">Save Changes</Button>
-                </Modal.Footer>
-            </Modal>
+            <EditCompanyProfileModal
+                showModal={showModal}
+                handleClose={handleClose}
+                activeSection={activeSection}
+                roleOptions={roleOptions}
+                cityOptions={cityOptions}
+                formData={formData}
+                handleChange={handleChange}
+                handleSave={handleSave}
+                errors={errors}
+            />
         </div>
     );
 }
