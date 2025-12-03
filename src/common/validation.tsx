@@ -106,6 +106,22 @@ export interface CompanyProfileForm {
 
 }
 
+export interface CompanyDetailsForm {
+  companyTypeId?: number;
+  industryTypeId?: number;
+  roleId?: number;
+  contactPerson?: string;
+  designationId?: number;
+  sizeOfOrganizationId?: number;
+}
+
+export interface KycDetailsForm {
+  ein?: number;
+  companyEmailDomain?: string;
+  companyAddress?: string;
+  govtId?: any;
+}
+
 //  LOGIN FORM VALIDATION
 export const validateLoginForm = (formData: { email?: string; password?: string }): FormErrors => {
   const errors: FormErrors = {};
@@ -745,6 +761,51 @@ export const validateCompanyProfileForm = (formData: CompanyProfileForm): FormEr
   if (!formData.cityId) {
     errors.cityId = "City is required";
   }
+
+  return errors;
+}
+
+export const validateCompanyDetailsForm = (formData: CompanyDetailsForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.companyTypeId) {
+    errors.companyTypeId = "Company Type is required";
+
+    if (!formData.industryTypeId)
+      errors.industryTypeId = "Industry Type is required";
+  }
+
+  if (!formData.designationId) {
+    errors.designationId = "Designation is required";
+  }
+
+  if (!formData.sizeOfOrganizationId) {
+    errors.sizeOfOrganizationId = "Size of Organization is required";
+  }
+  if (!formData.contactPerson) {
+    errors.contactPerson = "Contact Person is required";
+  }
+
+  return errors;
+}
+
+
+export const validateKycDetailsForm = (formData: KycDetailsForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.ein) {
+    errors.ein = "Employment Identification Number is required";
+
+    if (!formData.companyEmailDomain)
+      errors.companyEmailDomain = " Company Email Domain is required";
+  }
+
+  if (!formData.companyAddress) {
+    errors.companyAddress = "Company Address is required";
+  }
+
+  if (!formData.govtId) {
+    errors.govtId = "Govt Id is required";
+  }
+
 
   return errors;
 }

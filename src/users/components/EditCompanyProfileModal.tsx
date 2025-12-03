@@ -12,6 +12,10 @@ export interface EditModalProps {
     handleSave: any;
     cityOptions: Array<{ label: string; value: number }>;
     errors: any;
+    companyTypeOptions: Array<{ label: string; value: number }>;
+    IndustryTypeOptions: Array<{ label: string; value: number }>;
+    DesignationOptions: Array<{ label: string; value: number }>;
+    OrganizationSizeOptions: Array<{ label: string; value: number }>;
 }
 
 
@@ -25,6 +29,10 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
     handleSave,
     cityOptions,
     errors,
+    companyTypeOptions,
+    IndustryTypeOptions,
+    DesignationOptions,
+    OrganizationSizeOptions,
 }) => {
     return (
         <Modal show={showModal} onHide={handleClose} centered>
@@ -53,7 +61,7 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
 
                                 <div className="col-md-6">
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Email for Communication<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Label>Email for Communication</Form.Label>
                                         <Form.Control type="email" name="alternativeEmail" value={formData.alternativeEmail} onChange={handleChange} placeholder="Enter the alternate email" className={` ${errors.alternativeEmail ? "is-invalid" : ""}`} />
                                         {errors.alternativeEmail && <div className="invalid-feedback">{errors.alternativeEmail}</div>}
                                     </Form.Group>
@@ -99,7 +107,7 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
                                             value={formData.cityId}
                                             onChange={handleChange}
                                             placeholder="Select city"
-                                             error={errors.cityId}
+                                            error={errors.cityId}
                                         />
                                         {errors.cityId && <div className="invalid-feedback">{errors.cityId}</div>}
                                     </Form.Group>
@@ -111,25 +119,76 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
                     {/* COMPANY EDIT */}
                     {activeSection === "company" && (
                         <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Company Type</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Industry Type</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Contact Person</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Designation</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Company Type</Form.Label>
+                                        <SearchableSelect
+                                            name="companyTypeId"
+                                            options={companyTypeOptions}
+                                            value={formData.companyTypeId}
+                                            onChange={handleChange}
+                                            placeholder="Select Company Type"
+                                            error={errors.companyTypeId}
+                                        />
+                                        {errors.companyTypeId && <div className="invalid-feedback">{errors.companyTypeId}</div>}
+                                    </Form.Group>
+                                </div>
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Industry Type</Form.Label>
+                                        <SearchableSelect
+                                            name="industryTypeId"
+                                            options={IndustryTypeOptions}
+                                            value={formData.industryTypeId}
+                                            onChange={handleChange}
+                                            placeholder="Select Industry Type"
+                                            error={errors.industryTypeId}
+                                        />
+                                        {errors.industryTypeId && <div className="invalid-feedback">{errors.industryTypeId}</div>}
+                                    </Form.Group>
+                                </div>
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Contact Person</Form.Label>
+                                        <Form.Control type="text"
+                                            name="contactPerson"
+                                            value={formData.contactPerson}
+                                            onChange={handleChange}
+                                            placeholder="Enter the contact person"
+                                            className={` ${errors.contactPerson ? "is-invalid" : ""}`} />
+                                        {errors.contactPerson && <div className="invalid-feedback">{errors.contactPerson}</div>}
+                                    </Form.Group>
+                                </div>
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Designation</Form.Label>
+                                        <SearchableSelect
+                                            name="designationId"
+                                            options={DesignationOptions}
+                                            value={formData.designationId}
+                                            onChange={handleChange}
+                                            placeholder="Select Designation"
+                                            error={errors.designationId}
+                                        />
+                                        {errors.designationId && <div className="invalid-feedback">{errors.designationId}</div>}
+                                    </Form.Group>
+                                </div>
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Organization Size</Form.Label>
+                                        <SearchableSelect
+                                            name="sizeOfOrganizationId"
+                                            options={OrganizationSizeOptions}
+                                            value={formData.sizeOfOrganizationId}
+                                            onChange={handleChange}
+                                            placeholder="Select Organization Size"
+                                            error={errors.sizeOfOrganizationId}
+                                        />
+                                        {errors.sizeOfOrganizationId && <div className="invalid-feedback">{errors.sizeOfOrganizationId}</div>}
+                                    </Form.Group>
+                                </div>
+                            </div>
                         </Form>
                     )}
 
@@ -137,55 +196,60 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
                     {activeSection === "kyc" && (
                         <Form>
                             <div className="row">
-                                {[
-                                    "KYC Status",
-                                    "Name",
-                                    "Address Label",
-                                    "Address",
-                                    "Country",
-                                    "State",
-                                    "City",
-                                    "Pincode",
-                                    "GSTIN"
-                                ].map((label, idx) => (
-                                    <div className="col-md-6" key={idx}>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>{label}</Form.Label>
-                                            <Form.Control type="text" />
-                                        </Form.Group>
-                                    </div>
-                                ))}
-                            </div>
-                        </Form>
-                    )}
-
-                    {/* PROFILE EDIT */}
-                    {activeSection === "profile" && (
-                        <Form>
-                            <div className="row">
                                 <div className="col-md-6">
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" defaultValue="akeebshaik@gmail.com" />
+                                        <Form.Label>EIN<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Control type="text"
+                                            name="ein"
+                                            value={formData.ein}
+                                            onChange={handleChange}
+                                            placeholder="Enter the EIN "
+                                            className={` ${errors.ein ? "is-invalid" : ""}`} />
+                                        {errors.ein && <div className="invalid-feedback">{errors.ein}</div>}
+                                    </Form.Group>
+                                </div>
+                                <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Company Email Domain<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Control type="text"
+                                            name="companyEmailDomain"
+                                            value={formData.companyEmailDomain}
+                                            onChange={handleChange}
+                                            placeholder="Enter the Company Email Domain "
+                                            className={` ${errors.companyEmailDomain ? "is-invalid" : ""}`} />
+                                        {errors.companyEmailDomain && <div className="invalid-feedback">{errors.companyEmailDomain}</div>}
                                     </Form.Group>
                                 </div>
 
                                 <div className="col-md-6">
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Mobile Number</Form.Label>
-                                        <Form.Control type="text" defaultValue="9880087932" />
+                                        <Form.Label>Company Address<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Control type="text"
+                                            name="companyAddress"
+                                            value={formData.companyAddress}
+                                            onChange={handleChange}
+                                            placeholder="Enter the Company Address "
+                                            className={` ${errors.companyAddress ? "is-invalid" : ""}`} />
+                                        {errors.companyAddress && <div className="invalid-feedback">{errors.companyAddress}</div>}
                                     </Form.Group>
                                 </div>
-
-                                <div className="col-md-12">
+                                <div className="col-md-6">
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Location</Form.Label>
-                                        <Form.Control type="text" defaultValue="Bengaluru, INDIA" />
+                                        <Form.Label>Government ID<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Control type="text"
+                                            name="govtId"
+                                            value={formData.govtId}
+                                            onChange={handleChange}
+                                            placeholder="Enter the govt id "
+                                            className={` ${errors.govtId ? "is-invalid" : ""}`} />
+                                        {errors.govtId && <div className="invalid-feedback">{errors.govtId}</div>}
                                     </Form.Group>
                                 </div>
                             </div>
                         </Form>
                     )}
+
+                 
                 </Modal.Body>
 
                 <Modal.Footer>

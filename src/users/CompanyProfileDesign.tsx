@@ -7,24 +7,21 @@ import { Modal, Button, Form, } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store.tsx";
 import { useAppSelector } from "../redux/hooks.tsx";
-import { fetchEmployerProfile, updateCompanyProfileDetails, uploadCompanyLogo } from "../redux/slices/employerProfileSlice.tsx";
+import { fetchEmployerProfile, updateCompanyDetails, updateCompanyProfileDetails, updateKycDetails, uploadCompanyLogo } from "../redux/slices/employerProfileSlice.tsx";
 import BASE_URL_JOB from "../config/config.jsx";
 import profile from "../assets/img/profile.jpg";
 import "../assets/css/style.css";
 import { getAllRole } from "../redux/slices/RoleSlice.tsx";
 import SearchableSelect from "../components/SearchableSelect.tsx";
-import { FormErrors, validateCompanyProfileForm } from "../common/validation.tsx";
+import { FormErrors, validateCompanyDetailsForm, validateCompanyProfileForm, validateKDetailsForm, validateKycDetailsForm } from "../common/validation.tsx";
 import EditCompanyProfileModal from "./components/EditCompanyProfileModal.tsx";
 import { getAllCities } from "../redux/slices/citiesSlice.tsx";
+import { getAllCompanyType } from "../redux/slices/CompanyTypeSlice.tsx";
+import { getAllIndustryType } from "../redux/slices/IndustryTypeSlice.tsx";
+import { getAllDesignation } from "../redux/slices/DesignationSlice.tsx";
+import { getAllOrganizationSize } from "../redux/slices/organizationSizeSlice.tsx";
 
-export interface UpdateCompanyProfilePayload {
-    email?: string;
-    alternativeEmail?: string;
-    roleId?: number;
-    reportingManager?: string;
-    mobile?: string;
-    cityId?: number;
-}
+
 
 function ProfilePage() {
     const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +32,10 @@ function ProfilePage() {
     const kyc = kycDetails?.[0];
     const { RoleList } = useAppSelector((state: RootState) => state.role);
     const { CityList } = useAppSelector((state: RootState) => state.city);
+    const { CompanyTypeList } = useAppSelector((state: RootState) => state.companyType);
+    const { IndustryTypeList } = useAppSelector((state: RootState) => state.industryType);
+    const { DesignationList } = useAppSelector((state: RootState) => state.designation);
+    const { OrganizationSizeList } = useAppSelector((state: RootState) => state.organizationSize);
     const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState("");
     const [profilePhoto, setProfilePhoto] = useState<any>();
@@ -47,6 +48,16 @@ function ProfilePage() {
         reportingManager: "",
         mobile: "",
         cityId: 0,
+        companyTypeId: 0,
+        industryTypeId: 0,
+        contactPerson: "",
+        designationId: 0,
+        sizeOfOrganizationId: 0,
+        ein: 0,
+        companyEmailDomain: "",
+        companyAddress: "",
+        govtId: "",
+
     });
 
     const roleOptions = RoleList.map((item: any) => ({
@@ -59,11 +70,36 @@ function ProfilePage() {
         label: item.cityName,
     }));
 
+    const companyTypeOptions = CompanyTypeList.map((item: any) => ({
+        value: item.id,
+        label: item.companyType,
+    }));
+
+    const IndustryTypeOptions = IndustryTypeList.map((item: any) => ({
+        value: item.id,
+        label: item.industryType,
+    }));
+
+    const DesignationOptions = DesignationList.map((item: any) => ({
+        value: item.id,
+        label: item.designation,
+    }));
+
+    const OrganizationSizeOptions = OrganizationSizeList.map((item: any) => ({
+        value: item.id,
+        label: item.title,
+    }));
+
+
     useEffect(() => {
         if (employerId) {
             dispatch(fetchEmployerProfile(employerId));
             dispatch(getAllRole());
             dispatch(getAllCities());
+            dispatch(getAllCompanyType());
+            dispatch(getAllIndustryType());
+            dispatch(getAllDesignation());
+            dispatch(getAllOrganizationSize());
         }
     }, [employerId]);
 
@@ -79,36 +115,65 @@ function ProfilePage() {
         setErrors((prev) => ({ ...prev, [name]: "" }))
     };
 
-    const handleEdit = (sectionName: string) => {
-        setActiveSection(sectionName);
-        if (sectionName === "account" && companyDetails) {
-            setFormData({
-                email: companyDetails.email || "",
-                alternativeEmail: companyDetails.alternativeEmail || "",
-                roleId: companyDetails.roleId || 0,
-                reportingManager: companyDetails.reportingManager || "",
-                mobile: companyDetails.mobile || "",
-                cityId: companyDetails.cityId || 0,
-            });
+    const handleEdit = (section: string) => {
+        setActiveSection(section);
+
+        if (section === "account") {
+            setFormData(prev => ({
+                ...prev,
+                email: companyDetails?.email || "",
+                alternativeEmail: companyDetails?.alternativeEmail || "",
+                roleId: companyDetails?.roleId || 0,
+                reportingManager: companyDetails?.reportingManager || "",
+                mobile: companyDetails?.mobile || "",
+                cityId: companyDetails?.cityId || 0,
+            }));
         }
 
-        if (sectionName === "company" && companyDetails) {
-            setFormData({
-                ...formData, // or map company fields as needed
-            });
+        if (section === "company") {
+            setFormData(prev => ({
+                ...prev,
+                companyTypeId: companyDetails?.companyTypeId || 0,
+                industryTypeId: companyDetails?.industryTypeId || 0,
+                contactPerson: companyDetails?.contactPerson || "",
+                designationId: companyDetails?.designationId || 0,
+                sizeOfOrganizationId: companyDetails?.sizeOfOrganizationId || 0,
+            }));
         }
 
-        if (sectionName === "kyc" && kyc) {
-            setFormData({
-                ...formData, // map KYC fields
-            });
+        if (section === "kyc" && kyc) {
+            setFormData(prev => ({
+                ...prev,
+                ein: kyc.ein || "",
+                companyEmailDomain: kyc.companyEmailDomain || "",
+                govtId: kyc.govtId || "",
+                companyAddress: kyc.address || "",
+            }));
         }
-
         setShowModal(true);
     };
 
-
-    const handleClose = () => setShowModal(false);
+    const handleClose = (e: any) => {
+        setShowModal(false);
+        setFormData({
+            email: "",
+            alternativeEmail: "",
+            roleId: 0,
+            reportingManager: "",
+            mobile: "",
+            cityId: 0,
+            companyTypeId: 0,
+            industryTypeId: 0,
+            contactPerson: "",
+            designationId: 0,
+            sizeOfOrganizationId: 0,
+            ein: 0,
+            companyEmailDomain: "",
+            companyAddress: "",
+            govtId: "",
+        })
+        setErrors({});
+    }
 
     const handleProfilePhoto = (e: any,) => {
         const file = e.target.files[0];
@@ -125,18 +190,60 @@ function ProfilePage() {
     };
     const handleSave = (e: FormEvent) => {
         e.preventDefault();
-        const validationErrors = validateCompanyProfileForm(formData);
-        setErrors(validationErrors);
-        if (Object.keys(validationErrors).length > 0) {
-            return;
+        let validationErrors = {};
+        if (activeSection === "account") {
+            validationErrors = validateCompanyProfileForm(formData);
         }
-        {
-            activeSection === "account" && (
-                dispatch(updateCompanyProfileDetails({ payload: formData }))
-            )
-            setShowModal(false);
+        if (activeSection === "company") {
+            validationErrors = validateCompanyDetailsForm(formData);
+        }
+        if (activeSection === "kyc") {
+            validationErrors = validateKycDetailsForm(formData);
+        }
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) return;
+
+        if (activeSection === "account") {
+            dispatch(
+                updateCompanyProfileDetails({
+                    payload: {
+                        email: formData.email,
+                        alternativeEmail: formData.alternativeEmail,
+                        roleId: formData.roleId,
+                        reportingManager: formData.reportingManager,
+                        mobile: formData.mobile,
+                        cityId: formData.cityId,
+                    },
+                })
+            );
         }
 
+        if (activeSection === "company") {
+            dispatch(
+                updateCompanyDetails({
+                    payload: {
+                        companyTypeId: formData.companyTypeId,
+                        industryTypeId: formData.industryTypeId,
+                        contactPerson: formData.contactPerson,
+                        designationId: formData.designationId,
+                        sizeOfOrganizationId: formData.sizeOfOrganizationId,
+                    },
+                })
+            );
+        }
+        if (activeSection === "kyc") {
+            dispatch(
+                updateKycDetails({
+                    payload: {
+                        ein: formData.ein,
+                        companyEmailDomain: formData.companyEmailDomain,
+                        companyAddress: formData.companyAddress,
+                        govtId: formData.govtId,
+                    },
+                })
+            );
+        }
+        setShowModal(false);
     };
 
     return (
@@ -326,6 +433,10 @@ function ProfilePage() {
                 activeSection={activeSection}
                 roleOptions={roleOptions}
                 cityOptions={cityOptions}
+                companyTypeOptions={companyTypeOptions}
+                IndustryTypeOptions={IndustryTypeOptions}
+                DesignationOptions={DesignationOptions}
+                OrganizationSizeOptions={OrganizationSizeOptions}
                 formData={formData}
                 handleChange={handleChange}
                 handleSave={handleSave}

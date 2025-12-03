@@ -30,6 +30,22 @@ export interface UpdateCompanyProfilePayload {
     cityId?: number;
 }
 
+export interface UpdateCompanyDetailsPayload {
+    companyTypeId?: number;
+    industryTypeId?: number;
+    roleId?: number;
+    contactPerson?: string;
+    designationId?: number;
+    sizeOfOrganizationId?: number;
+}
+
+export interface UpdateKycDetails {
+    ein?: number;
+    companyEmailDomain?: string;
+    companyAddress?: string;
+    govtId?: any;
+}
+
 const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;
 
 export const fetchEmployerProfile = createAsyncThunk(
@@ -67,14 +83,14 @@ export const uploadCompanyLogo = createAsyncThunk(
 
 export const updateCompanyProfileDetails = createAsyncThunk(
     "employer/updateProfile",
-    async ({ payload }: { payload: UpdateCompanyProfilePayload } ,{ rejectWithValue , dispatch}) => {
+    async ({ payload }: { payload: UpdateCompanyProfilePayload }, { rejectWithValue, dispatch }) => {
         try {
-            const response = await axios.patch(`${BASE_URL_JOB}/employer/updateProfile`,payload , getAuthAdminHeaders(false),);
+            const response = await axios.patch(`${BASE_URL_JOB}/employer/updateProfile`, payload, getAuthAdminHeaders(false),);
             toast.success(response.data.message);
-             if (employerId) {
+            if (employerId) {
                 await dispatch(fetchEmployerProfile(employerId));
             }
-            return response.data; 
+            return response.data;
         } catch (err: any) {
             toast.error(err.response?.data.message);
             return rejectWithValue(err.response?.data || "Something went wrong");
@@ -82,6 +98,39 @@ export const updateCompanyProfileDetails = createAsyncThunk(
     }
 );
 
+export const updateCompanyDetails = createAsyncThunk(
+    "employer/updateCompanyDetails",
+    async ({ payload }: { payload: UpdateCompanyDetailsPayload }, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await axios.patch(`${BASE_URL_JOB}/employer/updateCompanyDetails`, payload, getAuthAdminHeaders(false),);
+            toast.success(response.data.message);
+            if (employerId) {
+                await dispatch(fetchEmployerProfile(employerId));
+            }
+            return response.data;
+        } catch (err: any) {
+            toast.error(err.response?.data.message);
+            return rejectWithValue(err.response?.data || "Something went wrong");
+        }
+    }
+);
+
+export const updateKycDetails = createAsyncThunk(
+    "employer/updateKycDetails",
+    async ({ payload }: { payload: UpdateKycDetails }, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await axios.patch(`${BASE_URL_JOB}/employer/updateKycDetails`, payload, getAuthAdminHeaders(false),);
+            toast.success(response.data.message);
+            if (employerId) {
+                await dispatch(fetchEmployerProfile(employerId));
+            }
+            return response.data;
+        } catch (err: any) {
+            toast.error(err.response?.data.message);
+            return rejectWithValue(err.response?.data || "Something went wrong");
+        }
+    }
+);
 
 const employerProfileSlice = createSlice({
     name: "employerProfile",
@@ -128,6 +177,42 @@ const employerProfileSlice = createSlice({
                 }
             })
             .addCase(updateCompanyProfileDetails.rejected, (state, action: any) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+        builder
+            .addCase(updateCompanyDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateCompanyDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                if (state.data) {
+                    state.data.companyDetails = {
+                        ...state.data.companyDetails,
+                        ...action.payload.data,
+                    };
+                }
+            })
+            .addCase(updateCompanyDetails.rejected, (state, action: any) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+        builder
+            .addCase(updateKycDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateKycDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                if (state.data) {
+                    state.data.companyDetails = {
+                        ...state.data.companyDetails,
+                        ...action.payload.data,
+                    };
+                }
+            })
+            .addCase(updateKycDetails.rejected, (state, action: any) => {
                 state.loading = false;
                 state.error = action.payload;
             });
