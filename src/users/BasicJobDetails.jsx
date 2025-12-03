@@ -76,16 +76,7 @@ const JobDetails = () => {
                             >
                                 <i className="bi bi-clock-history me-2"></i>Timings
                             </div>
-                            <div
-                                className={`fw-semibold pb-2 ${activeTab === "company"
-                                    ? "text-primary border-bottom border-primary"
-                                    : ""
-                                    }`}
-                                role="button"
-                                onClick={() => setActiveTab("company")}
-                            >
-                                <i className="bi bi-buildings me-2"></i>About Your Company
-                            </div>
+                          
                         </div>
                     </div>
 
@@ -263,13 +254,13 @@ const JobDetails = () => {
                                     </div>
                                 </div>
 
-
-                                {/* Candidate Location */}
-                                <div className="mb-3">
-                                    <label className="form-label fw-semibold">I want calls from candidates within</label>
+                                {/* How soon to fill position */}
+                                <div className="col-12 mb-3 req">
+                                    <label className="form-label fw-semibold">How soon do you want to fill the position?</label>
                                     <div className="d-flex flex-wrap gap-2">
-                                        <button className="btn btn-outline-primary btn-sm rounded-pill">Anywhere in New York</button>
-                                        <button className="btn btn-outline-primary btn-sm rounded-pill">Nearby areas (up to 10 km)</button>
+                                        <button type="button" className="btn btn-outline-secondary ">Immediately (1-2 weeks)</button>
+                                        <button type="button" className="btn btn-outline-secondary ">Immediate</button>
+                                        <button type="button" className="btn btn-outline-secondary ">Immediately in 30 days</button>
                                     </div>
                                 </div>
 
@@ -288,7 +279,7 @@ const JobDetails = () => {
 
                                 {/* Salary Range */}
                                 <div className="row mb-3 align-items-center">
-                                    <label className="form-label fw-semibold">Monthly In-hand Salary</label>
+                                    <label className="form-label fw-semibold">Monthly In-hand Salary(USD)</label>
                                     <div className="col-md-4">
                                         <input type="number" className="form-control rounded-3" placeholder="16000" />
                                     </div>
@@ -331,103 +322,6 @@ const JobDetails = () => {
                                     />
                                 </div>
                                 <p>Please mention job timings correctly otherwise candidates may not join.</p>
-                            </div>
-                        )}
-
-                        {/* ✅ TAB 4 — About Company */}
-                        {activeTab === "company" && (
-                            <div className="animate__animated animate__fadeIn col-lg-6">
-                                <h5 className="fw-semibold mb-3">About Your Company</h5>
-
-                                <div className="row comapny-lg">
-                                    {/* Company Name */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Company Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control rounded-3"
-                                            placeholder="Company Name"
-                                        />
-                                    </div>
-
-                                    {/* Contact Person Name */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Contact Person Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control rounded-3"
-                                            placeholder="Person Name"
-                                        />
-                                    </div>
-
-                                    {/* Mobile Number */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Mobile Number</label>
-                                        <input
-                                            type="text"
-                                            className="form-control rounded-3"
-                                            placeholder="Mobile Number"
-                                        />
-                                        <small className="text-muted fon">Candidates will call you on this number.</small>
-                                    </div>
-
-                                    {/* Email Id */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Email Id</label>
-                                        <input
-                                            type="email"
-                                            className="form-control rounded-3"
-                                            placeholder="Email Id"
-                                        />
-                                        <small className="text-muted">Candidates will send resumes on this email-id.</small>
-                                    </div>
-
-                                    {/* Contact Person Profile */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Contact Person Profile</label>
-                                        <select className="form-select form-control rounded-3">
-                                            <option>Select</option>
-                                            <option>HR</option>
-                                            <option>Manager</option>
-                                            <option>Recruiter</option>
-                                            <option>Other</option>
-                                        </select>
-                                    </div>
-
-                                    {/* Size of Organization */}
-                                    <div className="col-md-6 mb-3">
-                                        <label className="form-label">Size of Organization</label>
-                                        <select className="form-select form-control rounded-3">
-                                            <option>Select</option>
-                                            <option>1-10 Employees</option>
-                                            <option>11-50 Employees</option>
-                                            <option>51-200 Employees</option>
-                                            <option>201-500 Employees</option>
-                                            <option>500+ Employees</option>
-                                        </select>
-                                    </div>
-
-                                    {/* How soon to fill position */}
-                                    <div className="col-12 mb-3 req">
-                                        <label className="form-label">How soon do you want to fill the position?</label>
-                                        <div className="d-flex flex-wrap gap-2">
-                                            <button type="button" className="btn btn-outline-secondary ">Immediately (1-2 weeks)</button>
-                                            <button type="button" className="btn btn-outline-secondary ">Immediate</button>
-                                            <button type="button" className="btn btn-outline-secondary ">Immediately in 30 days</button>
-                                        </div>
-                                    </div>
-
-                                    {/* Job Address */}
-                                    <div className="col-12 mb-3">
-                                        <label className="form-label">Job Address</label>
-                                        <textarea
-                                            className="form-control rounded-3"
-                                            rows="3"
-                                            placeholder="Job Address"
-                                             style={{ height: "120px" }}
-                                        ></textarea>
-                                    </div>
-                                </div>
                             </div>
                         )}
 

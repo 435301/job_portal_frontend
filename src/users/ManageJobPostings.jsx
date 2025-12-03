@@ -95,7 +95,7 @@ const JobDetails = () => {
 
 
                             {/* Job Type */}
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="form-label">Job posted by</label>
                                 {["Me", "Other"].map((type, index) => (
                                     <div className="form-check d-flex align-items-center" key={index}>
@@ -109,8 +109,7 @@ const JobDetails = () => {
                                         </label>
                                     </div>
                                 ))}
-                            </div>
-
+                            </div> */}
 
                         </div>
                     </div>
@@ -184,8 +183,13 @@ const JobDetails = () => {
 
 
                                         <div className="text-center small text-secondary">
-                                            <p className="mb-1 fw-semibold text-dark">Total Jobs</p>
+                                            <p className="mb-1 fw-semibold text-dark">Total Openings</p>
                                             <h5 className="mb-0">10</h5>
+                                        </div>
+
+                                        <div className="text-center small">
+                                            <p className="mb-1 fw-semibold text-dark">Views</p>
+                                            <h5 className="text-danger mb-0">05</h5>
                                         </div>
 
                                         <div className="text-center small">
@@ -193,10 +197,7 @@ const JobDetails = () => {
                                             <h5 className="text-info mb-0">56</h5>
                                         </div>
 
-                                        <div className="text-center small">
-                                            <p className="mb-1 fw-semibold text-dark">Hires</p>
-                                            <h5 className="text-danger mb-0">05</h5>
-                                        </div>
+
 
                                         <div className="text-end d-flex flex-column align-items-end cal">
                                             <div className="d-flex align-items-center mb-3">
@@ -235,7 +236,7 @@ const JobDetails = () => {
                                             </div>
 
                                             <p className="small mt-2 mb-0 text-primary view-call">
-                                                Posted by me <span className="text-muted border-end mx-2"></span> 10 July, 2025
+                                                Posted on <span className="text-muted border-end mx-2"></span> 10 July, 2025
                                             </p>
                                         </div>
 
