@@ -138,6 +138,11 @@ const Sidebar = ({
           text: "Work Location Type",
           path: "/admin/manage-work-location-type",
         },
+         {
+          id: "hiringTimeline",
+          text: "Hiring Timeline",
+          path: "/admin/manage-hiring-timeline",
+        },
       ],
     },
     {

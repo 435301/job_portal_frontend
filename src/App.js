@@ -97,6 +97,8 @@ import OrganizationSizeManage from './admin/pages/OrganizationSizeManage.tsx';
 import CreateOrganizationSize from './admin/pages/CreateOrganizationSize.tsx';
 import WorkLocationTypeManage from './admin/pages/WorkLocationTypeManage.tsx';
 import CreateWorkLocationType from './admin/pages/CreateWorkLocationType.tsx';
+import CreateHiringTimeline from './admin/pages/CreateHiringTimeline.tsx';
+import HiringTimelineManage from './admin/pages/HiringTimelineManage.tsx';
 
 
 
@@ -164,6 +166,7 @@ const App = () => {
         <Route path="/admin/manage-company-type" element={<AdminRoute><CompanyTypeManage /></AdminRoute>} />
         <Route path="/admin/manage-organization-size" element={<AdminRoute><OrganizationSizeManage /></AdminRoute>} />
         <Route path="/admin/manage-work-location-type" element={<AdminRoute><WorkLocationTypeManage /></AdminRoute>} />
+        <Route path="/admin/manage-hiring-timeline" element={<AdminRoute><HiringTimelineManage /></AdminRoute>} />
         <Route path="/admin/create-education" element={<AdminRoute><CreateEducation /></AdminRoute>} />
         <Route path="/admin/create-skill" element={<AdminRoute><CreateSkill /></AdminRoute>} />
         <Route path="/admin/create-institution" element={<AdminRoute><CreateInstitution /></AdminRoute>} />
@@ -192,6 +195,7 @@ const App = () => {
         <Route path="/admin/create-company-type" element={<AdminRoute><CreateCompanyType /></AdminRoute>} />
         <Route path="/admin/create-organization-size" element={<AdminRoute><CreateOrganizationSize /></AdminRoute>} />
         <Route path="/admin/create-work-location-type" element={<AdminRoute><CreateWorkLocationType /></AdminRoute>} />
+        <Route path="/admin/create-hiring-timeline" element={<AdminRoute><CreateHiringTimeline /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/change-password" element={<AdminRoute><ChangePassword /></AdminRoute>} />
 

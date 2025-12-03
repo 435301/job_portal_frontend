@@ -809,3 +809,14 @@ export const validateKycDetailsForm = (formData: KycDetailsForm): FormErrorsEmpl
 
   return errors;
 }
+
+export const validateHiringTimelineForm = (formData: { title?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.title) {
+    errors.title = "Hiring Timeline is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
+  }
+  return errors;
+}
