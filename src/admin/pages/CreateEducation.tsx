@@ -157,7 +157,7 @@ function CreateEducation() {
                                     <Button
                                         variant="secondary"
                                         className="me-2 rounded-pill px-4"
-                                        onClick={() => navigate("/admin/education-manage")}
+                                        onClick={() => navigate("/admin/manage-education")}
                                     >
                                         Cancel
                                     </Button>

@@ -16,6 +16,7 @@ export interface EditModalProps {
     IndustryTypeOptions: Array<{ label: string; value: number }>;
     DesignationOptions: Array<{ label: string; value: number }>;
     OrganizationSizeOptions: Array<{ label: string; value: number }>;
+    loading: boolean;
 }
 
 
@@ -33,13 +34,14 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
     IndustryTypeOptions,
     DesignationOptions,
     OrganizationSizeOptions,
+    loading
 }) => {
     return (
         <Modal show={showModal} onHide={handleClose} centered>
             <Form onSubmit={handleSave}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {activeSection === "account" && "Edit Account Details"}
+                        {activeSection === "account" && "Edit Profile Details"}
                         {activeSection === "company" && "Edit Company Details"}
                         {activeSection === "kyc" && "Edit KYC Details"}
                         {activeSection === "profile" && "Edit Profile"}
@@ -254,7 +256,7 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    <Button variant="primary" onClick={handleSave}>Save Changes</Button>
+                    <Button variant="primary" onClick={handleSave}> {loading ? "Saving Changes" :"Save Changes"}</Button>
                 </Modal.Footer>
             </Form>
         </Modal>

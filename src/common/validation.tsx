@@ -606,7 +606,7 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
     errors.joiningMonth = "Joining month must be between 1 and 12";
   }
   if (!formData.endingYear) {
-    errors.joiningYear = "Enter a valid ending year";
+    errors.endingYear = "Enter a valid ending year";
   }
   if (!formData.endingMonth || formData.endingMonth < 1 || formData.endingMonth > 12) {
     errors.endingMonth = "Ending month must be between 1 and 12";
@@ -820,3 +820,28 @@ export const validateHiringTimelineForm = (formData: { title?: string; status: s
   }
   return errors;
 }
+
+export const validatePersonalDetails = (form: any) => {
+  const errors: any = {};
+
+  if (!form.firstName?.trim()) errors.firstName = "First name is required";
+  if (!form.lastName?.trim()) errors.lastName = "Last name is required";
+
+  if (!form.genderId) errors.genderId = "Please select your gender";
+  if (!form.maritalStatusId) errors.maritalStatusId = "Please select marital status";
+
+  if (!form.dob) errors.dob = "Date of birth is required";
+
+  if (!form.cityId) errors.cityId = "City is required";
+  if (!form.availabilityId) errors.availabilityId = "Availability is required";
+  if (!form.experienceId) errors.experienceId = "Experience is required";
+
+  if (!form.permanentAddress?.trim())
+    errors.permanentAddress = "Permanent address is required";
+
+  if (!form.homeTown?.trim()) errors.homeTown = "Home town is required";
+  if (!form.pincode?.trim()) errors.pincode = "Pincode is required";
+  if (!form.nationality?.trim()) errors.nationality = "Nationality is required";
+
+  return errors;
+};

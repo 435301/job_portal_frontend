@@ -78,7 +78,7 @@ import ProfilePercentageManage from './admin/pages/ProfilePercentageManage.tsx';
 import CreateProfilePercentage from './admin/pages/CreateProfilePercentage.tsx';
 import WorkPermitManage from './admin/pages/WorkPermitManage.tsx';
 import CreateWorkPermit from './admin/pages/CreateWorkPermit.tsx';
-import { AdminRoute, EmployeeRoute } from './utils/roleRoute.js';
+import { AdminRoute, EmployeeRoute, EmployerRoute } from './utils/roleRoute.js';
 import CurrencyTypeManage from './admin/pages/CurrencyTypeManage.tsx';
 import CreateCurrencyType from './admin/pages/CreateCurrencyType.tsx';
 import ProfilePageNew from './users/ProfliePageNew.tsx';
@@ -99,6 +99,7 @@ import WorkLocationTypeManage from './admin/pages/WorkLocationTypeManage.tsx';
 import CreateWorkLocationType from './admin/pages/CreateWorkLocationType.tsx';
 import CreateHiringTimeline from './admin/pages/CreateHiringTimeline.tsx';
 import HiringTimelineManage from './admin/pages/HiringTimelineManage.tsx';
+import NotFound from './components/NotFound.tsx';
 
 
 
@@ -119,7 +120,7 @@ const App = () => {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/verify-email-success" element={<EmailVerifiedSuccess />} />
         <Route path="/company-verify-email-success" element={<CompanyEmailVerifiedSuccess />} />
-        <Route path="/profile" element={<EmployeeRoute><ProfilePageNew/></EmployeeRoute>} />
+        <Route path="/profile" element={<EmployeeRoute><ProfilePageNew /></EmployeeRoute>} />
         <Route path="/company" element={<Company />} />
         <Route path="/company-details" element={<CompanyDetails />} />
         <Route path="/employer-dashboard" element={<EmployeeDashboard />} />
@@ -128,15 +129,15 @@ const App = () => {
         <Route path="/company-details-reg" element={<CompanyDetailsReg />} />
         <Route path="/company-details-hiring" element={<CompanyDetailsHiring />} />
         <Route path="/success-page" element={<SuccessPage />} />
-        <Route path="/company-profile" element={<CompanyProfileDesign />} />
+        <Route path="/company-profile" element={<EmployerRoute><CompanyProfileDesign /></EmployerRoute>} />
         <Route path="/looking-jobs" element={<LokkingJobs />} />
-        <Route path="/change-password" element={<ChangePasswordEmployee />} />
-        <Route path="/employer/change-password" element={<ChangePasswordEmployer />} />
-      
+        <Route path="/change-password" element={<EmployeeRoute><ChangePasswordEmployee /></EmployeeRoute>} />
+        <Route path="/employer/change-password" element={<EmployerRoute><ChangePasswordEmployer /></EmployerRoute>} />
+
 
         {/* ===== Admin Routes ===== */}
 
-        <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute> 
+        <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>
         } />
         <Route path="/admin/manage-education" element={<AdminRoute><EducationManage /></AdminRoute>} />
         <Route path="/admin/manage-skills" element={<AdminRoute><SkillManage /></AdminRoute>} />
@@ -199,6 +200,10 @@ const App = () => {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/change-password" element={<AdminRoute><ChangePassword /></AdminRoute>} />
 
+
+        <Route path="*" element={<NotFound />} />
+
+
       </Routes>
       <ToastContainer position="top-right"
         autoClose={3000}
@@ -209,7 +214,7 @@ const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored" 
+        theme="colored"
         toastStyle={{
           color: "#fff",
           borderRadius: "12px",

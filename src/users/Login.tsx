@@ -40,7 +40,6 @@ const Login = () => {
 
   const [showForgot, setShowForgot] = useState(false);
   const [forgotStep, setForgotStep] = useState(1); // 1=email/mobile, 2=otp, 3=new password
-  const [forgotError, setForgotError] = useState("");
   const [forgotSuccess, setForgotSuccess] = useState("");
   const [forgotData, setForgotData] = useState({
     email: "",
@@ -50,6 +49,7 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [forgotErrors, setForgotErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
 
   // Handle input change
@@ -97,7 +97,7 @@ const Login = () => {
 
   const handleForgot = async () => {
     if (!forgotData.email) {
-      setErrors({ email: "Email is required" })
+      setForgotErrors({ email: "Email is required" })
       return;
     }
     const role = activeTab === "candidate" ? "employee" : "employer";
@@ -212,7 +212,7 @@ const Login = () => {
                               <Form.Control
                                 type="email"
                                 name="email"
-                                placeholder="Enter your Registered email"
+                                placeholder="Enter the email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 isInvalid={!!errors.email}
@@ -306,7 +306,7 @@ const Login = () => {
                                   name="email"
                                   value={forgotData.email}
                                   onChange={handleForgotChange}
-                                  isInvalid={!!errors.email}
+                                  isInvalid={!!forgotErrors.email}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                   {errors.email}

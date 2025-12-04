@@ -12,6 +12,7 @@ import SearchableSelect from "../../components/SearchableSelect.tsx";
 interface ITSkillsProps {
   itSkills: any;
   activeSection: any;
+  loading: boolean;
 }
 
 interface ITSkillsForm {
@@ -21,7 +22,7 @@ interface ITSkillsForm {
   expYears: number | string;
   expMonths: number | string;
 }
-const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) => {
+const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection, loading }) => {
   const dispatch = useAppDispatch();
   const { skillList } = useAppSelector((state: RootState) => state.skill);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -224,9 +225,6 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
                   placeholder="Select skills"
                   error={errors.skillId}
                 />
-              {errors.skillId && (
-                <div className="text-danger small mt-1">{errors.skillId}</div>
-              )}
             </Form.Group>
 
 
@@ -309,7 +307,7 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection }) =
               className="rounded-pill px-4"
               onClick={handleSave}
             >
-              {editMode ? "Update" : "Save"}
+              {loading ? "Saving" : "Save"}
             </Button>
           </Modal.Footer>
         </div>

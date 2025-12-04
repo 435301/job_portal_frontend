@@ -102,7 +102,7 @@ function CreateRole() {
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/manage-role")}
+                                        onClick={() => navigate("/admin/manage-roles")}
                                     >
                                         <i className="bi bi-arrow-left me-2"></i>Manage Role
                                     </Button>

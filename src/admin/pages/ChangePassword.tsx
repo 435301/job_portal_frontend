@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store.tsx";
 import { changePassword } from "../../redux/slices/forgotPasswordSlice.tsx";
 import { useNavigate } from "react-router-dom";
+import { useToggle } from "../../customHooks/useToggle.tsx";
+import "../../assets/css/login.css";
 
 
 const ChangePassword = () => {
@@ -17,7 +19,11 @@ const ChangePassword = () => {
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useToggle(false);
+    const [showConfirmPassword, toggleShowConfirmPassword] = useToggle(false);
+    const [showNewPassword, toggleShowNewPassword] = useToggle(false);
+
+
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +44,7 @@ const ChangePassword = () => {
         setErrors(validation);
         if (Object.keys(validation).length !== 0) return;
         try {
-            const response =await dispatch(changePassword(formData));;
+            const response = await dispatch(changePassword(formData));;
             if (changePassword.fulfilled.match(response)) {
                 navigate("/admin/login");
             }
@@ -71,6 +77,7 @@ const ChangePassword = () => {
                                     {/* Current Password */}
                                     <Form.Group className="mb-3">
                                         <Form.Label>Current Password</Form.Label>
+                                          <div className="password-field-wrapper">
                                         <Form.Control
                                             type={showPassword ? "text" : "password"}
                                             name="oldPassword"
@@ -79,6 +86,11 @@ const ChangePassword = () => {
                                             onChange={handleChange}
                                             className={`${errors.oldPassword ? "is-invalid" : ""}`}
                                         />
+                                        <i
+                                            className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                            onClick={setShowPassword}
+                                        ></i>
+                                        </div>
                                         {errors.oldPassword && (
                                             <div className="invalid-feedback">{errors.oldPassword}</div>
                                         )}
@@ -87,14 +99,20 @@ const ChangePassword = () => {
                                     {/* New Password */}
                                     <Form.Group className="mb-3">
                                         <Form.Label>New Password</Form.Label>
+                                         <div className="password-field-wrapper">
                                         <Form.Control
-                                            type={showPassword ? "text" : "password"}
+                                            type={showNewPassword ? "text" : "password"}
                                             name="newPassword"
                                             placeholder="Enter new password"
                                             value={formData.newPassword}
                                             onChange={handleChange}
                                             className={`${errors.newPassword ? "is-invalid" : ""}`}
                                         />
+                                        <i
+                                            className={`bi ${showNewPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                            onClick={toggleShowNewPassword}
+                                        ></i>
+                                        </div>
                                         {errors.newPassword && (
                                             <div className="invalid-feedback">{errors.newPassword}</div>
                                         )}
@@ -103,27 +121,26 @@ const ChangePassword = () => {
                                     {/* Confirm Password */}
                                     <Form.Group className="mb-3">
                                         <Form.Label>Confirm Password</Form.Label>
+                                         <div className="password-field-wrapper">
                                         <Form.Control
-                                            type={showPassword ? "text" : "password"}
+                                            type={showConfirmPassword ? "text" : "password"}
                                             name="confirmPassword"
                                             placeholder="Re-enter password"
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
                                             className={`${errors.confirmPassword ? "is-invalid" : ""}`}
                                         />
+                                        <i
+                                            className={`bi ${showConfirmPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                                            onClick={toggleShowConfirmPassword}
+                                        ></i>
+                                        </div>
                                         {errors.confirmPassword && (
                                             <div className="invalid-feedback">{errors.confirmPassword}</div>
                                         )}
                                     </Form.Group>
 
-                                    {/* Toggle Show Password */}
-                                    <Form.Check
-                                        type="checkbox"
-                                        label="Show Password"
-                                        className="mb-3"
-                                        onChange={(e) => setShowPassword(e.target.checked)}
-                                    />
-
+                                  
                                     <div className="d-grid">
                                         <Button variant="primary" type="submit" className="rounded-3">
                                             <i className="bi bi-unlock-fill me-2"></i>

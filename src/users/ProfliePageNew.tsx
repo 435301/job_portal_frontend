@@ -231,6 +231,7 @@ function ProfilePageNew() {
                       profileTitle={data?.profileTitle}
                       onSave={handleSaveProfileTitle}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -259,6 +260,7 @@ function ProfilePageNew() {
                       skillList={skillList}
                       onSave={handleSaveKeySkills}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -291,6 +293,7 @@ function ProfilePageNew() {
                       onUpdate={handleUpdateEmployment}
                       onDelete={handleDeleteEmployment}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -325,6 +328,7 @@ function ProfilePageNew() {
                       onUpdate={handleUpdateEducation}
                       onDelete={handleDeleteEducation}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -354,6 +358,7 @@ function ProfilePageNew() {
                       onUpdate={handleUpdateCertificate}
                       onDelete={handleDeleteCertificate}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -380,6 +385,7 @@ function ProfilePageNew() {
                     <ITSkillsSection
                       itSkills={data?.keySkills}
                       activeSection={activeSection}
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -406,6 +412,8 @@ function ProfilePageNew() {
                     <PersonalDetailsSection
                       personalDetails={data?.personalDetails}
                       activeSection={activeSection}
+                      error={error}
+                      loading={loading}
                     />
                   </div>
                 </div>

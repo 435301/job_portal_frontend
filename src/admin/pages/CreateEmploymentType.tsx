@@ -163,7 +163,7 @@ function CreateEmploymentType() {
                                     <Button
                                         variant="secondary"
                                         className="me-2 rounded-pill px-4"
-                                        onClick={() => navigate("/admin/manage-Employment Type")}
+                                        onClick={() => navigate("/admin/manage-employment-type")}
                                     >
                                         Cancel
                                     </Button>

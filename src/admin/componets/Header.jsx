@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 const Header = ({ toggleMobileSidebar, showProfileMenu, setShowProfileMenu }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogout = () => {
     dispatch(logoutAdmin());
     navigate("/admin/login");
@@ -42,7 +43,7 @@ const Header = ({ toggleMobileSidebar, showProfileMenu, setShowProfileMenu }) =>
             <Link to="/profile">Profile</Link>
             <Link to="/settings">Settings</Link>
             <hr />
-            <Link to="/logout" className="logout" onClick={handleLogout}>
+            <Link to="/admin/login" className="logout" onClick={handleLogout}>
               Logout
             </Link>
           </div>

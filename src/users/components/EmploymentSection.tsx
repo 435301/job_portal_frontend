@@ -17,6 +17,7 @@ interface EmploymentProps {
   NoticePeriodList: any[];
   CurrencyTypeList: any[];
   activeSection: any;
+  loading: boolean;
 }
 
 interface EmploymentForm {
@@ -38,7 +39,7 @@ interface EmploymentForm {
 
 }
 
-const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete, activeSection }) => {
+const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete, activeSection , loading}) => {
   const dispatch = useAppDispatch();
 
   const [show, setShow] = useState(false);
@@ -103,6 +104,8 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
   const handlEmploymentType = (id: any) => {
     setFormData({ ...formData, employmentTypeId: id });
+        setErrors((prev) => ({ ...prev, employmentTypeId: "" }));
+
   };
 
   const handleSwitch = () => {
@@ -299,13 +302,13 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                 </div>
 
                 <div className="mb-3">
-                  <h6 className="mb-3">Employment type<span className="text-danger"> *</span></h6>
+                  <h6 className="mb-3">Employment Type<span className="text-danger"> *</span></h6>
                   {EmploymentTypeList?.map((item: any) => (
                     <Badge
                       key={item.id}
                       bg={formData.employmentTypeId === item.id ? "dark" : "light"}
                       text={formData.employmentTypeId === item.id ? "light" : "dark"}
-                      className={` border rounded-pill px-3 py-2 ${errors.employmentTypeId ? "is-invalid" : ""}`}
+                      className={` border rounded-pill px-3 py-2 me-2 ${errors.employmentTypeId ? "is-invalid" : ""}`}
                       style={{ cursor: "pointer" }}
                       onClick={() => handlEmploymentType(item.id)}
                     >
@@ -318,7 +321,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
               {/* Total Experience */}
               <div className="row mb-3 yers">
-                <h6 className="mb-3">Total experience<span className="text-danger"> *</span></h6>
+                <h6 className="mb-3">Total Experience<span className="text-danger"> *</span></h6>
                 <div className="col-md-6 ">
                   <label >Years</label>
                   <Form.Select value={formData.totalExpYears} name="totalExpYears" onChange={handleChange} className={`form-control ${errors.totalExpYears ? "is-invalid" : ""}`} >
@@ -348,13 +351,13 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
               {/* Company and Title */}
               <div className="row mb-3 g-3">
                 <div className="col-md-6">
-                  <label className="form-section-label">Current company name<span className="text-danger"> *</span></label>
+                  <label className="form-section-label">Current Company Name<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Type your company name" className={`form-control  ${errors.currentCompanyName ? "is-invalid" : ""}`} name="currentCompanyName" value={formData.currentCompanyName} onChange={handleChange} />
                   {errors.currentCompanyName && <div className="invalid-feedback">{errors.currentCompanyName}</div>}
 
                 </div>
                 <div className="col-md-6">
-                  <label className="form-section-label">Current job title<span className="text-danger"> *</span></label>
+                  <label className="form-section-label">Current Job Title<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Type your designation" name="currentJobTitle" value={formData.currentJobTitle} onChange={handleChange} className={`form-control  ${errors.currentJobTitle ? "is-invalid" : ""}`} />
                   {errors.currentJobTitle && <div className="invalid-feedback">{errors.currentJobTitle}</div>}
                 </div>
@@ -363,7 +366,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
               {/* Joining Date */}
               <div className="row mb-3">
                 <div className="col-md-12">
-                  <label className="form-section-label">Joining date<span className="text-danger"> *</span></label>
+                  <label className="form-section-label">Joining Date<span className="text-danger"> *</span></label>
                   <div className="d-flex gap-2">
                     <Form.Select name="joiningYear" value={formData.joiningYear} onChange={handleChange} className={`form-control  ${errors.joiningYear ? "is-invalid" : ""}`}>
                       <option value="">Years</option>
@@ -396,7 +399,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
               {!formData.isCurrentEmployment && (
                 <div className="row mb-3">
                   <div className="col-md-12">
-                    <label className="form-section-label">Ending date<span className="text-danger"> *</span></label>
+                    <label className="form-section-label">Ending Date<span className="text-danger"> *</span></label>
                     <div className="d-flex gap-2">
                       <Form.Select name="endingYear" value={formData.endingYear} onChange={handleChange} className={`form-control  ${errors.endingYear ? "is-invalid" : ""}`}>
                         <option value="">Years</option>
@@ -454,7 +457,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                   </div>
                 </div>
                   <div className="col-md-6">
-                  <label className="form-section-label">Skills used<span className="text-danger"> *</span></label>
+                  <label className="form-section-label">Skills Used<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Add Skills" name="skillsUsed" value={formData.skillsUsed} onChange={handleChange} className={`form-control  ${errors.skillsUsed ? "is-invalid" : ""}`} />
                   {errors.skillsUsed && <div className="invalid-feedback">{errors.skillsUsed}</div>}
                 </div>
@@ -462,13 +465,12 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
               {/* Skills Used */}
               <div className="row mb-3">
-              
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label className="form-section-label">Job Profile</label>
-                  <Form.Control as="textarea" rows={3} placeholder="Type here" name="jobProfile" value={formData.jobProfile} onChange={handleChange} />
+                  <Form.Control as="textarea" rows={3} placeholder="Type here" className="mb-3" name="jobProfile" value={formData.jobProfile} onChange={handleChange} />
                 </div>
                   <div className="col-md-6">
-                  <label className="form-section-label">Notice period<span className="text-danger"> *</span></label>
+                  <label className="form-section-label">Notice Period<span className="text-danger"> *</span></label>
                   <SearchableSelect
                     name="noticePeriodId"
                     options={options}
@@ -486,7 +488,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                   Cancel
                 </Button>
                 <Button variant="dark" className="btn-save" type="submit">
-                  Save
+                  {loading ? "Saving" : "Save"}
                 </Button>
               </div>
             </div>

@@ -39,7 +39,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         options={options}
         placeholder={placeholder}
         isClearable={isClearable}
-        className={error ? "is-invalid" : ""}
+        className={` ${error} ? "is-invalid" : ""`}
       />
       {error && <div className="invalid-feedback d-block">{error}</div>}
     </div>

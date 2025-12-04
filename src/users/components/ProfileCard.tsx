@@ -198,7 +198,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
 
               <h5 className="fw-bold mb-3">Edit Mobile Number<span className="text-danger"> *</span></h5>
 
-              <input
+              <input  
                 type="text"
                 className={`form-control mb-3 ${errors.mobile}? "is-invalid" : "`}
                 value={mobile}
@@ -209,7 +209,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
                 <button className="btn btn-secondary me-2" onClick={() => setShowPopup(false)}>
                   Cancel
                 </button>
-                <button className="btn btn-primary" onClick={handleSave}>
+                <button className="btn btn-dark" onClick={handleSave}>
                   Save
                 </button>
               </div>

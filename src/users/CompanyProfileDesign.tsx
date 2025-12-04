@@ -13,7 +13,7 @@ import profile from "../assets/img/profile.jpg";
 import "../assets/css/style.css";
 import { getAllRole } from "../redux/slices/RoleSlice.tsx";
 import SearchableSelect from "../components/SearchableSelect.tsx";
-import { FormErrors, validateCompanyDetailsForm, validateCompanyProfileForm, validateKDetailsForm, validateKycDetailsForm } from "../common/validation.tsx";
+import { FormErrors, validateCompanyDetailsForm, validateCompanyProfileForm, validateKycDetailsForm } from "../common/validation.tsx";
 import EditCompanyProfileModal from "./components/EditCompanyProfileModal.tsx";
 import { getAllCities } from "../redux/slices/citiesSlice.tsx";
 import { getAllCompanyType } from "../redux/slices/CompanyTypeSlice.tsx";
@@ -153,7 +153,7 @@ function ProfilePage() {
         setShowModal(true);
     };
 
-    const handleClose = (e: any) => {
+    const handleClose = () => {
         setShowModal(false);
         setFormData({
             email: "",
@@ -347,7 +347,7 @@ function ProfilePage() {
             <div className="container">
 
                 {/* ===== Account Details Section ===== */}
-                <div className="container mb-4">
+                <div className="container mb-4 details">
                     <div className="card rounded-4">
                         <div className="border-bottom p-3 section-title d-flex justify-content-between align-items-center mb-3">
                             <h6 className="fw-bold mb-0"> <i className="bi bi-person-lines-fill me-2"></i>Profile Details</h6>
@@ -372,7 +372,7 @@ function ProfilePage() {
                 </div>
 
                 {/* ===== Company Details Section ===== */}
-                <div className="container mb-4">
+                <div className="container mb-4 details">
                     <div className="card rounded-4">
                         <div className="border-bottom p-3 section-title d-flex justify-content-between align-items-center mb-3">
                             <h6 className="fw-bold mb-0"><i className="bi bi-person-lines-fill me-2"></i> Company Details</h6>
@@ -441,6 +441,7 @@ function ProfilePage() {
                 handleChange={handleChange}
                 handleSave={handleSave}
                 errors={errors}
+                loading={loading}
             />
         </div>
     );

@@ -17,8 +17,9 @@ interface EducationProps {
   onUpdate: (id: number, formData: any) => void;
   onDelete: (id: number) => void;
   activeSection: any;
+  loading: boolean;
 }
-const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, courseTypeList, GradingSystemList, onAdd, onUpdate, onDelete, activeSection }) => {
+const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, courseTypeList, GradingSystemList, onAdd, onUpdate, onDelete, activeSection , loading}) => {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
@@ -225,7 +226,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <span className="fw-semibold">Education</span>{" "}
+              <span className="fw-semibold">Education Details</span>{" "}
               {/* <span className="text-success fs-6">Add 10%</span> */}
             </Modal.Title>
           </Modal.Header>
@@ -300,7 +301,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
               </Row>
               <Form.Group className="mb-3">
                 <Form.Label className="fw-semibold">
-                  Course type <span className="text-danger">*</span>
+                  Course Type <span className="text-danger">*</span>
                 </Form.Label>
 
                 <div className="d-flex gap-4 mt-2 flex-wrap">
@@ -328,7 +329,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
               <Row className="mb-3">
                 <Col md={6}>
                   <Form.Label className="fw-semibold">
-                    Course duration <span className="text-danger">*</span>
+                    Course Duration <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Select name="courseStartYear" value={formData.courseStartYear} onChange={handleChange} className={` ${errors.courseStartYear ? "is-invalid" : ""}`}>
                     <option value="">Starting year</option>
@@ -355,7 +356,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
               <Row className="mb-3">
                 <Col md={6} >
                   <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Grading system<span className="text-danger"> *</span></Form.Label>
+                    <Form.Label className="fw-semibold">Grading System<span className="text-danger"> *</span></Form.Label>
                     <SearchableSelect
                       name="gradingSystemId"
                       options={gradingSystemOptions}
@@ -386,7 +387,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
               Cancel
             </Button>
             <Button variant="dark" onClick={handleSubmit}>
-              Save
+              {loading ? "Saving" : "Save"}
             </Button>
           </Modal.Footer>
         </Form>

@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../redux/slices/adminSlice";
 import { validateLoginForm } from "../../common/validation.tsx";
 import { forgotPassword, resetPassword, verifyOtp } from "../../redux/slices/forgotPasswordSlice.tsx";
+import { useToggle } from "../../customHooks/useToggle.tsx";
+import "../../assets/css/login.css"
+import "../../assets/css/style.css";
 
 const AdminLogin = () => {
   const dispatch = useDispatch();
@@ -16,7 +19,9 @@ const AdminLogin = () => {
   const [forgotStep, setForgotStep] = useState(1); // 1=email/mobile, 2=otp, 3=new password
   const [forgotError, setForgotError] = useState("");
   const [forgotSuccess, setForgotSuccess] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useToggle(false);
+  const [showNewPassword, toggleShowNewPassword] = useToggle(false);
+  const [showConfirmPassword, toggleShowConfirmPassword] = useToggle(false);
   const [forgotData, setForgotData] = useState({
     email: "",
     otp: "",
@@ -165,14 +170,21 @@ const AdminLogin = () => {
 
                     <Form.Group className="mb-3" controlId="password">
                       <Form.Label>Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        name="password"
-                        className={`form-control ${errors.password ? "is-invalid" : ""}`}
-                        placeholder="Enter password"
-                        value={formData.password}
-                        onChange={handleChange}
-                      />
+                      <div className="password-field-wrapper">
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                          placeholder="Enter password"
+                          value={formData.password}
+                          onChange={handleChange}
+                        />
+                        <i
+                          className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                          onClick={setShowPassword}
+                        ></i>
+                      </div>
+
                       {errors.password && (
                         <div className="invalid-feedback">{errors.password}</div>
                       )}
@@ -291,25 +303,39 @@ const AdminLogin = () => {
                         {/* New Password */}
                         <Form.Group className="mb-3 position-relative">
                           <Form.Label>New Password</Form.Label>
-                          <Form.Control
-                            type={showPassword ? "text" : "password"}
-                            name="newPassword"
-                            placeholder="Enter new password"
-                            value={forgotData.newPassword}
-                            onChange={handleForgotChange}
-                          />
+                          <div className="password-field-wrapper">
+                            <Form.Control
+                              type={showNewPassword ? "text" : "password"}
+                              name="newPassword"
+                              placeholder="Enter new password"
+                              value={forgotData.newPassword}
+                              onChange={handleForgotChange}
+                            />
+                            <i
+                              className={`bi ${showNewPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                              style={{ cursor: "pointer" }}
+                              onClick={toggleShowNewPassword}
+                            ></i>
+                          </div>
                         </Form.Group>
 
                         {/* Confirm Password */}
                         <Form.Group className="mb-3 position-relative">
                           <Form.Label>Confirm Password</Form.Label>
-                          <Form.Control
-                            type={showPassword ? "text" : "password"}
-                            name="confirmPassword"
-                            placeholder="Confirm new password"
-                            value={forgotData.confirmPassword}
-                            onChange={handleForgotChange}
-                          />
+                          <div className="password-field-wrapper">
+                            <Form.Control
+                              type={showPassword ? "text" : "password"}
+                              name="confirmPassword"
+                              placeholder="Confirm new password"
+                              value={forgotData.confirmPassword}
+                              onChange={handleForgotChange}
+                            />
+                            <i
+                              className={`bi ${showConfirmPassword ? "bi-eye-slash" : "bi-eye"} password-eye-icon`}
+                              style={{ cursor: "pointer" }}
+                              onClick={toggleShowConfirmPassword}
+                            ></i>
+                          </div>
                         </Form.Group>
 
                         <div className="d-flex justify-content-between mb-3">
@@ -321,7 +347,7 @@ const AdminLogin = () => {
                             ← Back
                           </span>
 
-                          <Button  onClick={handleResetPassword} >
+                          <Button onClick={handleResetPassword} >
                             Reset Password
                           </Button>
                         </div>

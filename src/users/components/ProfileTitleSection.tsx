@@ -7,9 +7,10 @@ interface ProfileTitleProps {
   profileTitle: { title: string }[];
   onSave: (newTitle: string) => void;
   activeSection: any;
+  loading: boolean;
 }
 
-const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave, activeSection }) => {
+const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave, activeSection , loading}) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(profileTitle?.[0]?.title || "");
 
@@ -84,7 +85,7 @@ const ProfileTitleSection: React.FC<ProfileTitleProps> = ({ profileTitle, onSave
             Cancel
           </Button>
           <Button variant="dark" onClick={handleSave}>
-            Save
+           {loading ? "Saving" :"Save"}
           </Button>
         </Modal.Footer>
       </Modal>

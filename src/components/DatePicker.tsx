@@ -1,31 +1,44 @@
-
 import React from "react";
-import ReactDatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface DatePickerProps {
-  value: Date | null;
-  onChange: (date: Date | null) => void;
-  placeholder?: string;
-  minDate?: Date;
-  maxDate?: Date;
+function safeParseDate(dateString: string | null | undefined) {
+  if (!dateString) return null;
+  if (dateString === "0000-00-00") return null;
+
+  const d = new Date(dateString);
+  return isNaN(d.getTime()) ? null : d;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ value, onChange, placeholder, minDate, maxDate }) => {
+interface Props {
+  form: any;
+  handleChange: (e: { target: { name: string; value: string } }) => void;
+}
+
+const DobPicker: React.FC<Props> = ({ form, handleChange }) => {
+  const selectedDate = safeParseDate(form?.dob);
+
+  const onChange = (date: Date | null) => {
+    handleChange({
+      target: {
+        name: "dob",
+        value: date ? date.toISOString().split("T")[0] : "",
+      },
+    });
+  };
+
   return (
-    <ReactDatePicker
-      selected={value}
+    <DatePicker
+      selected={selectedDate}
       onChange={onChange}
-      placeholderText={placeholder}
-      className="form-control"
-      minDate={minDate}
-      maxDate={maxDate}
+      dateFormat="MM-dd-yyyy"
+      placeholderText="Select Date of Birth"
       showMonthDropdown
       showYearDropdown
       dropdownMode="select"
-      dateFormat="MM/dd/yyyy"
+      className="form-control"
     />
   );
 };
 
-export default DatePicker;
+export default DobPicker;

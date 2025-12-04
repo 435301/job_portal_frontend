@@ -12,13 +12,14 @@ interface CertificationProps {
   onUpdate: (id: number, formData: any) => void;
   onDelete: (id: number) => void;
   activeSection: any;
+  loading: boolean;
 }
 interface CertificateForm {
   certificateName: "",
   issuedBy: "",
 }
 
-const CertificationsSection: React.FC<CertificationProps> = ({ certificationDetails, onAdd, onUpdate, onDelete, activeSection }) => {
+const CertificationsSection: React.FC<CertificationProps> = ({ certificationDetails, onAdd, onUpdate, onDelete, activeSection, loading }) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -103,7 +104,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
           <thead>
             <tr>
               <th>Certificate Name</th>
-              <th>Issued by</th>
+              <th>Issued By</th>
               <th></th>
               <th></th>
             </tr>
@@ -160,7 +161,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
             {/* Certification Name */}
             <Form.Group className="mb-3">
               <Form.Label className="fw-semibold">
-                Certification name <span className="text-danger">*</span>
+                Certification Name <span className="text-danger">*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -204,7 +205,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
               className="rounded-pill px-4"
               onClick={handleSubmit}
             >
-              {editId ? "Update" : "Save"}
+              {loading ? "Saving" :"Save"}
             </Button>
           </Modal.Footer>
         </div>

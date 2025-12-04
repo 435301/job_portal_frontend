@@ -1,7 +1,9 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Logo from "../../assets/img/logo.png";
+import { logoutAdmin } from "../../redux/slices/adminSlice";
+import { useDispatch } from "react-redux";
  
 const Sidebar = ({
   isSidebarOpen,
@@ -13,6 +15,8 @@ const Sidebar = ({
   toggleSubMenu,
 }) => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
  
   // ✅ Detect if any child route is active
   const isChildActive = (children) => {
@@ -21,6 +25,7 @@ const Sidebar = ({
       return child.path === location.pathname;
     });
   };
+
  
   const menuItems = [
     {

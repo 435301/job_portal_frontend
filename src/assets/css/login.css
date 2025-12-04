@@ -202,8 +202,8 @@ body {
 
 .password-eye-icon {
   position: absolute;
-  right: 10px;
-  top: 50%;
+  right:25px;
+  top: 52%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 18px;
@@ -249,3 +249,7 @@ body {
   border-radius: 0 0 10px 10px;
 }
 
+.css-13cymwt-control{
+    min-height:44px !important ;
+    border-color: #dee2e6 !important;
+}

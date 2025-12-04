@@ -158,7 +158,7 @@ function CreateInstitution() {
                                     <Button
                                         variant="secondary"
                                         className="me-2 rounded-pill px-4"
-                                        onClick={() => navigate("/admin/manage-instituions")}
+                                        onClick={() => navigate("/admin/manage-institutions")}
                                     >
                                         Cancel
                                     </Button>

@@ -12,8 +12,9 @@ interface KeySkillsProps {
   skillList: any;
   onSave: (sikllIds: number[]) => void;
   activeSection: any;
+  loading: boolean;
 }
-const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave, activeSection }) => {
+const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSave, activeSection, loading }) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
 
@@ -228,7 +229,7 @@ const KeySkillsSection: React.FC<KeySkillsProps> = ({ keySkills, skillList, onSa
             Cancel
           </Button>
           <Button variant="dark" className="rounded-pill px-4" onClick={handleSave}>
-            Save
+           {loading ? "Saving" :"Save"} 
           </Button>
         </Modal.Footer>
       </Modal>
