@@ -60,6 +60,13 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
                                         {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>}
                                     </Form.Group>
                                 </div>
+                                 <div className="col-md-6">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Company Description<span className="text-danger"> *</span></Form.Label>
+                                        <Form.Control type="text" name="companyDescription" value={formData.companyDescription} onChange={handleChange} placeholder="Enter the company description" className={` ${errors.companyDescription ? "is-invalid" : ""}`} />
+                                        {errors.companyDescription && <div className="invalid-feedback">{errors.companyDescription}</div>}
+                                    </Form.Group>
+                                </div>
                                 <div className="col-md-6">
                                     <Form.Group className="mb-3">
                                         <Form.Label>Email<span className="text-danger"> *</span></Form.Label>

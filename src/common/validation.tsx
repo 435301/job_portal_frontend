@@ -98,6 +98,7 @@ export interface MobileForm {
 
 export interface CompanyProfileForm {
   email?: string;
+  companyDescription?:string;
   alternativeEmail?: string;
   roleId?: number;
   reportingManager?: string;
@@ -787,7 +788,9 @@ export const validateCompanyProfileForm = (formData: CompanyProfileForm): FormEr
   if (!formData.cityId) {
     errors.cityId = "City is required";
   }
-
+  if (!formData.companyDescription) {
+    errors.companyDescription = "Company Description is required";
+  }
   return errors;
 }
 

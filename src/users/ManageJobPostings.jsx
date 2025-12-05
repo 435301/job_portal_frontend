@@ -41,7 +41,7 @@ const JobDetails = () => {
                     <div>
                         <h2 className="fw-bold mb-1 text-dark">Manage Job Postings</h2>
                         <p className="text-secondary mb-0">
-                            Track all job and NVite responses here.
+                            Track all job and invite responses here.
                         </p>
                     </div>
                     <a href="/basic-job-details" className="btn btn-dark rounded-pill px-4 py-2 mt-3 mt-md-0">
@@ -58,8 +58,6 @@ const JobDetails = () => {
                         <div className="filter-panel">
                             <h5>Filter</h5>
                             <div className="applied-count">Applied (3)</div>
-
-                            {/* Location */}
                             <div className="mt-3 mb-3">
                                 <label htmlFor="location" className="form-label">
                                     Search
@@ -67,8 +65,7 @@ const JobDetails = () => {
                                 <input type="text" placeholder="Search Location" className="form-control py-2" />
                             </div>
 
-                            {/* Industry */}
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="form-label">Industry</label>
                                 {[
                                     { id: "software", label: "Software", count: 28 },
@@ -88,14 +85,9 @@ const JobDetails = () => {
                                         <span className="number">{item.count}</span>
                                     </div>
                                 ))}
-                            </div>
+                            </div> */}
 
-
-
-
-
-                            {/* Job Type */}
-                            {/* <div className="mb-3">
+                            <div className="mb-3">
                                 <label className="form-label">Job posted by</label>
                                 {["Me", "Other"].map((type, index) => (
                                     <div className="form-check d-flex align-items-center" key={index}>
@@ -109,7 +101,7 @@ const JobDetails = () => {
                                         </label>
                                     </div>
                                 ))}
-                            </div> */}
+                            </div>
 
                         </div>
                     </div>
@@ -120,22 +112,10 @@ const JobDetails = () => {
                             <h6 className="fw-bold mb-2">12 jobs</h6>
                             <div className="d-flex align-items-center gap-2">
                                 <select className="form-select form-select-sm w-auto">
-                                    <option>Show 12</option>
-                                    <option>Show 24</option>
-                                </select>
-                                <select className="form-select form-select-sm w-auto">
                                     <option>Sort by New Post</option>
                                     <option>Sort by Old Post</option>
                                 </select>
-                                <div className="form-check ms-2">
-                                    <input className="form-check-input me-2" type="checkbox" id="selectAll" />
-                                    <label
-                                        className="form-check-label small text-dark"
-                                        htmlFor="selectAll"
-                                    >
-                                        Select all
-                                    </label>
-                                </div>
+                              
                             </div>
                         </div>
                         <div className="ms-4 border rounded-3 bg-white mb-3">

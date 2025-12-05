@@ -23,6 +23,7 @@ const initialState: EmployerProfileState = {
 
 export interface UpdateCompanyProfilePayload {
     companyName?:string;
+    companyDescription?:string;
     email?: string;
     alternativeEmail?: string;
     roleId?: number;

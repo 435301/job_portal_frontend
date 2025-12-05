@@ -43,6 +43,7 @@ function ProfilePage() {
 
     const [formData, setFormData] = useState({
         companyName:"",
+        companyDescription:"",
         email: "",
         alternativeEmail: "",
         roleId: 0,
@@ -123,6 +124,7 @@ function ProfilePage() {
             setFormData(prev => ({
                 ...prev,
                 companyName:companyDetails?.companyName|| "",
+                companyDescription:companyDetails?.companyDescription || "",
                 email: companyDetails?.email || "",
                 alternativeEmail: companyDetails?.alternativeEmail || "",
                 roleId: companyDetails?.roleId || 0,
@@ -159,6 +161,7 @@ function ProfilePage() {
         setShowModal(false);
         setFormData({
             companyName:"",
+            companyDescription:"",
             email: "",
             alternativeEmail: "",
             roleId: 0,
@@ -211,6 +214,7 @@ function ProfilePage() {
                 updateCompanyProfileDetails({
                     payload: {
                         companyName:formData.companyName,
+                        companyDescription:formData.companyDescription,
                         email: formData.email,
                         alternativeEmail: formData.alternativeEmail,
                         roleId: formData.roleId,
@@ -366,6 +370,7 @@ function ProfilePage() {
 
                         <div className="row g-3 px-3 small-text mb-3">
                             <div className="col-md-3"><strong className="companyName">Company Name</strong><div className="fs-6"> {companyDetails?.companyName || "-"} </div></div>
+                            <div className="col-md-3"><strong className="companyDescription">Company Description</strong><div className="fs-6"> {companyDetails?.companyDescription || "-"} </div></div>
                             <div className="col-md-3"><strong className="email">Email</strong><div className="fs-6"> {companyDetails?.email || "-"} </div></div>
                             <div className="col-md-3"><strong className="email">Email for Communication</strong><div className="fs-6"> {companyDetails?.alternativeEmail || "-"} </div></div>
                             <div className="col-md-3"><strong className="email">Role</strong><div className="fs-6">{companyDetails?.role?.role || "-"}</div></div>
