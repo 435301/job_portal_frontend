@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "react-select";
+import "../assets/css/login.css";
 
 interface Option {
   value: any;
@@ -32,14 +33,14 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
   };
 
   return (
-    <div>
+    <div className={error ? "has-error" : ""}>
       <Select
         value={selectedOption}
         onChange={handleChange}
         options={options}
         placeholder={placeholder}
         isClearable={isClearable}
-        className={` ${error} ? "is-invalid" : ""`}
+        classNamePrefix="react-select"
       />
       {error && <div className="invalid-feedback d-block">{error}</div>}
     </div>

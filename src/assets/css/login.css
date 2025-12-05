@@ -253,3 +253,20 @@ body {
     min-height:44px !important ;
     border-color: #dee2e6 !important;
 }
+
+.has-error .react-select__control {
+  border: 1px solid #dc3545 !important;
+}
+
+.react-select__control {
+  min-height: 42px !important;
+}
+
+.react-select__value-container {
+  padding: 6px 8px !important;
+}
+
+.textarea-large {
+  min-height: 140px !important; 
+  height: auto !important;
+}

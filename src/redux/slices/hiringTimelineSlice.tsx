@@ -60,7 +60,7 @@ export const createHiringTimeline = createAsyncThunk<HiringTimeline, any>(
 
 export const getAllHiringTimeline = createAsyncThunk<any, { page?: number; status?: string | number; search?: string, } | void>(
     "hiringTimeline/getAll",
-    async (params = { page: 0, status: "", search: "", }, { rejectWithValue }) => {
+    async (params = { page: 1, status: "", search: "", }, { rejectWithValue }) => {
         try {
             const response = await axios.post(`${BASE_URL_JOB}/hiringTimeline/list`, params, getAuthAdminHeaders());
             return response.data;

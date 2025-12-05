@@ -21,7 +21,7 @@ import EmailVerifiedSuccess from './users/EmailVerifiedSuccess';
 import Company from './users/Company';
 import EmployeeDashboard from './users/EmployeeDashboard';
 import ManageJobPostings from './users/ManageJobPostings';
-import BasicJobDetails from './users/BasicJobDetails';
+import BasicJobDetails from './users/BasicJobDetails.tsx';
 import CompanyDetailsReg from './users/CompanyDetailsReg';
 import CompanyDetailsHiring from './users/CompanyDetailsHiring';
 import SuccessPage from './users/SuccessPage';
@@ -125,7 +125,7 @@ const App = () => {
         <Route path="/company-details" element={<CompanyDetails />} />
         <Route path="/employer-dashboard" element={<EmployeeDashboard />} />
         <Route path="/job-posting" element={<ManageJobPostings />} />
-        <Route path="/basic-job-details" element={<BasicJobDetails />} />
+        <Route path="/basic-job-details" element={<EmployerRoute><BasicJobDetails /></EmployerRoute>} />
         <Route path="/company-details-reg" element={<CompanyDetailsReg />} />
         <Route path="/company-details-hiring" element={<CompanyDetailsHiring />} />
         <Route path="/success-page" element={<SuccessPage />} />

@@ -122,6 +122,32 @@ export interface KycDetailsForm {
   govtId?: any;
 }
 
+export interface JobDetailsForm {
+  employmentTypeId?: number;
+  jobTitle?: string;
+  jobRoleId?: number;
+  cityId?: number;
+  workLocationTypeId?: number;
+  noOfOpenings?: number;
+}
+
+export interface CandidateRequirementForm {
+  minExpId?: number;
+  maxExpId?: number;
+  educationId?: number;
+  genderId?: number;
+  hiringTimelineId?: number;
+  minSalary?: number;
+  maxSalary?: number;
+  skillIds?: number[];
+  jobDescription?: string;
+}
+
+
+export interface JobTimingsForm {
+  timings?: string;
+}
+
 //  LOGIN FORM VALIDATION
 export const validateLoginForm = (formData: { email?: string; password?: string }): FormErrors => {
   const errors: FormErrors = {};
@@ -845,3 +871,72 @@ export const validatePersonalDetails = (form: any) => {
 
   return errors;
 };
+
+
+export const validateJobDetailsForm = (formData: JobDetailsForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.employmentTypeId) {
+    errors.employmentTypeId = "Job Type is required";
+
+    if (!formData.jobTitle)
+      errors.jobTitle = "Job Title is required";
+  }
+
+  if (!formData.jobRoleId) {
+    errors.jobRoleId = "Job Role is required";
+  }
+
+  if (!formData.cityId) {
+    errors.cityId = "City is required";
+  }
+  if (!formData.workLocationTypeId) {
+    errors.workLocationTypeId = "Location is required";
+  }
+  if (!formData.noOfOpenings) {
+    errors.noOfOpenings = "No of openings is required";
+  }
+
+  return errors;
+}
+
+export const validateCandidateRequirementsForm = (formData: CandidateRequirementForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.minExpId) {
+    errors.minExpId = "Min Experience is required";
+
+    if (!formData.maxExpId)
+      errors.maxExpId = "Max Experience is required";
+  }
+
+  if (!formData.educationId) {
+    errors.educationId = "Min Qualification is required";
+  }
+
+  if (!formData.genderId) {
+    errors.genderId = "Gender is required";
+  }
+  if (!formData.hiringTimelineId) {
+    errors.hiringTimelineId = "Hiring Timeline is required";
+  }
+  if (!formData.minSalary) {
+    errors.minSalary = "Minimum Salary is required";
+  }
+  if (!formData.maxSalary) {
+    errors.maxSalary = "Maximum Salary is required";
+  }
+ if (!formData.skillIds || formData.skillIds.length === 0) {
+  errors.skillIds = "At least one skill is required";
+}
+  if (!formData.jobDescription) {
+    errors.jobDescription = "Job Description is required";
+  }
+  return errors;
+}
+
+export const validateJobTimingsForm = (formData: JobTimingsForm): FormErrorsEmployment => {
+  const errors: FormErrorsEmployment = {};
+  if (!formData.timings) {
+    errors.timings = "Job Timings is required";
+  }
+  return errors;
+}

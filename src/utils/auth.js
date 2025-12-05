@@ -1,8 +1,9 @@
-const getAuthHeaders = (isFormData = false) => {
+const getAuthAdminHeaders = (isFormData = false) => {
   const adminToken = localStorage.getItem("adminToken");
   const employeeToken = localStorage.getItem("employeeToken");
+  const employerToken = localStorage.getItem("employerToken");
 
-  const token = adminToken?.trim() || employeeToken?.trim();
+  const token = adminToken?.trim() || employeeToken?.trim() || employerToken?.trim();
 
   if (!token) return {};
 
@@ -16,7 +17,7 @@ const getAuthHeaders = (isFormData = false) => {
   };
 };
 
-export default getAuthHeaders;
+export default getAuthAdminHeaders;
 
 
 // const getAuthAdminHeaders = (isFormData = false) => {

@@ -78,9 +78,9 @@ const EmailVerifiedSuccess = () => {
                                                 <Button
                                                     variant="dark"
                                                     className="rounded-pill px-5 py-3 fw-semibold"
-                                                    onClick={() => (window.location.href = "/profile")}
+                                                    onClick={() => (window.location.href = "/login")}
                                                 >
-                                                    Go to Profile   <img className="ms-2"
+                                                    Go to Login   <img className="ms-2"
                                                         src={arrowIcon}
                                                         alt="arrow icon"
 
