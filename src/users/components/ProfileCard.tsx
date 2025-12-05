@@ -21,6 +21,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
   const [mobile, setMobile] = useState<any>();
   const [profilePhoto, setProfilePhoto] = useState<any>();
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
+  const [uploading, setUploading] = useState(false);
+  const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
+
 
   useEffect(() => {
     if (personalDetails?.profilePhoto) {
@@ -46,12 +49,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
     setShowPopup(false);
   }
 
-  const handleProfilePhoto = (e: any) => {
+  const handleProfilePhoto = async (e: any) => {
     const file = e.target.files[0];
     if (!file) return;
     const previewUrl = URL.createObjectURL(file);
-    setProfilePhoto(previewUrl);
-    onPhoto(file);
+    setPreviewPhoto(previewUrl);
+    setUploading(true);
+    await onPhoto(file);
+    setUploading(false);
   };
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -68,11 +73,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
         <div className="col-md-5 border-end d-flex align-items-center mb-4 mb-md-0">
 
           <div className="profile-photo-wrapper position-relative" style={{ width: "120px" }}>
+
             <img
               src={
-                profilePhoto
-                  ? `${BASE_URL_JOB}${profilePhoto}`
-                  : profile
+                previewPhoto
+                  ? previewPhoto
+                  : personalDetails?.profilePhoto
+                    ? `${BASE_URL_JOB}${personalDetails.profilePhoto}`
+                    : profile
               }
               alt="Profile"
               className="rounded-circle profile-img me-3"
@@ -80,7 +88,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
 
             {/* Edit Icon */}
             <img src={editIcon} alt="Edit Icon" className=" edit-icon ms-4 " style={{ cursor: "pointer" }} onClick={triggerUpload} />
-
+            {uploading && (
+              <div className="loading-overlay">
+                <div className="spinner-border text-primary" role="status" />
+              </div>
+            )}
             {/* Hidden file input */}
             <input
               type="file"
@@ -159,7 +171,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               </div>
               <div>
                 <div className="fw-semibold text-dark availability">Experience</div>
-                <div className="text-muted small">{personalDetails?.experience?.experienceName || "-" }</div>
+                <div className="text-muted small">{personalDetails?.experience?.experienceName || "-"}</div>
               </div>
             </div>
 
@@ -198,7 +210,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
 
               <h5 className="fw-bold mb-3">Edit Mobile Number<span className="text-danger"> *</span></h5>
 
-              <input  
+              <input
                 type="text"
                 className={`form-control mb-3 ${errors.mobile}? "is-invalid" : "`}
                 value={mobile}

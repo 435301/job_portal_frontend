@@ -40,6 +40,8 @@ function ProfilePage() {
     const [activeSection, setActiveSection] = useState("");
     const [profilePhoto, setProfilePhoto] = useState<any>();
     const [errors, setErrors] = useState<FormErrors>({});
+      const [uploading, setUploading] = useState(false);
+      const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
 
     const [formData, setFormData] = useState({
         companyName:"",
@@ -181,12 +183,15 @@ function ProfilePage() {
         setErrors({});
     }
 
-    const handleProfilePhoto = (e: any,) => {
+    const handleProfilePhoto = async (e: any,) => {
         const file = e.target.files[0];
         if (!file) return;
         const previewUrl = URL.createObjectURL(file);
         setProfilePhoto(previewUrl);
-        dispatch(uploadCompanyLogo(file))
+        setUploading(true);
+
+        await dispatch(uploadCompanyLogo(file))
+         setUploading(false);
     };
 
     const fileRef = useRef<HTMLInputElement>(null);
@@ -277,7 +282,7 @@ function ProfilePage() {
                                 className="edit-icon ms-4"
                                 onClick={triggerUpload}
                             />
-                            {loading && (
+                            {uploading && (
                                 <div className="loading-overlay">
                                     <div className="spinner-border text-primary" role="status" />
                                 </div>
