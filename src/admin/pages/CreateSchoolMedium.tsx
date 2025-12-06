@@ -99,16 +99,16 @@ function CreateSchoolMedium() {
                                 <Col>
                                     <h4 className="fw-bold mb-1 d-flex align-items-center text-dark">
                                         <i className="bi bi-mortarboard-fill me-2 text-primary fs-4"></i>
-                                        Create Instruction Medium
+                                        Create Language
                                     </h4>
                                 </Col>
                                 <Col xs="auto">
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/manage-instruction-medium")}
+                                        onClick={() => navigate("/admin/manage-languages")}
                                     >
-                                        <i className="bi bi-arrow-left me-2"></i>Manage Instruction Medium
+                                        <i className="bi bi-arrow-left me-2"></i>Manage Language
                                     </Button>
                                 </Col>
                             </Row>
@@ -123,12 +123,12 @@ function CreateSchoolMedium() {
                                   
                                      <Col md={4}>
                                             <Form.Group>
-                                                <Form.Label>Medium Name<span className="text-danger"> *</span></Form.Label>
+                                                <Form.Label>Language<span className="text-danger"> *</span></Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     name="schoolMedium"
                                                     className={`form-control ${errors.schoolMedium ? "is-invalid" : ""}`}
-                                                    placeholder="Enter school medium"
+                                                    placeholder="Enter language"
                                                     value={formData.schoolMedium}
                                                     onChange={handleChange}
                                                 />
@@ -163,7 +163,7 @@ function CreateSchoolMedium() {
                                     <Button
                                         variant="secondary"
                                         className="me-2 rounded-pill px-4"
-                                        onClick={() => navigate("/admin/manage-instruction-medium")}
+                                        onClick={() => navigate("/admin/manage-languages")}
                                     >
                                         Cancel
                                     </Button>

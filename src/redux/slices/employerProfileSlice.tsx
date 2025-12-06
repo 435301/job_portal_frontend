@@ -45,7 +45,6 @@ export interface UpdateKycDetails {
     ein?: number;
     companyEmailDomain?: string;
     companyAddress?: string;
-    govtId?: any;
 }
 
 const employerId = JSON.parse(localStorage.getItem("employer") ?? "{}")?.id;

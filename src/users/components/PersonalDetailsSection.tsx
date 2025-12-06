@@ -170,12 +170,8 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
         </div>
 
         <div className="col-md-3">
-          <strong>Locality:</strong>
+          <strong>City:</strong>
           <div>{personalDetails?.city?.cityName || "-"}</div>
-        </div>
-        <div className="col-md-3">
-          <strong>Availability:</strong>
-          <div>{personalDetails?.availability?.availability || "-"}</div>
         </div>
         <div className="col-md-3">
           <strong>Experience:</strong>
@@ -309,7 +305,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
                 )}
               </Col>
               <Col md={6}>
-                <Form.Label className="fw-bold">Locality<span className="text-danger"> *</span></Form.Label>
+                <Form.Label className="fw-bold">City<span className="text-danger"> *</span></Form.Label>
                 <Form.Select
                   name="cityId"
                   value={form.cityId}
@@ -326,45 +322,6 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
 
                 </Form.Select>
                 {errors.cityId && <div className="invalid-feedback">{errors.cityId}</div>}
-              </Col>
-            </Row>
-
-            <Row className="mb-4">
-              <Col md={6}>
-                <Form.Label className="fw-bold">Availability<span className="text-danger"> *</span></Form.Label>
-                <Form.Select
-                  name="availabilityId"
-                  value={form.availabilityId}
-                  className={errors.availabilityId ? "is-invalid" : ""}
-                  onChange={handleChange}>
-
-                  <option value="">Select availability</option>
-                  {AvailabilityList.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.availability}
-                    </option>
-                  )
-                  )}
-
-                </Form.Select>
-                {errors.availabilityId && <div className="invalid-feedback">{errors.availabilityId}</div>}
-              </Col>
-              <Col md={6}>
-                <Form.Label className="fw-bold">Experience<span className="text-danger"> *</span></Form.Label>
-                <Form.Select
-                  name="experienceId"
-                  value={form.experienceId}
-                  className={errors.experienceId ? "is-invalid" : ""}
-                  onChange={handleChange}>
-                  <option value="">Select experience</option>
-                  {experienceList.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.experienceName}
-                    </option>
-                  )
-                  )}
-                </Form.Select>
-                {errors.experienceId && <div className="invalid-feedback">{errors.experienceId}</div>}
               </Col>
             </Row>
 

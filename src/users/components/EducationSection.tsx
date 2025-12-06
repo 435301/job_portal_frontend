@@ -11,7 +11,6 @@ interface EducationProps {
   educationList: any[];
   courseList: any[];
   specializationList: any[];
-  courseTypeList: any[];
   GradingSystemList: any[];
   onAdd: (formData: any) => void;
   onUpdate: (id: number, formData: any) => void;
@@ -19,7 +18,7 @@ interface EducationProps {
   activeSection: any;
   loading: boolean;
 }
-const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, courseTypeList, GradingSystemList, onAdd, onUpdate, onDelete, activeSection , loading}) => {
+const EducationSection: React.FC<EducationProps> = ({ educationDetails, educationList, courseList, specializationList, onAdd, onUpdate, onDelete, activeSection , loading}) => {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
   const [errors, setErrors] = useState<FormErrorsEmployment>({});
@@ -33,11 +32,8 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
     courseId: 0,
     specificationId: 0,
     university: "",
-    courseTypeId: 0,
     courseStartYear: 0,
     courseEndYear: 0,
-    gradingSystemId: 0,
-    marks: "",
   });
 
   const educationOptions = educationList.map((item: any) => ({
@@ -54,10 +50,6 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
     label: item.specializationName,
   }));
 
-  const gradingSystemOptions = GradingSystemList.map((item: any) => ({
-    value: item.id,
-    label: item.gradingType,
-  }));
 
   useEffect(() => {
     if (activeSection === "education") {
@@ -72,11 +64,8 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
       courseId: 0,
       specificationId: 0,
       university: "",
-      courseTypeId: 0,
       courseStartYear: 0,
       courseEndYear: 0,
-      gradingSystemId: 0,
-      marks: "",
     });
     setErrors({});
   };
@@ -92,10 +81,6 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
     setErrors((prev) => ({ ...prev, [name]: "" }))
   };
 
-  const handleCourseType = (value: number) => {
-    setFormData({ ...formData, courseTypeId: value });
-    setErrors((prev) => ({ ...prev, courseTypeId: "" }))
-  };
 
   const handleEdit = (item: any) => {
     setEditId(item.id);
@@ -104,11 +89,8 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
       courseId: item.courseId,
       specificationId: item.specificationId,
       university: item.university,
-      courseTypeId: item.courseTypeId,
       courseStartYear: item.courseStartYear,
       courseEndYear: item.courseEndYear,
-      gradingSystemId: item.gradingSystemId,
-      marks: item.marks,
     });
 
     setShowModal(true);
@@ -126,10 +108,8 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
       educationId: Number(formData.educationId),
       courseId: Number(formData.courseId),
       specificationId: Number(formData.specificationId),
-      courseTypeId: Number(formData.courseTypeId),
       courseStartYear: Number(formData.courseStartYear),
       courseEndYear: Number(formData.courseEndYear),
-      gradingSystemId: Number(formData.gradingSystemId),
     };
 
     if (editId) {
@@ -299,32 +279,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
                   </Form.Group>
                 </Col>
               </Row>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">
-                  Course Type <span className="text-danger">*</span>
-                </Form.Label>
-
-                <div className="d-flex gap-4 mt-2 flex-wrap">
-                  {courseTypeList.map((course: any) => (
-                    <div key={course.id}>
-                      <Form.Check
-                        type="radio"
-                        name="courseTypeId"
-                        id={`courseType-${course.id}`}
-                        value={course.id}
-                        label={course.courseType}
-                        checked={formData.courseTypeId === course.id}
-                        onChange={() => handleCourseType(course.id)}
-                        className={errors.courseTypeId ? "is-invalid" : ""}
-                      />
-                    </div>
-                  ))}
-                </div>
-                {errors.courseTypeId && (
-                  <div className="invalid-feedback d-block">{errors.courseTypeId}</div>
-                )}
-              </Form.Group>
-
+             
 
               <Row className="mb-3">
                 <Col md={6}>
@@ -353,32 +308,7 @@ const EducationSection: React.FC<EducationProps> = ({ educationDetails, educatio
                   {errors.courseEndYear && <div className="invalid-feedback">{errors.courseEndYear}</div>}
                 </Col>
               </Row>
-              <Row className="mb-3">
-                <Col md={6} >
-                  <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Grading System<span className="text-danger"> *</span></Form.Label>
-                    <SearchableSelect
-                      name="gradingSystemId"
-                      options={gradingSystemOptions}
-                      value={formData.gradingSystemId}
-                      onChange={handleChange}
-                      placeholder="Select grading System"
-                      error={errors.gradingSystemId}
-                    />
-                    {errors.gradingSystemId && <div className="invalid-feedback">{errors.gradingSystemId}</div>}
-                  </Form.Group>
-                </Col>
-                <Col md={6} >
-                  <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold"   >
-                      Marks <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control type="text" placeholder="Enter marks" value={formData.marks} name="marks" className={` ${errors.marks ? "is-invalid" : ""}`}
-                      onChange={handleChange} />
-                    {errors.marks && <div className="invalid-feedback">{errors.marks}</div>}
-                  </Form.Group>
-                </Col>
-              </Row>
+             
             </Form>
           </Modal.Body>
 

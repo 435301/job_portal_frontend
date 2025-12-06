@@ -469,24 +469,6 @@ const JobDetails = () => {
                                         {errors.educationId && <div className="invalid-feedback d-block">{errors.educationId}</div>}
                                     </div>
 
-                                    {/* Gender Preference */}
-                                    <div className="mb-3">
-                                        <label className="form-label fw-semibold">Gender Preference</label>
-                                        <div className="d-flex flex-wrap gap-2">
-                                            {genderList?.map((item: any) => (
-                                                <button
-                                                    key={item.id}
-                                                    type="button"
-                                                    className={`btn btn-sm rounded-pill ${formData.genderId === item.id ? "btn-primary" : "btn-outline-dark"}`}
-                                                    onClick={() => handleSelectChange("genderId", item.id)}
-                                                >
-                                                    {item.gender}
-                                                </button>
-                                            ))}
-                                        </div>
-                                        {errors.genderId && <div className="invalid-feedback d-block">{errors.genderId}</div>}
-                                    </div>
-
                                     {/* Hiring Timeline */}
                                     <div className="col-12 mb-3 req">
                                         <label className="form-label fw-semibold">How soon do you want to fill the position?</label>

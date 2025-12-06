@@ -60,7 +60,6 @@ function ProfilePage() {
         ein: 0,
         companyEmailDomain: "",
         companyAddress: "",
-        govtId: "",
 
     });
 
@@ -152,7 +151,6 @@ function ProfilePage() {
                 ...prev,
                 ein: kyc.ein || "",
                 companyEmailDomain: kyc.companyEmailDomain || "",
-                govtId: kyc.govtId || "",
                 companyAddress: kyc.address || "",
             }));
         }
@@ -178,7 +176,6 @@ function ProfilePage() {
             ein: 0,
             companyEmailDomain: "",
             companyAddress: "",
-            govtId: "",
         })
         setErrors({});
     }
@@ -251,7 +248,6 @@ function ProfilePage() {
                         ein: formData.ein,
                         companyEmailDomain: formData.companyEmailDomain,
                         companyAddress: formData.companyAddress,
-                        govtId: formData.govtId,
                     },
                 })
             );
@@ -429,7 +425,6 @@ function ProfilePage() {
                             <div className="col-md-3"><strong className="email">EIN(Employer Identification Number)</strong><div className="fs-6"> {kyc?.ein || "-"}</div></div>
                             <div className="col-md-3"><strong className="email">Company Email Domain</strong><div className="fs-6">{kyc?.companyEmailDomain || "-"}</div></div>
                             <div className="col-md-3"><strong className="email">Company Address</strong><div className="fs-6">{kyc?.address || "-"}</div></div>
-                            <div className="col-md-3"><strong className="email">Government Id</strong><div className="fs-6">{kyc?.govtId || "-"}</div></div>
                         </div>
                     </div>
                 </div>

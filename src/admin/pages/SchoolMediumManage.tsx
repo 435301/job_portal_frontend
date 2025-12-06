@@ -127,16 +127,16 @@ function SchoolMediumManage() {
                                 <Col>
                                     <h4 className="fw-bold mb-1 d-flex align-items-center text-dark">
                                         <i className="bi bi-mortarboard-fill me-2 text-primary fs-4"></i>
-                                        Instruction Medium Management
+                                        Languages Management
                                     </h4>
                                 </Col>
                                 <Col xs="auto">
                                     <Button
                                         variant="primary"
                                         className="rounded-pill px-3 shadow-sm"
-                                        onClick={() => navigate("/admin/create-instruction-medium")}
+                                        onClick={() => navigate("/admin/create-language")}
                                     >
-                                        <i className="bi bi-plus-circle me-2"></i>Add Instruction Medium
+                                        <i className="bi bi-plus-circle me-2"></i>Add Language
                                     </Button>
                                 </Col>
                             </Row>
@@ -149,7 +149,7 @@ function SchoolMediumManage() {
                                     <InputGroup>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Search instruction medium..."
+                                            placeholder="Search language ..."
                                             value={searchTerm}
                                             onChange={handleSearchChange}
                                         />
@@ -177,7 +177,7 @@ function SchoolMediumManage() {
                         <Card className="shadow-sm border-0">
                             <Card.Header className="bg-white py-3 d-flex justify-content-between align-items-center">
                                 <h6 className="fw-bold mb-0 text-primary">
-                                    <i className="bi bi-list-task me-2"></i> Instruction Medium List
+                                    <i className="bi bi-list-task me-2"></i> Language List
                                 </h6>
                                 <span className="text-muted small">
                                     Showing {schoolMediumList?.length || 0} results
@@ -196,7 +196,7 @@ function SchoolMediumManage() {
                                         <thead className="bg-light">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Instruction Medium Name</th>
+                                                <th>Language</th>
                                                 <th>Status</th>
                                                 <th className="text-center">Actions</th>
                                             </tr>
@@ -245,7 +245,7 @@ function SchoolMediumManage() {
                                             ) : (
                                                 <tr>
                                                     <td colSpan={4} className="text-center py-3">
-                                                        No instruction medium records found.
+                                                        No language records found.
                                                     </td>
                                                 </tr>
                                             )}

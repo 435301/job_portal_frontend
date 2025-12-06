@@ -17,6 +17,7 @@ interface CertificationProps {
 interface CertificateForm {
   certificateName: "",
   issuedBy: "",
+  expiryYear: "",
 }
 
 const CertificationsSection: React.FC<CertificationProps> = ({ certificationDetails, onAdd, onUpdate, onDelete, activeSection, loading }) => {
@@ -29,6 +30,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
   const [formData, setFormData] = useState<CertificateForm>({
     certificateName: "",
     issuedBy: "",
+    expiryYear: "",
   });
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
   const handleClose = () => {
     setShow(false);
     setEditId(null);
-    setFormData({ certificateName: "", issuedBy: "" });
+    setFormData({ certificateName: "", issuedBy: "", expiryYear: "" });
     setErrors({});
   };
 
@@ -54,6 +56,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
     setFormData({
       certificateName: certificate.certificateName,
       issuedBy: certificate.issuedBy,
+      expiryYear: certificate.expiryYear,
     });
     setShow(true);
   };
@@ -105,6 +108,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
             <tr>
               <th>Certificate Name</th>
               <th>Issued By</th>
+              <th>Expiry Year</th>
               <th></th>
               <th></th>
             </tr>
@@ -113,8 +117,9 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
             {certificationDetails && certificationDetails.length > 0 ? (
               certificationDetails?.map((certificate: any) => (
                 <tr key={certificate?.id}>
-                  <td>{certificate?.certificateName}</td>
-                  <td>{certificate?.issuedBy}</td>
+                  <td>{certificate?.certificateName || "-"}</td>
+                  <td>{certificate?.issuedBy || "-"}</td>
+                  <td>{certificate?.expiryYear || "-"}</td>
                   <td>
                     <i
                       className="bi bi-pencil edit-icon ms-2"
@@ -189,6 +194,20 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
               />
               {errors.issuedBy && <div className="invalid-feedback">{errors.issuedBy}</div>}
             </Form.Group>
+            {/* expiry year */}
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-semibold">
+                Expiry Year
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=" Enter the expiry year "
+                name="expiryYear"
+                onChange={handleChange}
+                value={formData.expiryYear}
+              />
+            </Form.Group>
+
 
           </Modal.Body>
 
@@ -205,7 +224,7 @@ const CertificationsSection: React.FC<CertificationProps> = ({ certificationDeta
               className="rounded-pill px-4"
               onClick={handleSubmit}
             >
-              {loading ? "Saving" :"Save"}
+              {loading ? "Saving" : "Save"}
             </Button>
           </Modal.Footer>
         </div>

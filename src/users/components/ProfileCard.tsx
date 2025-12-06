@@ -136,7 +136,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
                 <i className="bi bi-geo-alt-fill"></i>
               </div>
               <div>
-                <div className="fw-semibold text-dark availability">Location</div>
+                <div className="fw-semibold text-dark availability">City</div>
                 <div className="text-muted small"> {personalDetails?.city?.cityName && personalDetails?.country?.countryName
                   ? `${personalDetails.city.cityName}, ${personalDetails.country.countryName}`
                   : "-"} </div>
@@ -183,17 +183,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ personalDetails, onMobile, on
               <div>
                 <div className="fw-semibold text-dark availability">Email</div>
                 <div className="text-muted small">{personalDetails?.email || "-"}</div>
-              </div>
-            </div>
-
-            {/* Availability */}
-            <div className="col-md-4 d-flex align-items-start">
-              <div className="icon-box me-2">
-                <i className="bi bi-calendar-check-fill"></i>
-              </div>
-              <div>
-                <div className="fw-semibold text-dark availability">Availability</div>
-                <div className="text-muted small">{personalDetails?.availability?.availability || "-"}</div>
               </div>
             </div>
 

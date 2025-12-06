@@ -249,18 +249,7 @@ const EditCompanyProfileModal: React.FC<EditModalProps> = ({
                                         {errors.companyAddress && <div className="invalid-feedback">{errors.companyAddress}</div>}
                                     </Form.Group>
                                 </div>
-                                <div className="col-md-6">
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Government ID<span className="text-danger"> *</span></Form.Label>
-                                        <Form.Control type="text"
-                                            name="govtId"
-                                            value={formData.govtId}
-                                            onChange={handleChange}
-                                            placeholder="Enter the govt id "
-                                            className={` ${errors.govtId ? "is-invalid" : ""}`} />
-                                        {errors.govtId && <div className="invalid-feedback">{errors.govtId}</div>}
-                                    </Form.Group>
-                                </div>
+                             
                             </div>
                         </Form>
                     )}

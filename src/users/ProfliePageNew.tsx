@@ -37,7 +37,6 @@ function ProfilePageNew() {
   const { educationList } = useAppSelector((state: RootState) => state.education);
   const { courseList } = useAppSelector((state: RootState) => state.course);
   const { specializationList } = useAppSelector((state: RootState) => state.specialization);
-  const { courseTypeList } = useAppSelector((state: RootState) => state.courseType);
   const { GradingSystemList } = useAppSelector((state: RootState) => state.gradingSystem);
   const [uploading, setUploading] = useState(false);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
@@ -325,7 +324,6 @@ function ProfilePageNew() {
                       educationList={educationList}
                       courseList={courseList}
                       specializationList={specializationList}
-                      courseTypeList={courseTypeList}
                       GradingSystemList={GradingSystemList}
                       onAdd={handleAddEducation}
                       onUpdate={handleUpdateEducation}
@@ -368,7 +366,7 @@ function ProfilePageNew() {
               </div>
 
               {/* IT Skills */}
-              <div className="accordion-item">
+              {/* <div className="accordion-item">
                 <h2 className="accordion-header">
                   <button
                     className="accordion-button collapsed"
@@ -392,7 +390,7 @@ function ProfilePageNew() {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Personal Details */}
               <div className="accordion-item">

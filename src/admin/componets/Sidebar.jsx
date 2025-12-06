@@ -74,9 +74,9 @@ const Sidebar = ({
           path: "/admin/manage-school-boards",
         },
         {
-          id: "schoolMedium",
-          text: "Instruction  Medium",
-          path: "/admin/manage-instruction-medium",
+          id: "language",
+          text: "Languages",
+          path: "/admin/manage-languages",
         },
         {
           id: "maritalStatus",

@@ -157,9 +157,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
   };
 
   const handleSubmit = (e: FormEvent) => {
-    console.log('firat')
     e.preventDefault();
-    console.log("Form submitted");
     const validationErrors = validateEmploymentForm(formData);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) {
@@ -432,7 +430,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
               <div className="row mb-3">
                 <div className="col-md-6">
                   <label className="form-section-label fw-semibold mb-2">
-                    Current Salary<span className="text-danger"> *</span>
+                    Current Salary
                   </label>
                   <div className="input-group">
                     <Dropdown>

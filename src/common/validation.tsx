@@ -81,11 +81,8 @@ export interface EducationForm {
   courseId: number,
   specificationId: number,
   university: string,
-  courseTypeId: number,
   courseStartYear: number,
   courseEndYear: number,
-  gradingSystemId: number,
-  marks: string,
 }
 
 export interface FormErrorsEmployment {
@@ -98,7 +95,7 @@ export interface MobileForm {
 
 export interface CompanyProfileForm {
   email?: string;
-  companyDescription?:string;
+  companyDescription?: string;
   alternativeEmail?: string;
   roleId?: number;
   reportingManager?: string;
@@ -120,7 +117,6 @@ export interface KycDetailsForm {
   ein?: number;
   companyEmailDomain?: string;
   companyAddress?: string;
-  govtId?: any;
 }
 
 export interface JobDetailsForm {
@@ -632,17 +628,17 @@ export const validateEmploymentForm = (formData: EmploymentForm): FormErrorsEmpl
   if (!formData.joiningMonth || formData.joiningMonth < 1 || formData.joiningMonth > 12) {
     errors.joiningMonth = "Joining month must be between 1 and 12";
   }
-  if (!formData.endingYear) {
-    errors.endingYear = "Enter a valid ending year";
-  }
-  if (!formData.endingMonth || formData.endingMonth < 1 || formData.endingMonth > 12) {
-    errors.endingMonth = "Ending month must be between 1 and 12";
+  if (!formData.isCurrentEmployment ) {
+    if (!formData.endingYear) {
+      errors.endingYear = "Enter a valid ending year";
+    }
+
+    if (!formData.endingMonth || formData.endingMonth < 1 || formData.endingMonth > 12) {
+      errors.endingMonth = "Ending month must be between 1 and 12";
+    }
   }
   if (!formData.currencyId) {
     errors.currencyId = "Currency type is required";
-  }
-  if (formData.currentSalary === undefined || formData.currentSalary < 0) {
-    errors.currentSalary = "Salary must be a valid positive number";
   }
   if (!formData.skillsUsed || !formData.skillsUsed.trim()) {
     errors.skillsUsed = "Skills used is required";
@@ -661,11 +657,8 @@ export const validateProfileEducationForm = (formData: EducationForm): FormError
   if (!formData.university.trim()) errors.university = "University is required";
   if (!formData.courseId) errors.courseId = "Course is required";
   if (!formData.specificationId) errors.specificationId = "Specialization is required";
-  if (!formData.courseTypeId) errors.courseTypeId = "Course type is required";
   if (!formData.courseStartYear) errors.courseStartYear = "Start year is required";
   if (!formData.courseEndYear) errors.courseEndYear = "End year is required";
-  if (!formData.gradingSystemId) errors.gradingSystemId = "Grading system is required";
-  if (!formData.marks.trim()) errors.marks = "Marks/Percentage is required";
 
   return errors;
 
@@ -831,10 +824,6 @@ export const validateKycDetailsForm = (formData: KycDetailsForm): FormErrorsEmpl
     errors.companyAddress = "Company Address is required";
   }
 
-  if (!formData.govtId) {
-    errors.govtId = "Govt Id is required";
-  }
-
 
   return errors;
 }
@@ -862,7 +851,6 @@ export const validatePersonalDetails = (form: any) => {
   if (!form.dob) errors.dob = "Date of birth is required";
 
   if (!form.cityId) errors.cityId = "City is required";
-  if (!form.availabilityId) errors.availabilityId = "Availability is required";
   if (!form.experienceId) errors.experienceId = "Experience is required";
 
   if (!form.permanentAddress?.trim())
@@ -927,9 +915,9 @@ export const validateCandidateRequirementsForm = (formData: CandidateRequirement
   if (!formData.maxSalary) {
     errors.maxSalary = "Maximum Salary is required";
   }
- if (!formData.skillIds || formData.skillIds.length === 0) {
-  errors.skillIds = "At least one skill is required";
-}
+  if (!formData.skillIds || formData.skillIds.length === 0) {
+    errors.skillIds = "At least one skill is required";
+  }
   if (!formData.jobDescription) {
     errors.jobDescription = "Job Description is required";
   }
