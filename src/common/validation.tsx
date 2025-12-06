@@ -144,7 +144,7 @@ export interface CandidateRequirementForm {
 
 
 export interface JobTimingsForm {
-  timings?: string;
+  timingId?: number;
 }
 
 //  LOGIN FORM VALIDATION
@@ -928,8 +928,8 @@ export const validateCandidateRequirementsForm = (formData: CandidateRequirement
 
 export const validateJobTimingsForm = (formData: JobTimingsForm): FormErrorsEmployment => {
   const errors: FormErrorsEmployment = {};
-  if (!formData.timings) {
-    errors.timings = "Job Timings is required";
+  if (!formData.timingId) {
+    errors.timingId = "Job Timings is required";
   }
   return errors;
 }

@@ -43,11 +43,11 @@ export const addCandidateRequirement = createAsyncThunk(
 //  Add Work Timings
 export const addWorkTimings = createAsyncThunk(
     "job/addWorkTimings",
-    async ({ jobId, timings }: { jobId: number; timings: string }, { rejectWithValue }) => {
+    async ({ jobId, timingId }: { jobId: number; timingId: number }, { rejectWithValue }) => {
         try {
             const res = await axios.patch(
                 `${BASE_URL_JOB}/jobDetails/addWorkTimings/${jobId}`,
-                { timings }, getAuthAdminHeaders()
+                { timingId }, getAuthAdminHeaders()
             );
             toast.success(res.data.message);
             return res.data;

@@ -24,6 +24,7 @@ import { getAllHiringTimeline } from "../redux/slices/hiringTimelineSlice.tsx";
 import SearchableSelectMulti from "../components/SearchableSelectMutli.tsx";
 import TextArea from "../components/TextArea.tsx";
 import { useNavigate } from "react-router-dom";
+import { getAllTimings } from "../redux/slices/timingsSlice.tsx";
 
 
 const JobDetails = () => {
@@ -39,6 +40,7 @@ const JobDetails = () => {
     const { educationList } = useAppSelector((state: RootState) => state.education);
     const { genderList } = useAppSelector((state: RootState) => state.gender);
     const { HiringTimelineList } = useAppSelector((state: RootState) => state.hiringTimeline);
+    const { TimingsList } = useAppSelector((state: RootState) => state.timings);
     const [activeTab, setActiveTab] = useState("basic");
     const [jobType, setJobType] = useState("Full time");
     const [errors, setErrors] = useState<FormErrorsEmployment>({});
@@ -62,6 +64,10 @@ const JobDetails = () => {
         value: item.id,
         label: item.skillName,
     }))
+      const timingsOptions = TimingsList.map((item: any) => ({
+        value: item.id,
+        label: item.timings,
+    }))
     const [formData, setFormData] = useState({
         employmentTypeId: 0,
         jobTitle: "",
@@ -78,7 +84,7 @@ const JobDetails = () => {
         maxSalary: 0,
         skillIds: [] as number[],
         jobDescription: "",
-        timings: "",
+        timingId: 0,
     });
 
     const handleRefresh = () => {
@@ -98,7 +104,7 @@ const JobDetails = () => {
             maxSalary: 0,
             skillIds: [] as number[],
             jobDescription: "",
-            timings: "",
+            timingId: 0,
         })
         setErrors({});
     }
@@ -118,6 +124,7 @@ const JobDetails = () => {
             dispatch(getAllEducations());
             dispatch(getAllGender());
             dispatch(getAllHiringTimeline());
+            dispatch(getAllTimings());
         }
     }, [dispatch, employerId]);
 
@@ -140,7 +147,7 @@ const JobDetails = () => {
                 maxSalary: jobData.maxSalary ?? prev.maxSalary,
                 skillIds: jobData.skillIds ?? prev.skillIds,
                 jobDescription: jobData.jobDescription ?? prev.jobDescription,
-                timings: jobData.timings ?? prev.timings,
+                timingId: jobData.timingId ?? prev.timingId,
             }));
             setJobType(jobData.employmentType?.employmentType || "Full time");
         }
@@ -211,7 +218,7 @@ const JobDetails = () => {
             dispatch(
                 addWorkTimings({
                     jobId: jobId,
-                    timings: formData.timings,
+                    timingId: formData.timingId,
                 })
             );
             handleRefresh();
@@ -559,15 +566,14 @@ const JobDetails = () => {
                                     <h5 className="fw-semibold mb-3">Job Timings</h5>
                                     <div className="mb-5 col-lg-5">
                                         <label className="form-label">Working Hours</label>
-                                        <input
-                                            type="text"
-                                            name="timings"
-                                            className={`form-control rounded-3 ${errors.timings ? "is-invalid" : ""}`}
-                                            placeholder="e.g., 9:00 AM - 6:00 PM"
-                                            value={formData?.timings}
+                                          <SearchableSelect
+                                            name="timingId"
+                                            options={timingsOptions}
+                                            value={formData.timingId}
                                             onChange={handleChange}
+                                            placeholder="Select time zone"
+                                            error={errors.timingId}
                                         />
-                                        {errors.timings && <div className="invalid-feedback">{errors.timings}</div>}
                                     </div>
                                     <p>Please mention job timings correctly otherwise candidates may not join.</p>
                                 </div>
