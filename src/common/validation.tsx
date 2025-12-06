@@ -57,6 +57,8 @@ export interface FormErrors {
   industryType?: string;
   companyType?: string;
   workLocationType?: string;
+  timeZone?: string;
+  timings?: string;
 }
 
 export interface EmploymentForm {
@@ -928,6 +930,20 @@ export const validateJobTimingsForm = (formData: JobTimingsForm): FormErrorsEmpl
   const errors: FormErrorsEmployment = {};
   if (!formData.timings) {
     errors.timings = "Job Timings is required";
+  }
+  return errors;
+}
+
+export const validateTimingsForm = (formData: { timings?: string; timeZone?: string; status: string | number; ipAddress?: string; }) => {
+  const errors: FormErrors = {};
+  if (!formData.timings) {
+    errors.timings = "Timings is required";
+  }
+   if (!formData.timeZone) {
+    errors.timeZone = "Time Zone is required";
+  }
+  if (formData.status === undefined || formData.status === null || formData.status === "") {
+    errors.status = "Status is required";
   }
   return errors;
 }

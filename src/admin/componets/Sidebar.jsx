@@ -148,6 +148,11 @@ const Sidebar = ({
           text: "Hiring Timeline",
           path: "/admin/manage-hiring-timeline",
         },
+           {
+          id: "timiZone",
+          text: "Time Zone",
+          path: "/admin/manage-timings",
+        },
       ],
     },
     {

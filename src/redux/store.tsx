@@ -36,6 +36,7 @@ import sizeOfOrganizationReducer from "./slices/organizationSizeSlice.tsx";
 import WorkLocationTypeReducer from "./slices/WorkLocationTypeSlice.tsx";
 import hiringTimelineReducer from "./slices/hiringTimelineSlice.tsx";
 import jobReducer from "./slices/jobDetailsSlice.tsx"
+import timingsReducer from "./slices/timingsSlice.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -70,12 +71,13 @@ export const store = configureStore({
     designation: designationReducer,
     role: roleReducer,
     industryType: industryTypeReducer,
-    companyType:companyTypeReducer,
+    companyType: companyTypeReducer,
     employerProfile: employerProfileReducer,
     organizationSize: sizeOfOrganizationReducer,
     workLocationType: WorkLocationTypeReducer,
     hiringTimeline: hiringTimelineReducer,
-     job: jobReducer,
+    job: jobReducer,
+    timings: timingsReducer,
   },
 });
 
