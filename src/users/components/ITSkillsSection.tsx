@@ -43,7 +43,7 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection, loa
 
   const [errors, setErrors] = useState<FormErrors>({});
 
-    const skillOptions = skillList.map((item: any) => ({
+  const skillOptions = skillList.map((item: any) => ({
     value: item.id,
     label: item.skillName,
   }));
@@ -81,7 +81,10 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection, loa
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === "skillId" ? Number(value) : value
+    }));
     setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
@@ -89,9 +92,9 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection, loa
     setEditMode(true);
     setEditRowId(row.id);
     setFormData({
-      skillId: String(row.skillId),
+      skillId: row.skillId,  // KEEP AS NUMBER
       version: row.version || "",
-      lastUsedYear: String(row.lastUsedYear || ""),
+      lastUsedYear: row.lastUsedYear ? String(row.lastUsedYear) : "",
       expYears: String(row.expYears),
       expMonths: String(row.expMonths)
     });
@@ -217,14 +220,14 @@ const ITSkillsSection: React.FC<ITSkillsProps> = ({ itSkills, activeSection, loa
               <Form.Label className="fw-semibold">
                 Skill / software name <span className="text-danger">*</span>
               </Form.Label>
-                <SearchableSelect
-                  name="skillId"
-                  options={skillOptions}
-                  value={formData.skillId}
-                  onChange={handleChange}
-                  placeholder="Select skills"
-                  error={errors.skillId}
-                />
+              <SearchableSelect
+                name="skillId"
+                options={skillOptions}
+                value={formData.skillId}
+                onChange={handleChange}
+                placeholder="Select skills"
+                error={errors.skillId}
+              />
             </Form.Group>
 
 

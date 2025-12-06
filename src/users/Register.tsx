@@ -94,7 +94,7 @@ const Register = () => {
         // Update selfOrOther based on activeTab
         const payload = {
           ...selectedForm,
-          captcha: captchaText.trim(),
+          // captcha: captchaText.trim(),
           selfOrOther: activeTab === "candidate" ? 1 : 2,
           ipAddress: ip,
           city: "Los Angeles"
@@ -110,7 +110,7 @@ const Register = () => {
         if (activeTab === "employer") {
           const resultActionEmployer = await dispatch(registerEmployer(payload));
           if (registerEmployer.fulfilled.match(resultActionEmployer)) {
-            navigate("/verify-email", {
+            navigate("/verify-email-employer", {
               state: { email: formData.email }
             });
           }
@@ -294,9 +294,10 @@ const Register = () => {
                                 <div
                                   className="px-3 py-2 rounded bg-light border fw-bold"
                                   style={{ letterSpacing: "3px", fontSize: "18px" }}
-                                  dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
-                                >
+                                // dangerouslySetInnerHTML={{ __html: captchaSvg || "Loading..." }}
 
+                                >
+                                  {captchaText || "Loading"}
                                 </div>
                                 <Button variant="outline-secondary rounded" className="py-2" onClick={handleFetchCaptcha}>
                                   ↻

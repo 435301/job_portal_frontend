@@ -29,11 +29,15 @@ export interface RegisterState {
     message?: string;
     error?: string;
     emailVerified?: boolean;
+    verificationData: any;
+    verificationDataEmployer: any;
 }
 
 const initialState: RegisterState = {
     loading: false,
     emailVerified: false,
+    verificationData: null,
+    verificationDataEmployer:null,
 };
 
 // Request body type
@@ -65,6 +69,8 @@ interface VerifyEmailResponse {
     status: boolean;
     message: string;
 }
+
+
 // Async thunk
 export const registerEmployee = createAsyncThunk<
     RegisterResponse,
@@ -79,6 +85,7 @@ export const registerEmployee = createAsyncThunk<
         toast.success(response.data.message);
         return response.data;
     } catch (error: any) {
+        toast.error(error.response?.data?.message);
         return rejectWithValue(error.response?.data?.message || "Registration failed");
     }
 });
@@ -93,6 +100,7 @@ export const verifyEmail = createAsyncThunk<
         const response = await axios.post<VerifyEmailResponse>(`${BASE_URL_JOB}/employees/verify-email`, payload);
         return response.data;
     } catch (error: any) {
+        toast.error(error.response?.data?.message);
         return rejectWithValue(error.response?.data?.message || "Email verification failed");
     }
 });
@@ -110,11 +118,44 @@ export const registerEmployer = createAsyncThunk<
         toast.success(response.data.message);
         return response.data;
     } catch (error: any) {
+        toast.error(error.response?.data?.message);
         return rejectWithValue(error.response?.data?.message || "Registration failed");
     }
 });
 
+export const sendVerificationEmail = createAsyncThunk(
+    "employees/resendLink",
+    async (email: string, { rejectWithValue }) => {
+        try {
+            const res = await axios.post<RegisterResponse>(
+                `${BASE_URL_JOB}/employees/resendLink`,
+                { email }
+            );
+            toast.success(res.data.message)
+            return res.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.message);
+            return rejectWithValue(error.response?.data?.message || "Something went wrong");
+        }
+    }
+);
 
+export const sendVerificationEmailEmployer = createAsyncThunk(
+    "employer/resendLink",
+    async (email: string, { rejectWithValue }) => {
+        try {
+            const res = await axios.post<RegisterResponse>(
+                `${BASE_URL_JOB}/employer/resendLink`,
+                { email }
+            );
+            toast.success(res.data.message)
+            return res.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.message);
+            return rejectWithValue(error.response?.data?.message || "Something went wrong");
+        }
+    }
+);
 
 const registerSlice = createSlice({
     name: "register",
@@ -147,6 +188,30 @@ const registerSlice = createSlice({
             .addCase(registerEmployer.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || "Something went wrong";
+            });
+        builder
+            .addCase(sendVerificationEmail.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(sendVerificationEmail.fulfilled, (state, action) => {
+                state.loading = false;
+                state.verificationData = action.payload;
+            })
+            .addCase(sendVerificationEmail.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
+        builder
+            .addCase(sendVerificationEmailEmployer.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(sendVerificationEmailEmployer.fulfilled, (state, action) => {
+                state.loading = false;
+                state.verificationDataEmployer = action.payload;
+            })
+            .addCase(sendVerificationEmailEmployer.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
             });
     },
 });

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import BASE_URL_JOB from "../../config/config";
 
 
@@ -45,6 +45,10 @@ const adminSlice = createSlice({
       state.token = null;
       localStorage.removeItem("admin");
       localStorage.removeItem("adminToken");
+      localStorage.removeItem("employee");
+      localStorage.removeItem("employeeToken");
+      localStorage.removeItem("employer");
+      localStorage.removeItem("employerToken");
       toast.info("Logged out successfully");
     },
   },

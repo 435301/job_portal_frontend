@@ -39,6 +39,7 @@ function ProfilePageNew() {
   const { specializationList } = useAppSelector((state: RootState) => state.specialization);
   const { courseTypeList } = useAppSelector((state: RootState) => state.courseType);
   const { GradingSystemList } = useAppSelector((state: RootState) => state.gradingSystem);
+  const [uploading, setUploading] = useState(false);
   const employeeId = JSON.parse(localStorage.getItem("employee") ?? "{}")?.id;
 
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -93,8 +94,10 @@ function ProfilePageNew() {
     dispatch(deleteCertificate(id))
   };
 
-  const handleUpload = (file: any) => {
-    dispatch(uploadResume(file));
+  const handleUpload = async (file: any) => {
+    setUploading(true);
+    await dispatch(uploadResume(file));
+    setUploading(false);
   };
 
   const handleDeleteResume = (id: number) => {
@@ -203,7 +206,7 @@ function ProfilePageNew() {
                       resumes={data?.resumes}
                       onUpload={handleUpload}
                       onDelete={handleDeleteResume}
-                      loading={loading}
+                      loading={uploading}
                     />
                   </div>
                 </div>

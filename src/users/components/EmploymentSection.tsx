@@ -39,7 +39,7 @@ interface EmploymentForm {
 
 }
 
-const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete, activeSection , loading}) => {
+const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, EmploymentTypeList, NoticePeriodList, CurrencyTypeList, onAdd, onUpdate, onDelete, activeSection, loading }) => {
   const dispatch = useAppDispatch();
 
   const [show, setShow] = useState(false);
@@ -104,7 +104,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
 
   const handlEmploymentType = (id: any) => {
     setFormData({ ...formData, employmentTypeId: id });
-        setErrors((prev) => ({ ...prev, employmentTypeId: "" }));
+    setErrors((prev) => ({ ...prev, employmentTypeId: "" }));
 
   };
 
@@ -175,10 +175,10 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
       } else {
         onAdd(payload)
       }
+      handleClose();
     } catch (err) {
       console.log(err)
     }
-    handleClose();
   };
 
   const handleDelete = (id: any) => {
@@ -456,7 +456,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                     {errors.currentSalary && <div className="invalid-feedback">{errors.currentSalary}</div>}
                   </div>
                 </div>
-                  <div className="col-md-6">
+                <div className="col-md-6">
                   <label className="form-section-label">Skills Used<span className="text-danger"> *</span></label>
                   <Form.Control type="text" placeholder="Add Skills" name="skillsUsed" value={formData.skillsUsed} onChange={handleChange} className={`form-control  ${errors.skillsUsed ? "is-invalid" : ""}`} />
                   {errors.skillsUsed && <div className="invalid-feedback">{errors.skillsUsed}</div>}
@@ -469,7 +469,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                   <label className="form-section-label">Job Profile</label>
                   <Form.Control as="textarea" rows={3} placeholder="Type here" className="mb-3" name="jobProfile" value={formData.jobProfile} onChange={handleChange} />
                 </div>
-                  <div className="col-md-6">
+                <div className="col-md-6">
                   <label className="form-section-label">Notice Period<span className="text-danger"> *</span></label>
                   <SearchableSelect
                     name="noticePeriodId"
@@ -482,7 +482,7 @@ const EmploymentSection: React.FC<EmploymentProps> = ({ employmentDetails, Emplo
                   {errors.noticePeriodId && <div className="invalid-feedback">{errors.noticePeriodId}</div>}
                 </div>
               </div>
-              
+
               <div className="modal-footer">
                 <Button variant="link" className="text-muted text-decoration-none" onClick={handleClose}>
                   Cancel

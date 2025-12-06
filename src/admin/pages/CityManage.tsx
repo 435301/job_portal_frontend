@@ -204,7 +204,7 @@ function CityManage() {
                                         />
                                     </InputGroup>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={2}>
                                     <Form.Select className="form-control" value={statusFilter}
                                         onChange={handleStatusChange}>
                                         <option value="">Select Status</option>
@@ -214,7 +214,7 @@ function CityManage() {
 
                                     </Form.Select>
                                 </Col>
-                                <Col md={3} className="d-flex gap-2">
+                                <Col md={1} className="d-flex gap-2">
 
                                     <Button variant="outline-secondary" onClick={handleReset}>
                                         <i className="bi bi-arrow-clockwise"></i>
@@ -245,7 +245,7 @@ function CityManage() {
                                         <thead className="bg-light">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Country Name</th>v 
+                                                <th>Country Name</th>
                                                 <th>State Name</th>
                                                 <th>City Name</th>
                                                 <th>Status</th>

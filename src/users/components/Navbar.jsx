@@ -4,8 +4,17 @@ import logo from '../../assets/img/logo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logoutAdmin } from '../../redux/slices/adminSlice';
 
 const Navbar = () => {
+   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutAdmin());
+  };
   return (
     <BootstrapNavbar expand="lg" className="navbar fixed-top navbar-light px-4 px-lg-5 py-3 py-lg-0">
       <BootstrapNavbar.Brand href="/" className="p-0">
@@ -51,7 +60,7 @@ const Navbar = () => {
             <NavDropdown.Item href="#">Settings</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/change-password">Change Password</NavDropdown.Item>
-            <NavDropdown.Item href="/login">Logout</NavDropdown.Item>
+            <NavDropdown.Item href="/login" onClick={handleLogout}>Logout</NavDropdown.Item>
 
           </NavDropdown>
 

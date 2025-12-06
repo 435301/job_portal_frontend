@@ -100,6 +100,7 @@ import CreateWorkLocationType from './admin/pages/CreateWorkLocationType.tsx';
 import CreateHiringTimeline from './admin/pages/CreateHiringTimeline.tsx';
 import HiringTimelineManage from './admin/pages/HiringTimelineManage.tsx';
 import NotFound from './components/NotFound.tsx';
+import VerifyEmailEmployer from './users/VerifyEmailEmployer.jsx';
 
 
 
@@ -118,6 +119,7 @@ const App = () => {
         <Route path="/candidate-details" element={<CandidatesDetail />} />
         <Route path="/employer-account" element={<EmployerAccount />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/verify-email-employer" element={<VerifyEmailEmployer />} />
         <Route path="/verify-email-success" element={<EmailVerifiedSuccess />} />
         <Route path="/company-verify-email-success" element={<CompanyEmailVerifiedSuccess />} />
         <Route path="/profile" element={<EmployeeRoute><ProfilePageNew /></EmployeeRoute>} />

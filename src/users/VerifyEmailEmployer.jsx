@@ -13,10 +13,10 @@ import Footer from "./components/Footer";
 import verifyImage from "../assets/img/reg-2.png"; // update path if needed
 import emailIcon from "../assets/img/email.png";
 import { useLocation } from "react-router-dom";
-import { sendVerificationEmail } from "../redux/slices/registerSlice.tsx";
+import { sendVerificationEmail, sendVerificationEmailEmployer } from "../redux/slices/registerSlice.tsx";
 import { useDispatch } from "react-redux";
 
-const VerifyEmail = () => {
+const VerifyEmailEmployer = () => {
   const dispatch= useDispatch();
   const location = useLocation();
   const email = location.state?.email
@@ -26,7 +26,7 @@ const VerifyEmail = () => {
   }, []);
 
   const handleSend = () => {
-  dispatch(sendVerificationEmail(email));
+  dispatch(sendVerificationEmailEmployer(email));
 };
 
   return (
@@ -109,4 +109,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default VerifyEmailEmployer;

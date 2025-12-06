@@ -149,7 +149,7 @@ function DesignationManage() {
                                     <InputGroup>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Search work permit..."
+                                            placeholder="Search designation..."
                                             value={searchTerm}
                                             onChange={handleSearchChange}
                                         />

@@ -350,9 +350,9 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   } else if (formData.password !== formData.confirmPassword) {
     errors.confirmPassword = "Passwords do not match";
   }
-  if (!formData.captcha || !formData.captcha.trim()) {
-    errors.captcha = "Captcha is required";
-  }
+  // if (!formData.captcha || !formData.captcha.trim()) {
+  //   errors.captcha = "Captcha is required";
+  // }
 
   return errors;
 };

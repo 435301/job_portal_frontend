@@ -31,7 +31,10 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
   const [dob, setDob] = useState<Date | null>(null);
   const [errors, setErrors] = useState<any>({});
   const handleShow = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+     setErrors({});
+    setShowModal(false);
+  }
 
   const { maritalStatusList } = useSelector((state: RootState) => state.maritalStatus);
   const { CityList } = useSelector((state: RootState) => state.city);
@@ -99,7 +102,12 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
   const fullName = `${form?.firstName} ${form?.lastName}`
 
   const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+      const { name, value } = e.target;
+    // setForm({ ...form, [e.target.name]: e.target.value });
+     setForm((prev) => ({
+    ...prev,
+    [name]: name === "genderId" ? Number(value) : value
+  }));
     setErrors((prev: any) => ({ ...prev, [e.target.name]: "" }));
   };
 
@@ -107,7 +115,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
     e.preventDefault();
     const validationErrors = validatePersonalDetails(form);
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
+    if (Object.keys(validationErrors).length > 0){return} ;
     try {
       dispatch(updatePersonalDetails(form))
     } catch (err) {
@@ -120,6 +128,8 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
   const handleMaritalSelect = (id: number) => {
     setForm({ ...form, maritalStatusId: id });
   };
+
+
 
 
   return (
@@ -264,7 +274,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
                   />
 
                 ))}
-                {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                {errors.genderId && <div className="invalid-feedback">{errors.genderId}</div>}
               </div>
             </div>
 
@@ -277,7 +287,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
                     key={item.id}
                     bg={form.maritalStatusId === item.id ? "dark" : "light"}
                     text={form.maritalStatusId === item.id ? "light" : "dark"}
-                    className={`border rounded-pill px-3 py-2 ${errors.maritalStatusId} ? " is-invalid" : ""`}
+                    className={`border rounded-pill px-3 py-2 ${errors.maritalStatusId ? "is-invalid" : ""}`}
                     style={{ cursor: "pointer" }}
                     onClick={() => handleMaritalSelect(item.id)}
 
@@ -285,7 +295,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
                     {item?.maritalStatus}
                   </Badge>
                 ))}
-                {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                {errors.maritalStatusId && <div className="invalid-feedback">{errors.maritalStatusId}</div>}
               </div>
             </div>
             {/* ===== Date of Birth ===== */}
@@ -293,8 +303,10 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
               <Col md={6}>
                 <Form.Label className="fw-bold">Date of Birth<span className="text-danger"> *</span></Form.Label>
                 {/* <Form.Control type="date" name="dob" value={form?.dob} onChange={handleChange}/> */}
-               <DobPicker form={form} handleChange={handleChange} />
-                {errors.dob && <div className="invalid-feedback">{errors.dob}</div>}
+                <DobPicker form={form} handleChange={handleChange} />
+                {errors.dob && (
+                  <div className="text-danger mt-1 d-block">{errors.dob}</div>
+                )}
               </Col>
               <Col md={6}>
                 <Form.Label className="fw-bold">Locality<span className="text-danger"> *</span></Form.Label>
@@ -313,7 +325,7 @@ const PersonalDetailsSection: React.FC<ProfileCardProps> = ({ personalDetails, a
                   )}
 
                 </Form.Select>
-                {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                {errors.cityId && <div className="invalid-feedback">{errors.cityId}</div>}
               </Col>
             </Row>
 
