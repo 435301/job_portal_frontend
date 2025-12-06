@@ -59,6 +59,7 @@ export interface FormErrors {
   workLocationType?: string;
   timeZone?: string;
   timings?: string;
+  companyName?:string;
 }
 
 export interface EmploymentForm {
@@ -323,24 +324,65 @@ export const validateCourseTypeForm = (formData: { courseType?: string; status?:
   return errors;
 };
 
-export const validateRegisterForm = (formData: { firstName?: string; lastName?: string, fullName?: string; email?: string; password?: string; confirmPassword?: string; captcha?: string; captchaText?: string; }): FormErrors => {
+export const validateRegisterForm = (
+  formData: {
+    firstName?: string;
+    lastName?: string;
+    companyName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+    captcha?: string;
+  },
+  activeTab: string
+): FormErrors => {
+
   const errors: FormErrors = {};
 
-  if (!formData.firstName || !formData.firstName.trim()) {
-    errors.firstName = "First name is required";
+  // -----------------------
+  // Candidate Validation
+  // -----------------------
+  if (activeTab === "candidate") {
+    if (!formData.firstName?.trim()) {
+      errors.firstName = "First name is required";
+    }
+    if (!formData.lastName?.trim()) {
+      errors.lastName = "Last name is required";
+    }
+    if (!formData.email?.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Enter a valid email address";
+    }
   }
-  if (!formData.lastName || !formData.lastName.trim()) {
-    errors.lastName = "Last name is required";
+
+  // -----------------------
+  // Employer Validation
+  // -----------------------
+  if (activeTab === "employer") {
+    if (!formData.companyName?.trim()) {
+      errors.companyName = "Company name is required";
+    }
+
+    if (!formData.email?.trim()) {
+      errors.email = "Company email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Enter a valid company email address";
+    }
   }
-  if (!formData.email || (!formData.email.trim())) {
-    errors.email = "Email is required";
-  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-    errors.email = "Enter a valid email address";
-  }
+
+  // -----------------------
+  // Common Fields
+  // -----------------------
   if (!formData.password) {
     errors.password = "Password is required";
-  } else if (formData.password.length < 6) {
-    errors.password = "Password must be at least 6 characters";
+  } else if (
+    !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+      formData.password
+    )
+  ) {
+    errors.password =
+      "Password must contain 1 uppercase, 1 lowercase, 1 number, 1 special character & min 6 characters";
   }
 
   if (!formData.confirmPassword) {
@@ -348,12 +390,14 @@ export const validateRegisterForm = (formData: { firstName?: string; lastName?: 
   } else if (formData.password !== formData.confirmPassword) {
     errors.confirmPassword = "Passwords do not match";
   }
-  // if (!formData.captcha || !formData.captcha.trim()) {
-  //   errors.captcha = "Captcha is required";
-  // }
+
+  if (!formData.captcha?.trim()) {
+    errors.captcha = "Captcha is required";
+  }
 
   return errors;
 };
+
 
 //  SCHOOL BOARD FORM VALIDATION
 export const validateSchoolBoardForm = (formData: { boardName?: string; status?: string | number, ipAddress?: string }): FormErrors => {

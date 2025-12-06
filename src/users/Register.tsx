@@ -45,6 +45,7 @@ const Register = () => {
   const [candidateForm, setCandidateForm] = useState({
     firstName: "",
     lastName: "",
+    companyName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -54,6 +55,7 @@ const Register = () => {
   const [employerForm, setEmployerForm] = useState({
     firstName: "",
     lastName: "",
+    companyName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -84,7 +86,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const selectedForm = activeTab === "candidate" ? candidateForm : employerForm;
-    const formErrors = validateRegisterForm(selectedForm);
+    const formErrors = validateRegisterForm(selectedForm, activeTab);
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -176,42 +178,65 @@ const Register = () => {
                         {/* Registration Form */}
                         <Form className="mt-4 pt-3 px-3" onSubmit={handleSubmit}>
                           <Row className="g-3">
+                            {activeTab === "candidate" && (
+                              <>
+                                {/* First Name */}
+                                <Form.Group className="col-lg-6">
+                                  <Form.Label>
+                                    First Name <span className="text-danger">*</span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="Enter the first name"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.firstName}
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                    {errors.firstName}
+                                  </Form.Control.Feedback>
+                                </Form.Group>
 
-                            {/* First Name */}
-                            <Form.Group className="col-lg-6">
-                              <Form.Label>
-                                First Name <span className="text-danger">*</span>
-                              </Form.Label>
-                              <Form.Control
-                                type="text"
-                                name="firstName"
-                                placeholder="Enter the first name"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                isInvalid={!!errors.firstName}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors.firstName}
-                              </Form.Control.Feedback>
-                            </Form.Group>
+                                {/* Last Name */}
+                                <Form.Group className="col-lg-6">
+                                  <Form.Label>
+                                    Last Name <span className="text-danger">*</span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Enter the last name"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.lastName}
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                    {errors.lastName}
+                                  </Form.Control.Feedback>
+                                </Form.Group>
+                              </>
+                            )}
 
-                            {/* Last Name */}
-                            <Form.Group className="col-lg-6">
-                              <Form.Label>
-                                Last Name <span className="text-danger">*</span>
-                              </Form.Label>
-                              <Form.Control
-                                type="text"
-                                name="lastName"
-                                placeholder="Enter the last name"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                isInvalid={!!errors.lastName}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors.lastName}
-                              </Form.Control.Feedback>
-                            </Form.Group>
+{/* EMPLOYER COMPANY NAME */}
+{activeTab === "employer" && (
+  <Form.Group className="col-lg-12">
+    <Form.Label>
+      Company Name <span className="text-danger">*</span>
+    </Form.Label>
+    <Form.Control
+      type="text"
+      name="companyName"
+      placeholder="Enter company name"
+      value={formData.companyName}
+      onChange={handleChange}
+      isInvalid={!!errors.companyName}
+    />
+    <Form.Control.Feedback type="invalid">
+      {errors.companyName}
+    </Form.Control.Feedback>
+  </Form.Group>
+)}
 
                             {/* Email */}
                             <Form.Group className="col-lg-12">

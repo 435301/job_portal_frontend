@@ -53,6 +53,16 @@ interface RegisterPayload {
     ipAddress: string;
 }
 
+interface RegisterPayloadEmployer {
+    companyName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    captcha: string;
+    city: string;
+    ipAddress: string;
+}
+
 interface VerifyEmailPayload {
     code: string;
 }
@@ -107,9 +117,9 @@ export const verifyEmail = createAsyncThunk<
 
 export const registerEmployer = createAsyncThunk<
     RegisterResponse,
-    RegisterPayload,
+    RegisterPayloadEmployer,
     { rejectValue: string }
->("employer/registerEmployee", async (payload, { rejectWithValue }) => {
+>("employer/registerEmployer", async (payload, { rejectWithValue }) => {
     try {
         const response = await axios.post<RegisterResponse>(
             `${BASE_URL_JOB}/employer/register`,
